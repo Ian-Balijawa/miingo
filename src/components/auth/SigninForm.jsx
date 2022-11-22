@@ -2,7 +2,7 @@ import {
   Box,
   Button,
   Heading,
-  Input,
+  Spinner,
   Stack,
   Text,
   useColorModeValue as mode
@@ -10,8 +10,46 @@ import {
 
 import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
+import Input from '../Input';
+import axios from '../../services/axios-config';
+import { signin } from '../../app/slices/authSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export const SigninForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const isInvalid = password === '' || email === '';
+
+  const handleSignin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const { data } = await axios.post('/auth/signin', {
+        email,
+        password
+      });
+      dispatch(signin(data));
+      setIsLoading(false);
+
+      console.log('RES: ', data);
+
+      navigate('/feed');
+    } catch (error) {
+      setError(error);
+      console.log('ERROR: ', error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Box minH="100vh" bg={{ md: mode('gray.100', 'inherit') }}>
       <Box
@@ -32,18 +70,24 @@ export const SigninForm = () => {
             <Heading textAlign="center" mb="8" size="lg" fontWeight="extrabold">
               Sign in to your account
             </Heading>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                // your submit logic here
-              }}
-            >
+            <form onSubmit={handleSignin}>
               <Stack spacing="4">
-                <Input type="email" autoComplete="email" placeholder="Email" />
+                <Input
+                  type="email"
+                  autoComplete="email"
+                  placeholder="Email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+
                 <Input
                   type="password"
                   placeholder="Password"
                   autoComplete="current-password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <Button
                   type="submit"
@@ -51,10 +95,9 @@ export const SigninForm = () => {
                   size="lg"
                   fontSize="md"
                 >
-                  Sign in
+                  {isLoading ? <Spinner size="md" color="white" /> : 'Sign in'}
                 </Button>
                 <DividerWithText>or</DividerWithText>
-
                 <Stack spacing="4">
                   <Button
                     variant="outline"

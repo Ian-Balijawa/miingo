@@ -15,6 +15,7 @@ const Loadable = (Component) => (props) => {
   );
 };
 
+// Notice the convention of how we're importing pagesing with the Loadable HOC
 const Signin = Loadable(lazy(() => import('./pages/Login')));
 const Signup = Loadable(lazy(() => import('./pages/Register')));
 const Home = Loadable(lazy(() => import('./pages/Home')));
