@@ -25,8 +25,6 @@ export const SigninForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const isInvalid = password === '' || email === '';
-
   const handleSignin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -41,8 +39,8 @@ export const SigninForm = () => {
       console.log('RES: ', data);
 
       navigate('/feed');
-    } catch (error) {
-      setError(error);
+    } catch (err) {
+      setError(err);
       console.log('ERROR: ', error);
       setIsLoading(false);
     } finally {
