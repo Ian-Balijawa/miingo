@@ -1,10 +1,10 @@
-import React from "react";
-import Boards from "./Boards";
-import BottomNav from "./BottomNav";
-import Feed from "./Feed";
-import Header from "./Header";
-import Statuses from "./Statuses";
-import Widgets from "./Widgets";
+import Boards from '../components/Boards';
+import BottomNav from '../components/BottomNav';
+import Feed from '../components/Feed';
+import Header from '../components/Header';
+import React from 'react';
+import Statuses from '../components/Statuses';
+import Widgets from '../components/Widgets';
 
 function Home() {
   return (
@@ -30,7 +30,6 @@ function Home() {
         </main>
 
         <BottomNav />
-
       </div>
     </div>
   );
