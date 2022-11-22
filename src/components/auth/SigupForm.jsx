@@ -2,6 +2,8 @@ import {
   Box,
   Button,
   Heading,
+  Radio,
+  RadioGroup,
   Spinner,
   Stack,
   Text,
@@ -48,8 +50,9 @@ export const SignupForm = () => {
       setIsLoading(false);
       console.log('RES: ', data);
       navigate('/feed');
-    } catch (error) {
-      setError(error);
+    } catch (err) {
+      setError(err);
+      console.log('ERROR: ', error);
       setIsLoading(false);
     }
   };
@@ -100,6 +103,12 @@ export const SignupForm = () => {
                   value={password}
                   onChange={({ target }) => setPassword(target.value)}
                 />
+                <RadioGroup onChange={setSelectedGender} value={selectedGender}>
+                  <Stack direction="row">
+                    <Radio value="male">Male</Radio>
+                    <Radio value="female">Female</Radio>
+                  </Stack>
+                </RadioGroup>
                 <Button
                   type="submit"
                   colorScheme="blue"
@@ -110,7 +119,6 @@ export const SignupForm = () => {
                   {isLoading ? <Spinner size="sm" color="white" /> : 'Sign up'}
                 </Button>
                 <DividerWithText>or</DividerWithText>
-
                 <Stack spacing="4">
                   <Button
                     variant="outline"
