@@ -29,15 +29,14 @@ export const SigninForm = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const { data } = await axios.post('/auth/signin', {
+      const res = await axios.post('/auth/signin', {
         email,
         password
       });
+      const data = res.data;
       dispatch(signin(data));
       setIsLoading(false);
-
-      console.log('USER: ', data.user);
-      console.log('ACCESS_TOKEN: ', data.accessToken);
+      console.log('RES: =>', res);
       const user = {
         ...data.user,
         token: data.accessToken
@@ -47,8 +46,12 @@ export const SigninForm = () => {
 
       navigate('/feed');
     } catch (err) {
-      setError(err);
-      console.log('ERROR: ', error);
+      if (err.message === 'Network Error') {
+        setError('Network Error');
+      } else {
+        setError(err.response.data.message);
+        console.log(err.response.data.message);
+      }
       setIsLoading(false);
     } finally {
       setIsLoading(false);
@@ -94,6 +97,11 @@ export const SigninForm = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                {error && (
+                  <Text color="red.500" fontSize="sm">
+                    {error}
+                  </Text>
+                )}
                 <Button
                   type="submit"
                   colorScheme="blue"

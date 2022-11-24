@@ -51,8 +51,7 @@ export const SignupForm = () => {
       console.log('RES: ', data);
       navigate('/feed');
     } catch (err) {
-      setError(err);
-      console.log('ERROR: ', error);
+      setError(err.response.data.message);
       setIsLoading(false);
     }
   };
@@ -103,6 +102,11 @@ export const SignupForm = () => {
                   value={password}
                   onChange={({ target }) => setPassword(target.value)}
                 />
+                {error && (
+                  <Text color="red.500" fontSize="sm">
+                    {error}
+                  </Text>
+                )}
                 <RadioGroup onChange={setSelectedGender} value={selectedGender}>
                   <Stack direction="row">
                     <Radio value="male">Male</Radio>

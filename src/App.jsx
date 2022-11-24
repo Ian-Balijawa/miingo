@@ -55,3 +55,48 @@ const RequireAuth = ({ children, redirectTo }) => {
 
   return user ? children : <Navigate to={redirectTo} />;
 };
+
+const IsUserRedirect = ({ children, user, loggedInPath, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={() => {
+        if (!user) {
+          return children;
+        }
+
+        if (user) {
+          return <Navigate to={loggedInPath} />;
+        }
+
+        return null;
+      }}
+    />
+  );
+};
+
+const ProtectedRoute = ({ children, user, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={({ location }) => {
+        if (user) {
+          return children;
+        }
+
+        if (!user) {
+          return (
+            <Navigate
+              to={{
+                pathname: 'login',
+                state: { from: location }
+              }}
+            />
+          );
+        }
+
+        return null;
+      }}
+    />
+  );
+};
