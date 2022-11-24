@@ -25,16 +25,9 @@ export default () => {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Signin />} />
         <Route path="login" element={<Signin />} />
         <Route path="register" element={<Signup />} />
-        <Route
-          path="/"
-          element={
-            <RequireAuth redirectTo="/login">
-              <Layout />
-            </RequireAuth>
-          }
-        />
         <Route
           path="feed"
           element={
