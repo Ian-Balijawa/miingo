@@ -1,11 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable no-use-before-define */
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
 import LoadingScreen from './components/LoadingScreen';
-import React from 'react';
-import RequireAuth from './services/RequireAuth';
+import useLocalStorage from './hooks/useLocalStorage';
 
 const Loadable = (Component) => (props) => {
   return (
@@ -26,14 +25,39 @@ export default () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout />} />
         <Route path="login" element={<Signin />} />
         <Route path="register" element={<Signup />} />
-        <Route element={<RequireAuth />}>
-          <Route path="feed" element={<Home />} />
-          <Route path="messages" element={<Messages />} />
-        </Route>
+        <Route
+          path="/"
+          element={
+            <RequireAuth redirectTo="/login">
+              <Layout />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="feed"
+          element={
+            <RequireAuth redirectTo="/login">
+              <Home />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="messages"
+          element={
+            <RequireAuth redirectTo="/login">
+              <Messages />
+            </RequireAuth>
+          }
+        />
       </Routes>
     </>
   );
+};
+
+const RequireAuth = ({ children, redirectTo }) => {
+  const [user, _] = useLocalStorage('user');
+
+  return user ? children : <Navigate to={redirectTo} />;
 };

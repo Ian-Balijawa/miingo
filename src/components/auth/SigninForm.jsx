@@ -36,7 +36,14 @@ export const SigninForm = () => {
       dispatch(signin(data));
       setIsLoading(false);
 
-      console.log('RES: ', data);
+      console.log('USER: ', data.user);
+      console.log('ACCESS_TOKEN: ', data.accessToken);
+      const user = {
+        ...data.user,
+        token: data.accessToken
+      };
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', JSON.stringify(user.token));
 
       navigate('/feed');
     } catch (err) {
