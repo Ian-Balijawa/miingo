@@ -1,5 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable no-use-before-define */
+
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
