@@ -101,8 +101,8 @@ function Header({onPress}) {
             <span className=" absolute top-0 right-0 w-3 h-3 rounded-full bg-green-400 border-2 border-white"></span>
           </div>
 
-          <div className="">
-            <p className="text-gray-700 hidden lg:inline-flex "> {user.name} </p>
+          <div className="hidden md:inline-flex md:flex-col">
+            <p className="text-gray-700 "> {user.name} </p>
             <h3 className="text-sm text-gray-600">Active Now</h3>
           </div>
         </div>
