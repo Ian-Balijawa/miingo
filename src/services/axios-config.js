@@ -7,7 +7,6 @@ instance.defaults.headers.common[
 	"Authorization"
 ] = `Bearer ${localStorage.getItem( "token" )}`;
 
-console.log( "TAOKEN: ", localStorage.getItem( "token" ) )
 instance.defaults.headers.post["Content-Type"] = "application/json";
 
 export default instance;

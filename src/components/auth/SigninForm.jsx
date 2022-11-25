@@ -36,7 +36,6 @@ export const SigninForm = () => {
       const data = res.data;
       dispatch(signin(data));
       setIsLoading(false);
-      console.log('RES: =>', res);
       const user = {
         ...data.user,
         token: data.accessToken
