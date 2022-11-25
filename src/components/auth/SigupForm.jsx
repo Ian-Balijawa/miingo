@@ -2,8 +2,7 @@ import {
   Box,
   Button,
   Heading,
-  Radio,
-  RadioGroup,
+  Select,
   Spinner,
   Stack,
   Text,
@@ -21,9 +20,11 @@ import { useState } from 'react';
 
 export const SignupForm = () => {
   const [email, setEmail] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [selectedGender, setSelectedGender] = useState('male');
+  const [selectedGender, setSelectedGender] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -107,17 +108,25 @@ export const SignupForm = () => {
                     {error}
                   </Text>
                 )}
-                <RadioGroup onChange={setSelectedGender} value={selectedGender}>
-                  <Stack direction="row">
-                    <Radio value="male">Male</Radio>
-                    <Radio value="female">Female</Radio>
-                  </Stack>
-                </RadioGroup>
+                <Select
+                  placeholder="Select Gender"
+                  onChange={setSelectedGender}
+                  value={selectedGender}
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </Select>
+                <Input
+                  type="date"
+                  // placeholder="Password"
+                  name="dateOfBirth"
+                  value={dateOfBirth}
+                  onChange={({ target }) => setDateOfBirth(target.value)}
+                />
                 <Button
                   type="submit"
                   colorScheme="blue"
                   size="lg"
-                  // disabled={isInvalid}
                   fontSize="md"
                 >
                   {isLoading ? <Spinner size="sm" color="white" /> : 'Sign up'}
