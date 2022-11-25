@@ -20,7 +20,7 @@ const Signin = Loadable(lazy(() => import('./pages/Login')));
 const Signup = Loadable(lazy(() => import('./pages/Register')));
 const Home = Loadable(lazy(() => import('./pages/Home')));
 const Messages = Loadable(lazy(() => import('./pages/Messages')));
-const Layout = Loadable(lazy(() => import('./pages/Layout')));
+const GroupFeeds = Loadable(lazy(()=> import("./pages/GroupFeeds")))
 
 export default () => {
   return (
@@ -42,6 +42,15 @@ export default () => {
           element={
             <RequireAuth redirectTo="/login">
               <Messages />
+            </RequireAuth>
+          }
+        />
+
+<Route
+          path="groups"
+          element={
+            <RequireAuth redirectTo="/login">
+              <GroupFeeds />
             </RequireAuth>
           }
         />
