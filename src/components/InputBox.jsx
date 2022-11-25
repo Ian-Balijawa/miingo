@@ -1,10 +1,27 @@
-import React, { useRef, useState } from "react";
+import React from "react";
+import {useDispatch , useSelector}  from 'react-redux';
+import { addPost } from "../app/slices/postSlice";
+
+const { useRef , useState}  =  React;
+
+
+
+
 
 function InputBox() {
   const inputRef = useRef(null);
   const filePickerRef = useRef(null);
-
+  const dispatch = useDispatch()
   const [imageToPost, setImageToPost] = useState(null);
+  const [title , setTitle ] = useState("");
+  const [content , setContent]  = useState("")
+
+  const onTitleChange =  (e) => e.target.value;
+  const onContentChange = (e) => e.target.value
+
+  const handlePost = (e) =>{
+      e.preventDefault()
+  }
 
   const removeImage = () => {
     setImageToPost(null);
@@ -20,13 +37,16 @@ function InputBox() {
             alt="profile"
           />
         </div>
-        <form className="flex w-full">
+        <form className="flex flex-col space-y-2 w-full">
           {/* <input
+            name="title"
             type="text"
+            value=""
             ref={inputRef}
-            className="rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none "
-            placeholder={`What's on your mind Muwonge Lawrence`}
+            className="rounded-lg h-12 bg-gray-100 flex-grow px-5 focus:outline-none "
+            placeholder={`Enter title`}
           /> */}
+
 
           <textarea
             id="comment"
@@ -34,7 +54,7 @@ function InputBox() {
             rows="8"
             cols="50"
             ref = {inputRef}
-            className="font-sans text-gray-600 resize-none flex-grow  h-20 w-full  px-5 py-3 focus:outline-none rounded-lg border"
+            className="font-sans text-gray-600 resize-none flex-grow bg-gray-100  h-20 w-full  px-5 py-3 focus:outline-none rounded-lg border"
             placeholder="Share what you are thinking here......."
             maxLength="200"
             // onChange={handleChange("comment")}

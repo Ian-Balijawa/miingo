@@ -41,44 +41,46 @@ function Post({ name, message, email, timestamp, postImage }) {
 
       {/* footer of post */}
       <div
-        className={`flex  justify-around  items-center 
+        className={`flex  justify-between  items-center 
               bg-white shadow-md text-gray-600 px-2  py-3 mt-2`}
       >
-        <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
-          <ThumbUpIcon className="h-6" />
-          <p className="text-xs sm:text-base hidden md:inline-flex"> 12k Likes </p>
+        <div className=" flex items-center justify-center">
+          <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
+            <ThumbUpIcon className="h-6" />
+            <p className="text-xs sm:text-base hidden md:inline-flex">
+              {" "}
+              12k Likes{" "}
+            </p>
+          </div>
+
+          <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
+            <ChatAltIcon className="h-6" />
+            <p className="text-xs sm:text-base">comment</p>
+          </div>
         </div>
 
-        <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
-          <ThumbDownIcon className="h-6" />
-          <p className="text-xs sm:text-base hidden md:inline-flex">20 Dislikes</p>
-        </div>
+        <div className=" flex items-center justify-center">
+          <div className="rounded-none flex items-center space-x-2 hover:bg-gray-100 p-2 hover:rounded-lg cursor-pointer">
+            <ShareIcon className="h-4" />
+            <p className="text-xs sm:text-base">share</p>
+          </div>
 
-        <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
-          <ChatAltIcon className="h-6" />
-          <p className="text-xs sm:text-base">comment</p>
-        </div>
-
-        <div className="rounded-none flex items-center space-x-2 hover:bg-gray-100 p-2 hover:rounded-lg cursor-pointer">
-          <ShareIcon className="h-4" />
-          <p className="text-xs sm:text-base">share</p>
-        </div>
-
-        <div className="  hover:bg-gray-100 p-2 hover:rounded-full cursor-pointer">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-            />
-          </svg>
+          <div className="  hover:bg-gray-100 p-2 hover:rounded-full cursor-pointer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </div>

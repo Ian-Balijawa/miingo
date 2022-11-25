@@ -1,8 +1,11 @@
 import { SearchIcon, HomeIcon } from "@heroicons/react/outline";
+import useLocalStorage from '../hooks/useLocalStorage'
 
-function Header() {
+function Header({onPress}) {
+ const [user , ] = useLocalStorage("user");
+ 
   return (
-    <div className="sticky top-0 z-50 bg-white flex justify-around md:justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
+    <div className=" bg-white sticky top-0 z-50  flex justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
       {/* left */}
       <div className="w-56">
         <div className="flex items-center justify-center rounded-full bg-regal-orange w-14 md:w-16  h-14 md:h-16">
@@ -12,12 +15,12 @@ function Header() {
 
       {/* center */}
 
-      <div className="flex  flex-grow items-center space-x-2 md:space-x-4  md:w-[500px] lg:w-[700px] ">
-        <div className="flex flex-grow  items-center rounded-full bg-white p-2 border-2">
+      <div className="flex flex-grow items-center space-x-2 md:space-x-4  md:w-[500px] lg:w-[700px] ">
+        <div className="flex items-center rounded-full bg-white p-2 border-2 md:flex-grow">
           <input
             type="text"
             placeholder="Start typing to search..."
-            className="flex ml-2 items-center bg-transparent outline-none placeholder-gray-500  text-gray-700 flex-grow"
+            className="flex mx-2 items-center bg-transparent outline-none placeholder-gray-500  text-gray-700 w-40 md:flex-grow"
           />
 
           <SearchIcon className="h-6 text-gray-600" />
@@ -43,8 +46,6 @@ function Header() {
 
       {/*  Right */}
       <div className="flex justify-around items-center sm:space-x-2 md:space-x-6 w-56 md:w-80">
-        <p className="text-gray-700 hidden md:inline-flex "> Find Friends </p>
-
         <div className="hidden md:inline-flex items-center relative ">
           <span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
             {" "}
@@ -67,10 +68,6 @@ function Header() {
         </div>
 
         <div className=" hidden md:inline-flex items-center mr-2 relative">
-          <span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
-            {" "}
-            5
-          </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -92,12 +89,22 @@ function Header() {
           </svg>
         </div>
 
-        <div className="w-14 h-14">
-          <img
-            src="https://res.cloudinary.com/itgenius/image/upload/v1668007542/pexels-mahdi-chaghari-12463279_cwiw1n.jpg"
-            alt=""
-            className=" w-full h-full rounded-full object-cover"
-          />
+        <div className=" flex items-center space-x-2">
+          <div 
+           onClick={ onPress }
+          className=" relative w-14 h-14 cursor-pointer">
+            <img
+              src="https://res.cloudinary.com/itgenius/image/upload/v1668007542/pexels-mahdi-chaghari-12463279_cwiw1n.jpg"
+              alt=""
+              className=" w-full h-full rounded-full object-cover"
+            />
+            <span className=" absolute top-0 right-0 w-3 h-3 rounded-full bg-green-400 border-2 border-white"></span>
+          </div>
+
+          <div className="">
+            <p className="text-gray-700 hidden lg:inline-flex "> {user.name} </p>
+            <h3 className="text-sm text-gray-600">Active Now</h3>
+          </div>
         </div>
       </div>
     </div>
