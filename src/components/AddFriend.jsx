@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { HiHeart } from "react-icons/hi";
 
 function AddFriend({ name, followers, following, image }) {
+  const [ follow , setFollow] = useState(false);
   return (
     <div className="w-56 h-56  bg-white rounded-lg shadow-2xl inline-block mr-2  ">
       <div className=" ">
@@ -61,11 +62,15 @@ function AddFriend({ name, followers, following, image }) {
 
           <div className=" flex items-center justify-center">
             <button
+              onClick={(e) => {
+                 e.preventDefault();
+                 setFollow(!follow);
+              }}
               className={`flex  mx-auto text-blue-600 hover:text-white  hover:bg-blue-600 px-3 py-1 
                           md:px-5 rounded-lg shadow-xl font-normal hover:shadow-xl active:scale-90 
                           transition duration-300 border border-blue-600`}
             >
-              Add Friend 
+              { follow ? "Follow" : "UnFollow"}
             </button>
           </div>
         </div>
