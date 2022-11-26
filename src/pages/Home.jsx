@@ -15,6 +15,7 @@ import { HiOutlineLogout } from "react-icons/hi";
 const { useState } = React;
 
 function Home() {
+  
   const [logout, setLogout] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
