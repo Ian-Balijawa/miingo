@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Contact({ src, name, online, timestamp }) {
   return (
-    <Link to={`/messages`}>
+    <Link to={`/messages`}  state={{ src: src , online: online, name:name }}>
       <div
         className={`flex items-center justify-between space-x-3
 	  mb-2 relative hover:bg-gray-200 cursor-pointer

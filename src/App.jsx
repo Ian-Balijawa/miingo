@@ -29,6 +29,7 @@ export default () => {
         <Route path="/" element={<Signin />} />
         <Route path="login" element={<Signin />} />
         <Route path="register" element={<Signup />} />
+        {/* <Route path="messages/:name" element={  <Messages /> } /> */}
         <Route
           path="feed"
           element={

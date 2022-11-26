@@ -1,12 +1,16 @@
+import { useLocation, useParams } from 'react-router-dom';
 import Boards from '../components/Boards';
 import Chat from '../components/Chats/Chat';
 import Header from '../components/Header';
 import SideFeed from '../components/SideFeed';
 import Statuses from '../components/Statuses';
 
-export default function Messages(props) {
+export default function Messages() {
 
- 
+//  const { name }= useParams();
+ const location = useLocation();
+ const { src , online , name } = location.state
+//  console.log(online);
 
   return (
     <div className="h-screen bg-miingo-gray overflow-hidden">
@@ -23,7 +27,7 @@ export default function Messages(props) {
 
         {/* Messages */}
 
-        <Chat   />
+        <Chat name = { name }  src = {src } online ={ online }/>
 
         {/* Boards */}
 
