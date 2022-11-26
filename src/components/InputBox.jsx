@@ -1,5 +1,5 @@
 import React from "react";
-import {useDispatch , useSelector}  from 'react-redux';
+import { useDispatch , useSelector }  from 'react-redux';
 import { addPost } from "../app/slices/postSlice";
 
 const { useRef , useState}  =  React;
@@ -78,7 +78,7 @@ function InputBox() {
         )}
       </div>
 
-      <div className="flex items-center justify-between p-3 border-t">
+      <div className="flex items-center  justify-around md:justify-between p-3 border-t">
         <div className=" flex items-center justify-center space-x-2">
           <div className="flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
             <svg
