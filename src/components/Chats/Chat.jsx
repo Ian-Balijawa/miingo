@@ -14,6 +14,7 @@ export default function Chat() {
                     <img
                       className="object-cover w-10 h-10 rounded-full"
                       src="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg"
+                      // src = { src }
                       alt="username"
                     />
                     <div>
