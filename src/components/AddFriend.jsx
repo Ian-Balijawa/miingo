@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { HiHeart } from "react-icons/hi";
 
 function AddFriend({ name, followers, following, image }) {
-  const [ follow , setFollow] = useState(false);
+  const [ follow , setFollow] = useState(true);
   return (
     <div className="w-56 h-56  bg-white rounded-lg shadow-2xl inline-block mr-2  ">
       <div className=" ">
@@ -66,7 +66,7 @@ function AddFriend({ name, followers, following, image }) {
                  e.preventDefault();
                  setFollow(!follow);
               }}
-              className={`flex  mx-auto text-blue-600 hover:text-white  hover:bg-blue-600 px-3 py-1 
+              className={`flex  mx-auto ${ !follow ? "bg-blue-600 text-white" :"text-blue-600"} px-3 py-1 
                           md:px-5 rounded-lg shadow-xl font-normal hover:shadow-xl active:scale-90 
                           transition duration-300 border border-blue-600`}
             >
