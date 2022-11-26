@@ -1,4 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
+
 import Cookies from 'js-cookie';
 import axios from '../services/axios-config';
 import { useEffect } from "react"
@@ -12,9 +13,10 @@ export default () => {
 	} )
 
 	useEffect( () => {
-		if ( !( Cookies.get( "access" ) ) ) {
-			axios.get( "refresh_url_here/", { withCredentials: true } ).then( ( res ) => {
-				Cookies.set( res.data.access )
+		if ( ( Cookies.get( "accessToken" ) ) ) {
+			axios.get( "refresh_url_here/" ).then( ( res ) => {
+				console.log( "REFRESHED TOKEN: ", Cookies.get( "accessToken" ) )
+
 			} )
 			/*what you do here, is try to have a
 			resource/view in your backend that has

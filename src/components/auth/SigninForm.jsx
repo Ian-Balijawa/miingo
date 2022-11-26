@@ -8,6 +8,7 @@ import {
   useColorModeValue as mode
 } from '@chakra-ui/react';
 
+import Cookies from 'js-cookie';
 import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
 import Input from '../Input';
@@ -33,25 +34,23 @@ export const SigninForm = () => {
         email,
         password
       });
+      if (res) {
+        console.log('RES HEADER: ', res.headers['set-cookie']);
+      }
+
       const data = res.data;
+      console.log('RES: ', data);
       dispatch(signin(data));
       setIsLoading(false);
-      console.log('RES: =>', res);
       const user = {
-        ...data.user,
-        token: data.accessToken
+        ...data.user
       };
+      delete user.accessToken;
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', JSON.stringify(user.token));
-
+      localStorage.setItem('token', JSON.stringify(data.accessToken));
       navigate('/feed');
     } catch (err) {
-      if (err.message === 'Network Error') {
-        setError('Network Error');
-      } else {
-        setError(err.response.data.message);
-        console.log(err.response.data.message);
-      }
+      setError(err.response.data.message);
       setIsLoading(false);
     } finally {
       setIsLoading(false);
@@ -59,37 +58,42 @@ export const SigninForm = () => {
   };
 
   return (
-    <Box minH="100vh" bg={{ md: mode('gray.100', 'inherit') }}>
+    <Box
+      minH="100vh"
+      css={{ backgroundImage: `url("/social.png")`, backgroundSize: 'cover' }}
+    >
       <Box
-        maxW="6xl"
+        maxW="md"
         mx="auto"
         py={{ base: '10', md: '20' }}
         px={{ base: '4', md: '10' }}
       >
         <Box w="full" maxW="xl" mx="auto">
           <Box
-            bg={{ md: mode('white', 'gray.700') }}
-            rounded={{ md: '2xl' }}
+            bg={mode('white', 'gray.700')}
             p={{ base: '4', md: '12' }}
             borderWidth={{ md: '1px' }}
             borderColor={mode('gray.200', 'transparent')}
             shadow={{ md: 'lg' }}
           >
             <Heading textAlign="center" mb="8" size="lg" fontWeight="extrabold">
-              Sign in to your account
+              Sign In
             </Heading>
             <form onSubmit={handleSignin}>
               <Stack spacing="4">
+                <label HtmlFor="email">Email</label>
                 <Input
                   type="email"
+                  id="email"
                   autoComplete="email"
                   placeholder="Email"
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-
+                <label HtmlFor="password">Password</label>
                 <Input
+                  id="password"
                   type="password"
                   placeholder="Password"
                   autoComplete="current-password"

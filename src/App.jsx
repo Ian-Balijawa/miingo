@@ -5,6 +5,8 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
 import LoadingScreen from './components/LoadingScreen';
+import axios from './services/axios-config';
+import { useEffect } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
 
 const Loadable = (Component) => (props) => {
@@ -20,9 +22,31 @@ const Signin = Loadable(lazy(() => import('./pages/Login')));
 const Signup = Loadable(lazy(() => import('./pages/Register')));
 const Home = Loadable(lazy(() => import('./pages/Home')));
 const Messages = Loadable(lazy(() => import('./pages/Messages')));
-const GroupFeeds = Loadable(lazy(()=> import("./pages/GroupFeeds")))
+const GroupFeeds = Loadable(lazy(() => import('./pages/GroupFeeds')));
 
 export default () => {
+  const [token] = useLocalStorage('token');
+  console.log('TOKEN: ============>', token);
+  useEffect(() => {
+    setInterval(() => {
+      axios
+        .get('/auth/refresh-token', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then((res) => {
+          const data = res.data;
+          console.log('RES: ', data);
+          const user = {
+            ...data.user,
+            token: data.accessToken
+          };
+          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('token', JSON.stringify(user.token));
+        });
+    }, 50 * 60000);
+  }, [token]);
   return (
     <>
       <Routes>
@@ -46,7 +70,7 @@ export default () => {
           }
         />
 
-<Route
+        <Route
           path="groups"
           element={
             <RequireAuth redirectTo="/login">
@@ -63,49 +87,4 @@ const RequireAuth = ({ children, redirectTo }) => {
   const [user, _] = useLocalStorage('user');
 
   return user ? children : <Navigate to={redirectTo} />;
-};
-
-const IsUserRedirect = ({ children, user, loggedInPath, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={() => {
-        if (!user) {
-          return children;
-        }
-
-        if (user) {
-          return <Navigate to={loggedInPath} />;
-        }
-
-        return null;
-      }}
-    />
-  );
-};
-
-const ProtectedRoute = ({ children, user, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={({ location }) => {
-        if (user) {
-          return children;
-        }
-
-        if (!user) {
-          return (
-            <Navigate
-              to={{
-                pathname: 'login',
-                state: { from: location }
-              }}
-            />
-          );
-        }
-
-        return null;
-      }}
-    />
-  );
 };

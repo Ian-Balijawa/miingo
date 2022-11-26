@@ -6,31 +6,35 @@ import React from 'react';
 import SideFeed from '../components/SideFeed';
 import Statuses from '../components/Statuses';
 import axios from '../services/axios-config';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { signout } from '../app/slices/authSlice';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+
+const { useState } = React;
 
 function Home() {
   const [logout, setLogout] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const showDropdown = () => {
     setLogout(!logout);
   };
-  const [user, _] = useLocalStorage('user');
 
-  const signOut = async (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.patch('/auth/logout', {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      });
-      navigate('/login');
-      localStorage.removeItem('token');
+      const res = await axios.patch('/auth/logout');
     } catch (error) {
-      console.log(error);
+      if (error) {
+        console.log(error);
+      }
     }
+
+    localStorage.removeItem('token');
+
+    navigate('/');
   };
 
   return (
@@ -46,7 +50,7 @@ function Home() {
               Profile{' '}
             </p>
             <p
-              onClick={signOut}
+              onClick={handleLogout}
               className="text-sm hover:bg-gray-200 cursor-pointer"
             >
               Logout
