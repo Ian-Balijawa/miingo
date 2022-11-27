@@ -42,6 +42,7 @@ export default function Messages() {
     navigate("/");
   };
 
+
   return (
     <div className="relative h-screen bg-miingo-gray overflow-hidden">
       {/* Header */}
@@ -83,7 +84,9 @@ export default function Messages() {
 
         {/* Messages */}
 
+
         <Chat name={name} src={src} online={online} />
+
 
         {/* Boards */}
 

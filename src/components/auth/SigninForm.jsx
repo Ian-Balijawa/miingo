@@ -29,28 +29,20 @@ export const SigninForm = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await axios.post('/auth/signin', {
+      const { data } = await axios.post('/auth/signin', {
         email,
         password
       });
-      const data = res.data;
+
+      console.log('RES: ', data);
       dispatch(signin(data));
       setIsLoading(false);
-      const user = {
-        ...data.user,
-        token: data.accessToken
-      };
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', JSON.stringify(user.token));
+
+      delete data.user.accessToken;
 
       navigate('/feed');
     } catch (err) {
-      if (err.message === 'Network Error') {
-        setError('Network Error');
-      } else {
-        setError(err.response.data.message);
-        console.log(err.response.data.message);
-      }
+      setError(err.response.data.message);
       setIsLoading(false);
     } finally {
       setIsLoading(false);
@@ -58,37 +50,42 @@ export const SigninForm = () => {
   };
 
   return (
-    <Box minH="100vh" bg={{ md: mode('gray.100', 'inherit') }}>
+    <Box
+      minH="100vh"
+      css={{ backgroundImage: `url("/social.png")`, backgroundSize: 'cover' }}
+    >
       <Box
-        maxW="6xl"
+        maxW="md"
         mx="auto"
         py={{ base: '10', md: '20' }}
         px={{ base: '4', md: '10' }}
       >
-        <Box w="full" maxW="xl" mx="auto">
+        <Box w="full" maxW="6xl" mx="auto">
           <Box
-            bg={{ md: mode('white', 'gray.700') }}
-            rounded={{ md: '2xl' }}
+            bg={mode('white', 'gray.700')}
             p={{ base: '4', md: '12' }}
             borderWidth={{ md: '1px' }}
             borderColor={mode('gray.200', 'transparent')}
             shadow={{ md: 'lg' }}
           >
             <Heading textAlign="center" mb="8" size="lg" fontWeight="extrabold">
-              Sign in to your account
+              Sign In
             </Heading>
             <form onSubmit={handleSignin}>
               <Stack spacing="4">
+                <label htmlFor="email">Email</label>
                 <Input
                   type="email"
+                  id="email"
                   autoComplete="email"
                   placeholder="Email"
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-
+                <label htmlFor="password">Password</label>
                 <Input
+                  id="password"
                   type="password"
                   placeholder="Password"
                   autoComplete="current-password"
