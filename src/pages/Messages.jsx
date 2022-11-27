@@ -9,8 +9,8 @@ export default function Messages() {
 
 //  const { name }= useParams();
  const location = useLocation();
- const { src , online , name } = location.state
-//  console.log(online);
+ //const { src , online , name } = location.state
+// console.log(online);
 
   return (
     <div className="h-screen bg-miingo-gray overflow-hidden">
@@ -27,7 +27,7 @@ export default function Messages() {
 
         {/* Messages */}
 
-        <Chat name = { name }  src = {src } online ={ online }/>
+        <Chat/>
 
         {/* Boards */}
 
