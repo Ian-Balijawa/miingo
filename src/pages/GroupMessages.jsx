@@ -1,6 +1,6 @@
+import React from "react";
 import { useLocation } from "react-router-dom";
 import Boards from "../components/Boards";
-import Chat from "../components/Chats/Chat";
 import Header from "../components/Header";
 import SideFeed from "../components/SideFeed";
 import { useNavigate } from "react-router-dom";
@@ -9,11 +9,12 @@ import axios from "../services/axios-config";
 import { HiOutlineLogout } from "react-icons/hi";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useState } from "react";
+import GroupChart from "../components/GroupChats/GroupChart";
 
-export default function Messages() {
-  //  const { name }= useParams();
+function GroupMessages() {
+
   const location = useLocation();
-  const { src, online, name } = location.state;
+  const { src, name , members } = location.state;
   //  console.log(online);
 
   const [logout, setLogout] = useState(false);
@@ -77,13 +78,14 @@ export default function Messages() {
       <Statuses />
 
       <main className="flex space-x-2 pr-3">
-        {/* chats */}
+        {/* Side_feed */}
 
         <SideFeed />
 
-        {/* Messages */}
+        {/* Group_Messages */}
 
-        <Chat name={name} src={src} online={online} />
+    
+        <GroupChart name={name} src={src} members= { members } />
 
         {/* Boards */}
 
@@ -92,3 +94,5 @@ export default function Messages() {
     </div>
   );
 }
+
+export default GroupMessages;

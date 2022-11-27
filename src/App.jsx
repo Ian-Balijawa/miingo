@@ -20,7 +20,8 @@ const Signin = Loadable(lazy(() => import('./pages/Login')));
 const Signup = Loadable(lazy(() => import('./pages/Register')));
 const Home = Loadable(lazy(() => import('./pages/Home')));
 const Messages = Loadable(lazy(() => import('./pages/Messages')));
-const GroupFeeds = Loadable(lazy(()=> import("./pages/GroupFeeds")))
+const GroupFeeds = Loadable(lazy(()=> import("./pages/GroupFeeds")));
+const GroupMessages = Loadable(lazy(() => import("./pages/GroupMessages")));
 
 export default () => {
   return (
@@ -46,6 +47,16 @@ export default () => {
           }
         />
 
+        <Route
+          path="group_messages"
+          element={
+            <RequireAuth redirectTo="/login">
+              <GroupMessages />
+            </RequireAuth>
+          }
+        />
+
+
        <Route
           path="groups"
           element={
@@ -55,6 +66,8 @@ export default () => {
           }
         />
       </Routes>
+
+      
     </>
   );
 };

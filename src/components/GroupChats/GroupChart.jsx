@@ -1,13 +1,13 @@
 import React from "react";
-import Charts from "./Chats";
+import Charts from "./Charts";
 
-export default function Chat({ src, online, name }) {
+export default function GroupChart({ src, name, members }) {
   return (
     <>
       {/* Header */}
-      <div className="relative h-screen flex flex-col space-y-2 flex-grow mx-2   mt-2 bg-miingo-gray">
-      
-          <div className=" flex  items-center p-3 mb-4 shadow-md rounded-md  ">
+      <div className=" relative h-screen  flex flex-col space-y-2  flex-grow mx-2  mt-2 bg-miingo-gray">
+        <div className="w-full">
+          <div className=" flex  items-center p-3 mb-10 shadow-md ">
             <img
               className="object-cover w-10 h-10 rounded-full"
               src={src}
@@ -18,28 +18,24 @@ export default function Chat({ src, online, name }) {
                 {name} <br />{" "}
               </h1>
               <p className="flex items-center space-x-2">
-                <span
-                  className={`w-3 h-3  rounded-full left-10 ml-3 ${
-                    online ? "bg-green-400" : "bg-red-400"
-                  }`}
-                ></span>
                 <small className=" ml-2 text-gray-900">
-                  {online ? "Online" : "offline"} <br />{" "}
+                  {members} {members > 1 ? "members" : "member"} <br />{" "}
                 </small>
               </p>
             </div>
           </div>
 
-          {/* Chart messages */}
+          {/* Group Chart messages */}
+
           <Charts src={src} />
 
-          <div className=" bg-miingo-gray sticky bottom-0 z-50 flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
+          <div className="bg-miingo-gray sticky bottom-0 z-50 flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
             {/* left */}
             <div className="flex-grow">
               <input
                 type="text"
                 placeholder="Type a message"
-                className="border-0 px-3 border-none  py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white  rounded-full text-sm shadow-xl outline-none focus:outline-none  w-full pl-10"
+                className="border-0 px-3 border-none  py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white  rounded-full text-sm shadow outline-none focus:outline-none  w-full pl-10"
                 required
               />
             </div>
@@ -92,7 +88,7 @@ export default function Chat({ src, online, name }) {
               </button>
             </div>
           </div>
-        
+        </div>
       </div>
     </>
   );
