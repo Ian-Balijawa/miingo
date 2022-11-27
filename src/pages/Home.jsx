@@ -18,7 +18,6 @@ function Home() {
   const [logout, setLogout] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [user] = useLocalStorage('user');
   const [userName] = useState(user.name.split(' '));
 
@@ -36,9 +35,7 @@ function Home() {
         console.log(error);
       }
     }
-
     localStorage.removeItem('token');
-
     navigate('/');
   };
 
