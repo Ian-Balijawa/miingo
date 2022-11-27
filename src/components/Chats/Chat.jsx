@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Chat() {
+export default function Chat({ src , online , name } ) {
   return (
     <>
       {/* Header */}
@@ -13,17 +13,17 @@ export default function Chat() {
                   <div className=" flex  items-center p-3 mb-10 shadow-md ">
                     <img
                       className="object-cover w-10 h-10 rounded-full"
-                      src="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg"
+                      src = { src }
                       alt="username"
                     />
                     <div>
                       <h1 className=" ml-2 font-bold text-gray-600">
-                        Claudia <br />{" "}
+                        { name } <br />{" "}
                       </h1>
                       <p className="flex items-center space-x-2">
-                        <span className="w-3 h-3 bg-green-600 rounded-full left-10 ml-3"></span>
+                        <span className={`w-3 h-3  rounded-full left-10 ml-3 ${online ? "bg-green-400": "bg-red-400"}`}></span>
                         <small className=" ml-2 text-gray-900">
-                          Online <br />{" "}
+                          {online ? "Online": "offline"} <br />{" "}
                         </small>
                       </p>
                     </div>

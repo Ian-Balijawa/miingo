@@ -70,7 +70,7 @@ export default () => {
           }
         />
 
-        <Route
+       <Route
           path="groups"
           element={
             <RequireAuth redirectTo="/login">
