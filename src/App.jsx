@@ -4,8 +4,14 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
+import JwtDecode from 'jwt-decode';
 import LoadingScreen from './components/LoadingScreen';
+import api from './services/axios-config';
+import { setAccessToken } from './app/slices/authSlice';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
+import { useLocation } from 'react-router-dom';
 
 const Loadable = (Component) => (props) => {
   return (
@@ -20,10 +26,45 @@ const Signin = Loadable(lazy(() => import('./pages/Login')));
 const Signup = Loadable(lazy(() => import('./pages/Register')));
 const Home = Loadable(lazy(() => import('./pages/Home')));
 const Messages = Loadable(lazy(() => import('./pages/Messages')));
-const GroupFeeds = Loadable(lazy(() => import("./pages/GroupFeeds")))
-const Profile = Loadable(lazy(() => import("./pages/ProfilePage")))
+const GroupFeeds = Loadable(lazy(() => import('./pages/GroupFeeds')));
+const Profile = Loadable(lazy(() => import('./pages/ProfilePage')));
 
 export default () => {
+  const [accessToken] = useLocalStorage('accessToken');
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!accessToken) return;
+    const id = setInterval(() => {
+      if (
+        location.pathname !== 'login' ||
+        location.pathname !== '/register' ||
+        location.pathname !== '/'
+      ) {
+        api
+          .get('/auth/refresh-token', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          })
+          .then((res) => {
+            const data = res.data;
+            console.log('RES: ', data);
+
+            dispatch(setAccessToken(data.accessToken));
+            localStorage.setItem('user', JSON.stringify(data));
+            localStorage.setItem(
+              'accessToken',
+              JSON.stringify(data.accessToken)
+            );
+          });
+      }
+    }, 50 * 60 * 1000);
+
+    return () => clearInterval(id);
+  }, [accessToken, dispatch, location.pathname]);
+
   return (
     <>
       <Routes>
@@ -31,6 +72,14 @@ export default () => {
         <Route path="login" element={<Signin />} />
         <Route path="register" element={<Signup />} />
 
+        <Route
+          path="profile"
+          element={
+            <RequireAuth redirectTo="/login">
+              <Profile />
+            </RequireAuth>
+          }
+        />
         <Route
           path="feed"
           element={
@@ -74,49 +123,4 @@ const RequireAuth = ({ children, redirectTo }) => {
   const [user, _] = useLocalStorage('user');
 
   return user ? children : <Navigate to={redirectTo} />;
-};
-
-const IsUserRedirect = ({ children, user, loggedInPath, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={() => {
-        if (!user) {
-          return children;
-        }
-
-        if (user) {
-          return <Navigate to={loggedInPath} />;
-        }
-
-        return null;
-      }}
-    />
-  );
-};
-
-const ProtectedRoute = ({ children, user, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={({ location }) => {
-        if (user) {
-          return children;
-        }
-
-        if (!user) {
-          return (
-            <Navigate
-              to={{
-                pathname: 'login',
-                state: { from: location }
-              }}
-            />
-          );
-        }
-
-        return null;
-      }}
-    />
-  );
 };

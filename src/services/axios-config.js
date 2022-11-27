@@ -1,12 +1,10 @@
 import * as axios from "axios";
-const instance = axios.create( {
-	baseURL: process.env.REACT_APP_BASE_URL || "https://api1.miingoapp.com",
-} );
 
-instance.defaults.headers.common[
-	"Authorization"
-] = `Bearer ${localStorage.getItem( "token" )}`;
+const instance = axios.create( {
+	baseURL: "https://api1.miingoapp.com",
+} );
 
 instance.defaults.headers.post["Content-Type"] = "application/json";
 
-export default instance;
+export default instance
+
