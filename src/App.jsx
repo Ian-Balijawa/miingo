@@ -4,10 +4,14 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
+import JwtDecode from 'jwt-decode';
 import LoadingScreen from './components/LoadingScreen';
-import axios from './services/axios-config';
+import api from './services/axios-config';
+import { setAccessToken } from './app/slices/authSlice';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
+import { useLocation } from 'react-router-dom';
 
 const Loadable = (Component) => (props) => {
   return (
@@ -23,36 +27,61 @@ const Signup = Loadable(lazy(() => import('./pages/Register')));
 const Home = Loadable(lazy(() => import('./pages/Home')));
 const Messages = Loadable(lazy(() => import('./pages/Messages')));
 const GroupFeeds = Loadable(lazy(() => import('./pages/GroupFeeds')));
+const Profile = Loadable(lazy(() => import('./pages/ProfilePage')));
 
 export default () => {
-  const [token] = useLocalStorage('token');
-  console.log('TOKEN: ============>', token);
+  const [accessToken] = useLocalStorage('accessToken');
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const token = JwtDecode(accessToken);
+  console.log('token: ', token);
+
   useEffect(() => {
-    setInterval(() => {
-      axios
-        .get('/auth/refresh-token', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-        .then((res) => {
-          const data = res.data;
-          console.log('RES: ', data);
-          const user = {
-            ...data.user,
-            token: data.accessToken
-          };
-          localStorage.setItem('user', JSON.stringify(user));
-          localStorage.setItem('token', JSON.stringify(user.token));
-        });
-    }, 50 * 60000);
-  }, [token]);
+    if (!accessToken) return;
+    const id = setInterval(() => {
+      if (
+        location.pathname !== 'login' ||
+        location.pathname !== '/register' ||
+        location.pathname !== '/'
+      ) {
+        api
+          .get('/auth/refresh-token', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          })
+          .then((res) => {
+            const data = res.data;
+            console.log('RES: ', data);
+
+            dispatch(setAccessToken(data.accessToken));
+            localStorage.setItem('user', JSON.stringify(data));
+            localStorage.setItem(
+              'accessToken',
+              JSON.stringify(data.accessToken)
+            );
+          });
+      }
+    }, 50 * 60 * 1000);
+
+    return () => clearInterval(id);
+  }, [accessToken, dispatch, location.pathname]);
+
   return (
     <>
       <Routes>
         <Route path="/" element={<Signin />} />
         <Route path="login" element={<Signin />} />
         <Route path="register" element={<Signup />} />
+
+        <Route
+          path="profile"
+          element={
+            <RequireAuth redirectTo="/login">
+              <Profile />
+            </RequireAuth>
+          }
+        />
         <Route
           path="feed"
           element={
@@ -66,6 +95,15 @@ export default () => {
           element={
             <RequireAuth redirectTo="/login">
               <Messages />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path="profile"
+          element={
+            <RequireAuth redirectTo="/login">
+              <Profile />
             </RequireAuth>
           }
         />

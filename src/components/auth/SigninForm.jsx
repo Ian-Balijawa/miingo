@@ -29,24 +29,17 @@ export const SigninForm = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await axios.post('/auth/signin', {
+      const { data } = await axios.post('/auth/signin', {
         email,
         password
       });
-      if (res) {
-        console.log('RES HEADER: ', res.headers['set-cookie']);
-      }
 
-      const data = res.data;
       console.log('RES: ', data);
       dispatch(signin(data));
       setIsLoading(false);
-      const user = {
-        ...data.user
-      };
-      delete user.accessToken;
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', JSON.stringify(data.accessToken));
+
+      delete data.user.accessToken;
+
       navigate('/feed');
     } catch (err) {
       setError(err.response.data.message);
@@ -80,7 +73,7 @@ export const SigninForm = () => {
             </Heading>
             <form onSubmit={handleSignin}>
               <Stack spacing="4">
-                <label HtmlFor="email">Email</label>
+                <label htmlFor="email">Email</label>
                 <Input
                   type="email"
                   id="email"
@@ -90,7 +83,7 @@ export const SigninForm = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <label HtmlFor="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <Input
                   id="password"
                   type="password"

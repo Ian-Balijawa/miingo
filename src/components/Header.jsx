@@ -1,11 +1,11 @@
-import { SearchIcon, HomeIcon } from "@heroicons/react/outline";
-import { useState } from "react";
-import useLocalStorage from '../hooks/useLocalStorage'
+import { HomeIcon, SearchIcon } from '@heroicons/react/outline';
 
-function Header({onPress}) {
- const [user , ] = useLocalStorage("user");
- const [userName] = useState(user.name.split(" "));
- 
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useState } from 'react';
+
+function Header({ onPress }) {
+  const [user, _] = useLocalStorage('user');
+
   return (
     <div className=" bg-white sticky top-0 z-50  flex justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
       {/* left */}
@@ -50,7 +50,7 @@ function Header({onPress}) {
       <div className="flex justify-around items-center sm:space-x-2 md:space-x-6 w-56 md:w-80">
         <div className="hidden md:inline-flex items-center relative ">
           <span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
-            {" "}
+            {' '}
             8
           </span>
           <svg
@@ -92,9 +92,7 @@ function Header({onPress}) {
         </div>
 
         <div className=" flex items-center space-x-2">
-          <div 
-           onClick={ onPress }
-          className=" relative w-14 h-14 cursor-pointer">
+          <div onClick={onPress} className=" relative w-14 h-14 cursor-pointer">
             <img
               src="https://res.cloudinary.com/itgenius/image/upload/v1668007542/pexels-mahdi-chaghari-12463279_cwiw1n.jpg"
               alt=""
@@ -104,7 +102,7 @@ function Header({onPress}) {
           </div>
 
           <div className="hidden md:inline-flex md:flex-col">
-            <p className="text-gray-700 "> {userName[0]} </p>
+            <p className="text-gray-700 "> {user.name} </p>
             <h3 className="text-sm text-gray-600">Active Now</h3>
           </div>
         </div>

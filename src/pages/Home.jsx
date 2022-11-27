@@ -3,6 +3,7 @@ import BottomNav from '../components/BottomNav';
 import Feed from '../components/Feed';
 import Header from '../components/Header';
 import { HiOutlineLogout } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import SideFeed from '../components/SideFeed';
 import Statuses from '../components/Statuses';
@@ -19,7 +20,6 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user] = useLocalStorage('user');
-  const [userName] = useState(user.name.split(' '));
 
   const showDropdown = () => {
     setLogout(!logout);
@@ -29,13 +29,12 @@ function Home() {
     e.preventDefault();
 
     try {
-      const res = await axios.patch('/auth/logout');
+      await axios.patch('/auth/logout');
+      dispatch(signout());
     } catch (error) {
-      if (error) {
-        console.log(error);
-      }
+      console.error('ERROR: ', error);
     }
-    localStorage.removeItem('token');
+    dispatch(signout());
     navigate('/');
   };
 
@@ -52,7 +51,7 @@ function Home() {
             </div>
 
             <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 sm:hidden">
-              {userName[0]}
+              {user.name}
             </p>
 
             <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 ">

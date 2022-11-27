@@ -29,27 +29,27 @@ export const SignupForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log('DATA: ', {
-    email,
-    name,
-    password,
-    gender: selectedGender,
-    dateOfBirth
-  });
-
   const handleSignup = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const { data } = await axios.post('/auth/signup', {
+      const {
+        data: { user }
+      } = await axios.post('/auth/signup', {
         name,
         email,
         password,
         gender: selectedGender
       });
-      dispatch(register(data));
+      const res = await axios.post('/auth/signin', {
+        email: user.email,
+        password: user.password
+      });
+      const accessToken = res.data.accessToken;
+      console.log('TOK: ', accessToken);
+      console.log('USER: ', user);
+      dispatch(register({ user, accessToken }));
       setIsLoading(false);
-      console.log('RES: ', data);
       navigate('/feed');
     } catch (err) {
       setError(err.response.data.message);
@@ -82,7 +82,7 @@ export const SignupForm = () => {
             </Heading>
             <form onSubmit={handleSignup}>
               <Stack spacing="4">
-                <label HtmlFor="name">Name</label>
+                <label htmlFor="name">Name</label>
                 <Input
                   type="text"
                   autoComplete="name"
@@ -92,7 +92,7 @@ export const SignupForm = () => {
                   onChange={({ target }) => setName(target.value)}
                   placeholder="Name"
                 />
-                <label HtmlFor="email">Email</label>
+                <label htmlFor="email">Email</label>
                 <Input
                   type="email"
                   id="email"
@@ -102,7 +102,7 @@ export const SignupForm = () => {
                   value={email}
                   onChange={({ target }) => setEmail(target.value)}
                 />
-                <label HtmlFor="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <Input
                   type="password"
                   id="password"
@@ -117,17 +117,17 @@ export const SignupForm = () => {
                     {error}
                   </Text>
                 )}
-                <label HtmlFor="gender">Gender</label>
+                <label htmlFor="gender">Gender</label>
                 <Select
                   id="gender"
                   placeholder="Select Gender"
-                  onChange={({ target: { value } }) => setSelectedGender(value)}
+                  onChange={(e) => setSelectedGender(e.target.value)}
                   value={selectedGender}
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </Select>
-                <label HtmlFor="dateOfBirth">Date of Birth</label>
+                <label htmlFor="dateOfBirth">Date of Birth</label>
                 <Input
                   type="date"
                   label="Date of Birth"
