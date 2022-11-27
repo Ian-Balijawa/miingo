@@ -1,8 +1,10 @@
 import { SearchIcon, HomeIcon } from "@heroicons/react/outline";
+import { useState } from "react";
 import useLocalStorage from '../hooks/useLocalStorage'
 
 function Header({onPress}) {
  const [user , ] = useLocalStorage("user");
+ const [userName] = useState(user.name.split(" "));
  
   return (
     <div className=" bg-white sticky top-0 z-50  flex justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
@@ -102,7 +104,7 @@ function Header({onPress}) {
           </div>
 
           <div className="hidden md:inline-flex md:flex-col">
-            <p className="text-gray-700 "> {user.name} </p>
+            <p className="text-gray-700 "> {userName[0]} </p>
             <h3 className="text-sm text-gray-600">Active Now</h3>
           </div>
         </div>
