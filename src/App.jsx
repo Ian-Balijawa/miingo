@@ -33,8 +33,6 @@ export default () => {
   const [accessToken] = useLocalStorage('accessToken');
   const dispatch = useDispatch();
   const location = useLocation();
-  const token = JwtDecode(accessToken);
-  console.log('token: ', token);
 
   useEffect(() => {
     if (!accessToken) return;
