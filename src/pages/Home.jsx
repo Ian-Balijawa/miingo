@@ -61,7 +61,7 @@ function Home() {
               {userName[0]}
             </p>
 
-            <Link  to="/profile" className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">
+            <Link  to={`/profile/${user._id}`} className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">
               {" "}
               Profile{" "}
             </Link>

@@ -30,7 +30,6 @@ export default () => {
         <Route path="/" element={<Signin />} />
         <Route path="login" element={<Signin />} />
         <Route path="register" element={<Signup />} />
-        <Route path="profile" element={<Profile />} />
 
         <Route
           path="feed"
@@ -50,7 +49,7 @@ export default () => {
         />
 
         <Route
-          path="profile"
+          path="/profile/:id"
           element={
             <RequireAuth redirectTo="/login">
               <Profile />
