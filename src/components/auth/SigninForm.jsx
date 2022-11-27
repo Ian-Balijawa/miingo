@@ -8,7 +8,6 @@ import {
   useColorModeValue as mode
 } from '@chakra-ui/react';
 
-import Cookies from 'js-cookie';
 import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
 import Input from '../Input';
