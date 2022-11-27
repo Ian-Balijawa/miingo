@@ -1,33 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const authSlice = createSlice({
+const authSlice = createSlice( {
 	name: "auth",
-	initialState: { user: null, token: null },
+	initialState: { user: null, accessToken: null },
 	reducers: {
-		signin: (state, action) => {
-			const { user, token } = action.payload;
+		signin: ( state, action ) => {
+			const { user, accessToken } = action.payload;
 			state.user = { ...user };
-			state.token = token;
+			state.accessToken = accessToken;
+			localStorage.setItem( 'user', JSON.stringify( user ) );
+			localStorage.setItem( 'accessToken', JSON.stringify( accessToken ) );
 		},
-		register: (state, action) => {
-			const { user, token } = action.payload;
+		register: ( state, action ) => {
+			const { user, accessToken } = action.payload;
 			state.user = { ...user };
-			state.token = token;
+			state.accessToken = accessToken;
+			localStorage.setItem( 'user', JSON.stringify( user ) );
+			localStorage.setItem( 'accessToken', JSON.stringify( accessToken ) );
 		},
-		signout: (state, action) => {
+		setAccessToken: ( state, action ) => {
+			state.accessToken = action.payload
+		},
+		signout: ( state, action ) => {
 			state.user = null;
-			state.token = null;
+			state.accessToken = null;
+			localStorage.clear()
 		},
-		userProfile:(state,action)=>{
-			const { user, token } = action.payload;
-			state.user = { ...user };
-			state.token = token;
-		}
 	},
-});
 
-export const { signin, signout, register } = authSlice.actions;
-export const selectCurrentUser = (state) => state.auth.user;
-export const selectCurrentToken = (state) => state.auth.token;
+} );
+
+export const { signin, signout, register, setAccessToken } = authSlice.actions;
+export const selectCurrentUser = ( state ) => state.auth.user;
+export const selectCurrentToken = ( state ) => state.auth.accessToken;
 
 export default authSlice.reducer;

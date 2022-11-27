@@ -1,28 +1,25 @@
-import React from "react";
-import Header from "../components/Header";
-import SideFeed from "../components/SideFeed";
-import Feed from "../components/Feed";
-import Statuses from "../components/Statuses";
-import Boards from "../components/Boards";
-import BottomNav from "../components/BottomNav";
-import { useDispatch } from "react-redux";
-import { signout } from "../app/slices/authSlice";
-import { useNavigate } from "react-router-dom";
-import axios from "../services/axios-config";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { HiOutlineLogout } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import Boards from '../components/Boards';
+import BottomNav from '../components/BottomNav';
+import Feed from '../components/Feed';
+import Header from '../components/Header';
+import { HiOutlineLogout } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import SideFeed from '../components/SideFeed';
+import Statuses from '../components/Statuses';
+import axios from '../services/axios-config';
+import { signout } from '../app/slices/authSlice';
+import { useDispatch } from 'react-redux';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useNavigate } from 'react-router-dom';
 
 const { useState } = React;
 
 function Home() {
-  
   const [logout, setLogout] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [user] = useLocalStorage("user");
-  const [userName] = useState(user.name.split(" "));
+  const [user] = useLocalStorage('user');
 
   const showDropdown = () => {
     setLogout(!logout);
@@ -32,16 +29,13 @@ function Home() {
     e.preventDefault();
 
     try {
-      const res = await axios.patch("/auth/logout");
+      await axios.patch('/auth/logout');
+      dispatch(signout());
     } catch (error) {
-      if (error) {
-        console.log(error);
-      }
+      console.error('ERROR: ', error);
     }
-
-    localStorage.removeItem("token");
-
-    navigate("/");
+    dispatch(signout());
+    navigate('/');
   };
 
   return (
@@ -52,19 +46,18 @@ function Home() {
 
         {logout && (
           <div className="absolute top-16 right-14 z-50 bg-white shadow-xl rounded-lg h-auto w-28 p-2">
-            
-             <div className="py-1">
-                 <div className="w-4 h-4 right-3 md:left-3 absolute mt-1 bg-white -top-3  rotate-45"></div>
-             </div>
+            <div className="py-1">
+              <div className="w-4 h-4 right-3 md:left-3 absolute mt-1 bg-white -top-3  rotate-45"></div>
+            </div>
 
             <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 sm:hidden">
-              {userName[0]}
+              {user.name}
             </p>
 
-            <Link  to="/profile" className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">
-              {" "}
-              Profile{" "}
-            </Link>
+            <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 ">
+              {' '}
+              Profile{' '}
+            </p>
             <p
               onClick={handleLogout}
               className="text-sm hover:bg-gray-200 cursor-pointer flex items-center space-x-3"
