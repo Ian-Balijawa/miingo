@@ -30,12 +30,6 @@ export const SignupForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log('DATA: ', {
-    email,
-    name,
-    password,
-    gender: selectedGender
-  });
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -47,6 +41,7 @@ export const SignupForm = () => {
         password,
         gender: selectedGender
       });
+      console.log(data)
       dispatch(register(data));
       setIsLoading(false);
       console.log('RES: ', data);
@@ -56,6 +51,7 @@ export const SignupForm = () => {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <Box minH="100vh" bg={{ md: mode('gray.100', 'inherit') }}>
@@ -110,7 +106,7 @@ export const SignupForm = () => {
                 )}
                 <Select
                   placeholder="Select Gender"
-                  onChange={setSelectedGender}
+                  onChange={(e) => setSelectedGender(e.target.value)}
                   value={selectedGender}
                 >
                   <option value="male">Male</option>

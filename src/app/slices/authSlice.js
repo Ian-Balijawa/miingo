@@ -18,6 +18,11 @@ const authSlice = createSlice({
 			state.user = null;
 			state.token = null;
 		},
+		userProfile:(state,action)=>{
+			const { user, token } = action.payload;
+			state.user = { ...user };
+			state.token = token;
+		}
 	},
 });
 

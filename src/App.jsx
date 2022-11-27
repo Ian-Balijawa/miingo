@@ -20,7 +20,8 @@ const Signin = Loadable(lazy(() => import('./pages/Login')));
 const Signup = Loadable(lazy(() => import('./pages/Register')));
 const Home = Loadable(lazy(() => import('./pages/Home')));
 const Messages = Loadable(lazy(() => import('./pages/Messages')));
-const GroupFeeds = Loadable(lazy(()=> import("./pages/GroupFeeds")))
+const GroupFeeds = Loadable(lazy(() => import("./pages/GroupFeeds")))
+const Profile = Loadable(lazy(() => import("./pages/ProfilePage")))
 
 export default () => {
   return (
@@ -29,6 +30,8 @@ export default () => {
         <Route path="/" element={<Signin />} />
         <Route path="login" element={<Signin />} />
         <Route path="register" element={<Signup />} />
+        <Route path="profile" element={<Profile />} />
+
         <Route
           path="feed"
           element={
@@ -46,7 +49,16 @@ export default () => {
           }
         />
 
-       <Route
+        <Route
+          path="profile"
+          element={
+            <RequireAuth redirectTo="/login">
+              <Profile />
+            </RequireAuth>
+          }
+        />
+
+        <Route
           path="groups"
           element={
             <RequireAuth redirectTo="/login">

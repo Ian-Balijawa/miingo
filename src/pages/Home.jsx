@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../services/axios-config";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { HiOutlineLogout } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const { useState } = React;
 
@@ -60,10 +61,10 @@ function Home() {
               {userName[0]}
             </p>
 
-            <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 ">
+            <Link  to="/profile" className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">
               {" "}
               Profile{" "}
-            </p>
+            </Link>
             <p
               onClick={handleLogout}
               className="text-sm hover:bg-gray-200 cursor-pointer flex items-center space-x-3"
