@@ -26,8 +26,10 @@ const Signin = Loadable(lazy(() => import('./pages/Login')));
 const Signup = Loadable(lazy(() => import('./pages/Register')));
 const Home = Loadable(lazy(() => import('./pages/Home')));
 const Messages = Loadable(lazy(() => import('./pages/Messages')));
-const GroupFeeds = Loadable(lazy(() => import('./pages/GroupFeeds')));
+const GroupFeeds = Loadable(lazy(()=> import("./pages/GroupFeeds")));
+const GroupMessages = Loadable(lazy(() => import("./pages/GroupMessages")));
 const Profile = Loadable(lazy(() => import('./pages/ProfilePage')));
+
 
 export default () => {
   const [accessToken] = useLocalStorage('accessToken');
@@ -98,14 +100,25 @@ export default () => {
         />
 
         <Route
-          path="/profile/:id"
+          path="group_messages"
           element={
             <RequireAuth redirectTo="/login">
-              <Profile />
+              <GroupMessages />
+
             </RequireAuth>
           }
         />
 
+         <Route
+          path="/profile/:id"
+          element={
+            <RequireAuth redirectTo="/login">
+                <Profile />
+            </RequireAuth>
+          }
+        />
+
+      
         <Route
           path="groups"
           element={
@@ -114,7 +127,10 @@ export default () => {
             </RequireAuth>
           }
         />
+        
       </Routes>
+
+      
     </>
   );
 };
