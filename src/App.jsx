@@ -98,7 +98,7 @@ export default () => {
         />
 
         <Route
-          path="profile"
+          path="/profile/:id"
           element={
             <RequireAuth redirectTo="/login">
               <Profile />

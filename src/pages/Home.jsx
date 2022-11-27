@@ -54,10 +54,10 @@ function Home() {
               {user.name}
             </p>
 
-            <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 ">
-              {' '}
-              Profile{' '}
-            </p>
+            <Link  to={`/profile/${user._id}`} className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">
+              {" "}
+              Profile{" "}
+            </Link>
             <p
               onClick={handleLogout}
               className="text-sm hover:bg-gray-200 cursor-pointer flex items-center space-x-3"
