@@ -68,7 +68,7 @@ export const SigninForm = () => {
         py={{ base: '10', md: '20' }}
         px={{ base: '4', md: '10' }}
       >
-        <Box w="full" maxW="xl" mx="auto">
+        <Box w="full" maxW="6xl" mx="auto">
           <Box
             bg={mode('white', 'gray.700')}
             p={{ base: '4', md: '12' }}
