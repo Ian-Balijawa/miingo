@@ -48,7 +48,7 @@ const newsfeeds = [
 
 function NewsFeeds() {
   return (
-    <div className=" relative flex flex-col shadow-2xl bg-white rounded-md pb-2 h-auto overflow-y-auto scrollbar-hide ">
+    <div className=" relative flex flex-col shadow-lg bg-white rounded-md pb-2 h-auto overflow-y-auto scrollbar-hide ">
       <div className=" bg-white  sticky top-0 z-50 flex space-x-4 items-center text-gray-700 mb-2">
         <h2 className="  text-lg text-gray-700 font-medium pl-10 py-4 font-sans">
           News Feeds

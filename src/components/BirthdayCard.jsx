@@ -8,7 +8,7 @@ import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 const BirthdayCard = () => {
  
   return (
-    <div className="flex flex-col space-y-4 bg-gradient-to-r from-miingo-pinksh to-miingo-pink rounded-lg bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60 border rounded-lg shadow-xl p-4 font-serif relative overflow-hidden">
+    <div className="flex flex-col space-y-4 bg-gradient-to-r from-miingo-pinksh to-miingo-pink  bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60 border rounded-lg shadow-lg p-4 font-serif relative overflow-hidden">
       {/* upper part */}
       <div className="flex justify-evenly">
         <div className="text-white">

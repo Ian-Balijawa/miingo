@@ -8,11 +8,15 @@ import React from "react";
 
 function Post({ name, message, email, timestamp, postImage }) {
   return (
-    <div className="flex flex-col bg-white shadow-xl my-3">
+    <div className="flex flex-col bg-white shadow-lg my-3">
       <div className="p-5 bg-white mt-5  shadow-sm">
         <div className="flex items-center justify-between space-x-2">
-          <div className="flex  items-center space-x-2">
-            <img className="rounded-full" src="/ml.jpg" alt="" />
+          <div className="flex items-center space-x-2">
+
+            <div className=" w-6 h-6 md:w-8 md:h-8">
+              <img className=" w-full h-full object-cover rounded-full" src="/images/ml.jpg" alt="" />
+            </div>
+
             <div>
               <p className="font-semibold  text-gray-500">{name}</p>
               <p className="text-xs text-gray-400">{timestamp}</p>
@@ -31,6 +35,7 @@ function Post({ name, message, email, timestamp, postImage }) {
         </div>
 
         <p className="pt-4 text-gray-600"> {message} </p>
+
       </div>
 
       {postImage && (

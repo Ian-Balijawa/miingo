@@ -54,7 +54,7 @@ const contacts = [
 
 function Widgets() {
     return (
-        <div className=" relative hidden lg:flex flex-col pb-2 mt-5 shadow-xl bg-white rounded-md  h-screen overflow-y-auto scrollbar-hide ">
+        <div className=" relative hidden lg:flex flex-col pb-2 mt-5 shadow-lg bg-white rounded-md  h-screen overflow-y-auto scrollbar-hide ">
             <div className=" bg-white  sticky top-0 z-50 flex space-x-4 items-center text-gray-700 mb-5">
                 <h2 className="  text-lg text-gray-700 font-medium pl-10 py-4 font-sans">
                     Chats
