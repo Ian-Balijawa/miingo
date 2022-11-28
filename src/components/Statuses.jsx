@@ -94,7 +94,8 @@ function Statuses() {
   };
 
   return (
-    <div className=" flex  items-center justify-around space-x-2  w-screen bg-miingo-gray px-3 py-1 mx-2 ">
+    <div className=" flex  items-center justify-between space-x-2  w-screen bg-miingo-gray px-3 py-1 mx-2 ">
+     
       <div className=" flex items-center justify-center  w-20 md:w-56 bg-miingo-gray">
         <div className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-regal-orange shadow-lg  flex items-center justify-center  hover:shadow-xl active:scale-90 transition duration-300">
           <svg
@@ -116,10 +117,10 @@ function Statuses() {
 
       
       
-      <div className="relative  flex items-center justify-around space-x-2 w-72 md:w-[870px] h-24 p-2 ">
+      <div className="relative  flex  md:flex-grow items-center justify-around space-x-2 w-60 md:w-[870px] h-24 p-2 ">
         <div
           onClick={slideLeft2}
-          className="bg-miingo-cyan text-gray-600 rounded-full p-1 cursor-pointer"
+          className="bg-miingo-cyan text-gray-600 rounded-full p-1 cursor-pointer hidden md:inline-flex"
         >
           <HiChevronLeft className="h-4 w-4" />
         </div>
@@ -136,7 +137,7 @@ function Statuses() {
 
         <div
           onClick={slideRight2}
-          className="bg-miingo-cyan text-gray-600 rounded-full p-1 cursor-pointer "
+          className="bg-miingo-cyan text-gray-600 rounded-full p-1 cursor-pointer hidden md:inline-flex "
         >
           <HiChevronRight className="h-4 w-4" />
         </div>
