@@ -103,7 +103,7 @@ function Header({ onPress }) {
 
           <div className="hidden md:inline-flex md:flex-col">
 
-            <p className="text-gray-700 "> { userName[0] } </p>
+            <p className="text-gray-700 "> { user[0] } </p>
 
             <h3 className="text-sm text-gray-600">Active Now</h3>
           </div>

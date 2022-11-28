@@ -27,7 +27,7 @@ export default function Profile({ user }) {
 
 
     const id = user._id
-    console.log(id)
+    console.log(user)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,7 +57,7 @@ export default function Profile({ user }) {
 
     return (
         <>
-            <div class="p-16 overflow-y-auto scrollbar-hide flex-grow   h-screen  pb-56 ">
+            <div class="p-25 md:p-16 overflow-y-auto scrollbar-hide flex-grow   h-screen  pb-56 ">
                 <div class="p-1 md:p-8  bg-white shadow mt-20">
                     <div class="grid grid-cols-1 md:grid-cols-3">
                         <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
@@ -82,7 +82,7 @@ export default function Profile({ user }) {
                             </div>
                         </div>
 
-                        <div class="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
+                        <div class="space-x-4 flex justify-center md:justify-between mt-20 md:mt-0 md:justify-center">
                             <button
                                 onClick={() => setShowModal(true)}
                                 data-bs-toggle="modal"
@@ -120,37 +120,37 @@ export default function Profile({ user }) {
             {showModal ? (
                 <>
                     <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                        <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                        <div className="relative w-auto my-3 mx-auto max-w-2xl">
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                                <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                                    <h3 className="text-3xl font=semibold">General Information</h3>
+                                <div className="flex items-center justify-center p-1 border-b border-solid border-gray-300 rounded-t ">
+                                    <h3 className="text-xl text-gray-700 font=semibold">General Information</h3>
                                 </div>
-                                <div className="relative p-6 flex-auto">
+                                <div className="relative p-1 flex-auto">
                                     <form
                                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 rounded px-8 pt-6 pb-8 w-full">
-                                        <Stack spacing="4">
-                                            <label className="block text-black text-sm font-bold mb-1">
+                                        <Stack spacing="2">
+                                            <label className="block text-gray-700 text-sm font-bold mb-1">
                                                 Intro
                                             </label>
                                             <Input
                                                 value={intro}
                                                 onChange={({ target }) => setIntro(target.value)}
                                             />
-                                            <label className="block text-black text-sm font-bold mb-1">
+                                            <label className="block text-gray-700 text-sm font-bold mb-1">
                                                 Phone
                                             </label>
                                             <Input
                                                 value={phone}
                                                 onChange={({ target }) => setPhone(target.value)}
                                             />
-                                            <label className="block text-black text-sm font-bold mb-1">
+                                            <label className="block text-gray-700 text-sm font-bold mb-1">
                                                 Email
                                             </label>
                                             <Input
                                                 value={email}
                                                 onChange={({ target }) => setEmail(target.value)}
                                             />
-                                            <label className="block text-black text-sm font-bold mb-1">
+                                            <label className="block text-gray-700 text-sm font-bold mb-1">
                                                 Lives In
                                             </label>
 
@@ -162,33 +162,36 @@ export default function Profile({ user }) {
 
                                         <Stack spacing="4">
 
-                                            <label className="block text-black text-sm font-bold mb-1">
+                                            <label className="block text-gray-700 text-sm font-bold mb-1">
                                                 Gender
                                             </label>
                                             <Select
+                                                className="cursor-pointer"
                                                 placeholder="Select Gender"
                                                 onChange={({ target }) => setGender(target.value)}
                                                 value={gender}
                                             >
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
+                                                <option value="male" className="block cursor-pointer text-gray-700 text-sm font-bold mb-1">Male</option>
+                                                <option value="female" className="block cursor-pointer text-gray-700 text-sm font-bold mb-1">Female</option>
                                             </Select>
-                                            <label className="block text-black text-sm font-bold mb-1">
+                                            <label className="block text-gray-700 text-sm font-bold mb-1">
                                                 Birth Date
                                             </label>
                                             <Input
+                                                className="cursor-pointer"
+
                                                 type="date"
                                                 value={birthDate}
                                                 onChange={({ target }) => setbirthDate(target.value)}
                                             />
-                                            <label className="block text-black text-sm font-bold mb-1">
+                                            <label className="block text-gray-700 text-sm font-bold mb-1">
                                                 Website
                                             </label>
                                             <Input
                                                 value={website}
                                                 onChange={({ target }) => setWebsite(target.value)}
                                             />
-                                            <label className="block text-black text-sm font-bold mb-1">
+                                            <label className="block text-gray-700 text-sm font-bold mb-1">
                                                 RelationShip
                                             </label>
                                             <Input
@@ -198,7 +201,7 @@ export default function Profile({ user }) {
                                         </Stack>
                                     </form>
                                 </div>
-                                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                                <div className="flex items-center justify-end p-2 border-t border-solid border-blueGray-200 rounded-b">
                                     <button
                                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
                                         type="button"
@@ -209,7 +212,7 @@ export default function Profile({ user }) {
                                     <Button
                                         type="submit"
                                         colorScheme="blue"
-                                        size="lg"
+                                        size="md"
                                         fontSize="md"
                                         onClick={handleSubmit}
                                     >
