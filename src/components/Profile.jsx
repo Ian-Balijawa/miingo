@@ -45,6 +45,7 @@ export default function Profile({ user }) {
                 city,
                 email,
                 website,
+                id
             });
             console.log(data)
             setShowModal(false);
