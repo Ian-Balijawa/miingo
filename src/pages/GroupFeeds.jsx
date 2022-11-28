@@ -7,7 +7,7 @@ import axios from "../services/axios-config";
 import { HiOutlineLogout } from "react-icons/hi";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function GroupFeeds() {
   
@@ -54,10 +54,10 @@ function GroupFeeds() {
               {userName[0]}
             </p>
 
-            <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 ">
+            <Link  to={`/profile/${user._id}`} className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">
               {" "}
               Profile{" "}
-            </p>
+            </Link>
             <p
               onClick={ handleLogout }
               className="text-sm hover:bg-gray-200 cursor-pointer flex items-center space-x-3"
