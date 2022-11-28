@@ -5,8 +5,11 @@ import {
   ThumbUpIcon,
 } from "@heroicons/react/outline";
 import React from "react";
+import { Link } from "react-router-dom";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function Post({ name, message, email, timestamp, postImage }) {
+  const [user] = useLocalStorage('user');
   return (
     <div className="flex flex-col bg-white shadow-lg my-3">
       <div className="p-5 bg-white mt-5  shadow-sm">
@@ -24,14 +27,14 @@ function Post({ name, message, email, timestamp, postImage }) {
           </div>
 
           {/* About me */}
-          <div className="flex items-center">
+          <Link  to={`/profile/${user._id}`} className="flex items-center">
             <button
               className={`flex  mx-auto text-white bg-regal-orange hover:bg-orange-400 px-3 py-1 md:px-5 rounded-full shadow-xl font-normal
                          hover:shadow-xl active:scale-90 transition duration-300 outline-none `}
             >
               About me
             </button>
-          </div>
+          </Link>
         </div>
 
         <p className="pt-4 text-gray-600"> {message} </p>
