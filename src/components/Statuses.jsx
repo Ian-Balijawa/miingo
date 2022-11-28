@@ -136,7 +136,7 @@ function Statuses() {
 
         <div
           onClick={slideRight2}
-          className="bg-miingo-cyan text-gray-600 rounded-full p-1 cursor-pointer"
+          className="bg-miingo-cyan text-gray-600 rounded-full p-1 cursor-pointer "
         >
           <HiChevronRight className="h-4 w-4" />
         </div>
