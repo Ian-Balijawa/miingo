@@ -20,6 +20,7 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user] = useLocalStorage('user');
+  const [userName] = useState(user.name.split(" "));
 
   const showDropdown = () => {
     setLogout(!logout);
@@ -51,7 +52,7 @@ function Home() {
             </div>
 
             <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 sm:hidden">
-              {user.name}
+              {userName[0]}
             </p>
 
             <Link  to={`/profile/${user._id}`} className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">

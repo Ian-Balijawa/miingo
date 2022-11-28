@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Boards from "../components/Boards";
 import Chat from "../components/Chats/Chat";
 import Header from "../components/Header";
@@ -59,10 +59,10 @@ export default function Messages() {
             {userName[0]}
           </p>
 
-          <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 ">
-            {" "}
-            Profile{" "}
-          </p>
+          <Link  to={`/profile/${user._id}`} className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">
+              {" "}
+              Profile{" "}
+          </Link>
           <p
             onClick={handleLogout}
             className="text-sm hover:bg-gray-200 cursor-pointer flex items-center space-x-3"
