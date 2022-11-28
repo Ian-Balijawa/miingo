@@ -11,12 +11,11 @@ function Header({ onPress }) {
   return (
     <div className=" bg-white sticky top-0 z-50  flex justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
       {/* left */}
-      <Link to="/feed">
-        <div className="w-56">
+      <Link to="/feed" className="w-56">
           <div className="flex items-center justify-center rounded-full bg-regal-orange w-14 md:w-16  h-14 md:h-16">
             <p className="text-white text-base text-center">Logo</p>
           </div>
-        </div>
+        
       </Link>
 
       {/* center */}
