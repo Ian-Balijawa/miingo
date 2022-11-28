@@ -16,6 +16,7 @@ function Feed() {
   }, [dispatch, posts]);
 
   console.log('POSTS: ', posts);
+  
   return (
     <div className="h-screen  pb-56  flex-grow  mt-2 overflow-y-auto scrollbar-hide ">
       <div className=" space-y-7 px-2 ">

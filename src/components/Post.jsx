@@ -8,7 +8,7 @@ import React from "react";
 
 function Post({ name, message, email, timestamp, postImage }) {
   return (
-    <div className="flex flex-col bg-white shadow-xl my-3">
+    <div className="flex flex-col bg-white shadow-lg my-3">
       <div className="p-5 bg-white mt-5  shadow-sm">
         <div className="flex items-center justify-between space-x-2">
           <div className="flex  items-center space-x-2">
@@ -31,6 +31,7 @@ function Post({ name, message, email, timestamp, postImage }) {
         </div>
 
         <p className="pt-4 text-gray-600"> {message} </p>
+
       </div>
 
       {postImage && (

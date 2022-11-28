@@ -68,7 +68,7 @@ function Gallery() {
 	];
 
   return (
-    <div className= {`flex flex-col bg-white rounded-lg shadow-xl p-4 relative overflow-hidden ${ expand ? "h-[500px] " : "h-[500px]"}`}>
+    <div className= {`flex flex-col bg-white rounded-lg shadow-lg p-4 relative overflow-hidden ${ expand ? "h-[500px] " : "h-[500px]"}`}>
 
       <div className="flex flex-col mb-6">
         <h4 className="text-gray-700 font-medium m-2  flex-start"> Gallery </h4>

@@ -4,7 +4,7 @@ import { HiHeart } from "react-icons/hi";
 function AddFriend({ name, followers, following, image }) {
   const [ follow , setFollow] = useState(true);
   return (
-    <div className="w-56 h-56  bg-white rounded-lg shadow-2xl inline-block mr-2  ">
+    <div className="w-56 h-56  bg-white rounded-lg shadow-lg inline-block mr-2  ">
       <div className=" ">
         <div className="flex flex-col space-y-3 items-center justify-center py-3">
           <div className="relative flex items-center justify-center w-20">

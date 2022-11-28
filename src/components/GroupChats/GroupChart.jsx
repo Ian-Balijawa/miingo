@@ -42,10 +42,14 @@ export default function GroupChart({ src, name, members }) {
 
             {/* right */}
             <div className=" p-2 flex items-center justify-center space-x-3">
-              <button className="focus:outline-none outline-none border-none">
+              <button className={`focus:outline-none outline-none border-none cursor-pointer 
+                active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+                 duration-300
+              `}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-gray-500"
+                  className="w-5 h-5 text-gray-700"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -59,10 +63,14 @@ export default function GroupChart({ src, name, members }) {
                 </svg>
               </button>
 
-              <button className="focus:outline-none outline-none border-none">
+              <button className={`focus:outline-none outline-none border-none cursor-pointer 
+                active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+                 duration-300
+              `}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 text-gray-500 focus:outline-none outline-none border-none"
+                  className="w-5 h-5 text-gray-700 focus:outline-none outline-none border-none"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -76,9 +84,13 @@ export default function GroupChart({ src, name, members }) {
                 </svg>
               </button>
 
-              <button className="focus:outline-none outline-none border-none">
+              <button className={`focus:outline-none outline-none border-none cursor-pointer 
+                active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+                 duration-300
+              `}
+              >
                 <svg
-                  className="w-5 h-5 text-gray-500 origin-center transform rotate-90"
+                  className="w-5 h-5 text-gray-700 origin-center transform rotate-90"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
