@@ -4,17 +4,17 @@ import GroupInfo from "./GroupInfo";
 function Groups() {
   const Leaders = [
     { id: 1, image: "/bg2.jpg", members: 246, name: "Chelsea FC", active: 13 },
-    { id: 2, image: "/bg2.jpg", members: 236, name: " Myooga", active: 18 },
+    { id: 2, image: "https://media.istockphoto.com/id/1314248856/photo/round-podium-with-pink-and-green-lights-background.jpg?b=1&s=170667a&w=0&k=20&c=0ManZpyL9lNQdp6gxF7jemC89m8KRDKg31F29kaODBo=", members: 236, name: " Myooga", active: 18 },
     {
       id: 3,
-      image: "/bg2.jpg",
+      image: "https://media.istockphoto.com/id/1353553203/photo/forest-wooden-table-background-summer-sunny-meadow-with-green-grass-forest-trees-background.jpg?b=1&s=170667a&w=0&k=20&c=-jvR1WDwcloLXRgRTGeyG3frvrhPIbegdemeL6vY2Pk=",
       members: 634,
       name: "Wattoto Church",
       active: 19,
     },
     {
       id: 4,
-      image: "/bg2.jpg",
+      image: "https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg",
       members: 736,
       name: " Radio Simba",
       active: 20,
