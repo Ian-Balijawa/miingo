@@ -27,12 +27,10 @@ export default function Profile({ user }) {
 
 
     const id = user._id
-    console.log(user)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        console.log(isLoading)
         try {
             const { data } = await axios.patch(`/user/profile/${id}`, {
                 intro,
@@ -47,7 +45,6 @@ export default function Profile({ user }) {
                 website,
                 id
             });
-            console.log(data)
             setShowModal(false);
         } catch (err) {
             // setError(err.response.data.message);
