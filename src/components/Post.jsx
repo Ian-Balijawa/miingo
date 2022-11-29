@@ -1,11 +1,6 @@
-import {
-  ChatAltIcon,
-  ShareIcon,
-  ThumbDownIcon,
-  ThumbUpIcon
-} from '@heroicons/react/outline';
-import React, { useRef } from 'react';
+import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/outline';
 
+import { useRef } from 'react';
 import { useState } from 'react';
 
 function Post({ name, postDesc, email, createdAt, image }) {
