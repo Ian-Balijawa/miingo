@@ -48,7 +48,7 @@ function Posts() {
 
     return (
 
-        <div className = "space-y-4 bg-miingo-gray">
+        <div className = " w-full md:w-[640px] space-y-4 bg-miingo-gray">
             { newPosts.slice(0,2).map(({id , name ,message, email ,timestamp ,postImage })=> (
                 <Post 
                  key = { id }
