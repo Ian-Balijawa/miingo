@@ -99,7 +99,7 @@ function InputBox() {
               />
             </svg>
             <label htmlFor="upload">
-              <span class="upload fa fa-upload">Video</span>
+              <span className="upload fa fa-upload">Video</span>
             </label>
             <input
               type="file"
@@ -125,7 +125,7 @@ function InputBox() {
               />
             </svg>
             <label htmlFor="image-upload">
-              <span class="upload fa fa-upload">Photo</span>
+              <span className="upload fa fa-upload">Photo</span>
             </label>
             <input
               type="file"
@@ -152,7 +152,7 @@ function InputBox() {
             </svg>
 
             <label htmlFor="file-upload">
-              <span class="upload fa fa-upload">File</span>
+              <span className="upload fa fa-upload">File</span>
             </label>
             <input
               type="file"

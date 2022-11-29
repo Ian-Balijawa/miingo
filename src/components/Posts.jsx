@@ -26,7 +26,7 @@ function Posts() {
       .catch((err) => {
         setError(err.response.data.message);
       });
-  }, [accessToken, dispatch]);
+  }, []);
 
   const postsSorted = [...posts];
 
@@ -36,32 +36,31 @@ function Posts() {
 
   return (
     <div className="space-y-4">
-      {postsSorted
-        .slice(0, 2)
-        .map(({ _id, postDesc, user, createdAt, image }) => (
-          <Post
-            key={_id}
-            name={user ? user.name : "creator's name"}
-            postDesc={postDesc}
-            email={user ? user.email : "creator's email"}
-            createdAt={createdAt}
-            image={image}
-          />
-        ))}
+      {postsSorted.slice(0, 1).map((post) => (
+        <Post
+          key={post._id}
+          name={post.user ? post.user.name : "creator's name"}
+          postDesc={post.postDesc}
+          email={post.user ? post.user.email : "creator's email"}
+          createdAt={post.createdAt}
+          image={`https://api1.miingoapp.com/${post.image}`}
+        />
+      ))}
 
       <Addfriends />
-      {postsSorted
-        .slice(2, postsSorted.length)
-        .map(({ _id, createdAt, postDesc, user, document, video, image }) => (
-          <Post
-            key={_id}
-            name={user ? user.name : "creator's name"}
-            postDesc={postDesc}
-            email={user ? user.email : "creator's email"}
-            createdAt={createdAt}
-            image={image}
-          />
-        ))}
+      {postsSorted.slice(1, postsSorted.length).map((post) => (
+        <Post
+          key={post._id}
+          name={post.user ? post.user.name : "creator's name"}
+          postDesc={post.postDesc}
+          email={post.user ? post.user.email : "creator's email"}
+          createdAt={post.createdAt}
+          image={`https://api1.miingoapp.com/${post.image}`}
+          likes={post.likes.length}
+          comments={post.comments}
+          _id={post._id}
+        />
+      ))}
 
       {error && <p className="text-red-500">{error}</p>}
     </div>

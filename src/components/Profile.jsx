@@ -1,22 +1,23 @@
-import React, { useState } from "react";
-import axios from "../services/axios-config";
-import Input from "./Input";
-import { useDispatch } from "react-redux";
-import { Stack, Button, Spinner, Select } from "@chakra-ui/react";
+import { Button, Select, Spinner, Stack } from '@chakra-ui/react';
+import React, { useState } from 'react';
+
+import Input from './Input';
+import axios from '../services/axios-config';
+import { useDispatch } from 'react-redux';
 
 export default function Profile({ user }) {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [intro, setIntro] = useState("");
-  const [birthDate, setbirthDate] = useState("");
-  const [gender, setGender] = useState("");
-  const [phone, setPhone] = useState("");
-  const [city, setCity] = useState("");
-  const [relationship, setRelationship] = useState("");
-  const [livesIn, setlivesIn] = useState("");
-  const [email, setEmail] = useState("");
-  const [website, setWebsite] = useState("");
-  const [country, setCountry] = useState("Uganda");
+  const [intro, setIntro] = useState('');
+  const [birthDate, setbirthDate] = useState('');
+  const [gender, setGender] = useState('');
+  const [phone, setPhone] = useState('');
+  const [city, setCity] = useState('');
+  const [relationship, setRelationship] = useState('');
+  const [livesIn, setlivesIn] = useState('');
+  const [email, setEmail] = useState('');
+  const [website, setWebsite] = useState('');
+  const [country, setCountry] = useState('Uganda');
 
   const dispatch = useDispatch();
 
@@ -38,7 +39,7 @@ export default function Profile({ user }) {
         relationship,
         city,
         email,
-        website,
+        website
       });
       console.log(data);
       setShowModal(false);
@@ -50,28 +51,28 @@ export default function Profile({ user }) {
 
   return (
     <>
-      <div class="p-16 overflow-y-auto scrollbar-hide flex-grow   h-screen  pb-56 ">
-        <div class="p-1 md:p-8  bg-white shadow mt-20">
-          <div class="grid grid-cols-1 md:grid-cols-3">
-            <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
+      <div className="p-16 overflow-y-auto scrollbar-hide flex-grow   h-screen  pb-56 ">
+        <div className="p-1 md:p-8  bg-white shadow mt-20">
+          <div className="grid grid-cols-1 md:grid-cols-3">
+            <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
               <div>
-                <p class="font-bold text-gray-700 text-xl">22</p>
-                <p class="text-gray-400">Friends</p>
+                <p className="font-bold text-gray-700 text-xl">22</p>
+                <p className="text-gray-400">Friends</p>
               </div>
               <div>
-                <p class="font-bold text-gray-700 text-xl">10</p>
-                <p class="text-gray-400">Photos</p>
+                <p className="font-bold text-gray-700 text-xl">10</p>
+                <p className="text-gray-400">Photos</p>
               </div>
               <div>
-                <p class="font-bold text-gray-700 text-xl">89</p>
-                <p class="text-gray-400">Comments</p>
+                <p className="font-bold text-gray-700 text-xl">89</p>
+                <p className="text-gray-400">Comments</p>
               </div>
             </div>
-            <div class="relative">
-              <div class="w-24 h-24 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+            <div className="relative">
+              <div className="w-24 h-24 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="h-12 w-12"
+                  className="h-12 w-12"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -84,40 +85,33 @@ export default function Profile({ user }) {
               </div>
             </div>
 
-            <div class="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
+            <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
               <button
                 onClick={() => setShowModal(true)}
                 data-bs-toggle="modal"
-                class=" text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5 mx-auto"
+                className=" text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5 mx-auto"
               >
                 Edit Profile
               </button>
-              {/* <button
-  class="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
->
-  Message
-</button> */}
             </div>
           </div>
 
-          <div class="mt-20 text-center border-b pb-12">
-            <h1 class="text-4xl font-medium text-gray-700">{user.name}</h1>
-            <p class="font-light text-gray-600 mt-3">{user.email}</p>
+          <div className="mt-20 text-center border-b pb-12">
+            <h1 className="text-4xl font-medium text-gray-700">{user.name}</h1>
+            <p className="font-light text-gray-600 mt-3">{user.email}</p>
 
-            <p class="mt-8 text-gray-500">
-              Solution Manager - Creative Tim Officer
-            </p>
-            <p class="mt-2 text-gray-500">University of Computer Science</p>
+            <p className="mt-8 text-gray-500">Solution Manager</p>
+            <p className="mt-2 text-gray-500">University of Computer Science</p>
           </div>
 
-          <div class="mt-12 flex flex-col justify-center">
-            <p class="text-gray-600 text-center font-light lg:px-16">
+          <div className="mt-12 flex flex-col justify-center">
+            <p className="text-gray-600 text-center font-light lg:px-16">
               An artist of considerable range, Ryan — the name taken by
               Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs
               and records all of his own music, giving it a warm, intimate feel
               with a solid groove structure. An artist of considerable range.
             </p>
-            <button class="text-indigo-500 py-2 px-4  font-medium mt-4">
+            <button className="text-indigo-500 py-2 px-4  font-medium mt-4">
               Show more
             </button>
           </div>
@@ -219,7 +213,7 @@ export default function Profile({ user }) {
                     fontSize="md"
                     onClick={handleSubmit}
                   >
-                    {isLoading ? <Spinner size="sm" color="white" /> : "Save"}
+                    {isLoading ? <Spinner size="sm" color="white" /> : 'Save'}
                   </Button>
                 </div>
               </div>

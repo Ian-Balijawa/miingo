@@ -1,13 +1,65 @@
-import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/outline';
+import {
+  ChatAltIcon,
+  HeartIcon,
+  ShareIcon,
+  ThumbUpIcon
+} from '@heroicons/react/outline';
 
 import { Link } from 'react-router-dom';
+import axios from '../services/axios-config';
+import { postLiked } from '../app/slices/postsSlice';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useState } from 'react';
 
-function Post({ postDesc, user, createdAt, image }) {
+function Post({ postDesc, user, createdAt, image, likes, _id }) {
   const [loggedInUser] = useLocalStorage('user');
+  const [accessToken] = useLocalStorage('accessToken');
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
+  const [showComments, setShowComments] = useState(false);
+  const [showCommentInput, setShowCommentInput] = useState(false);
+  const [showCommentButton, setShowCommentButton] = useState(true);
+  const dispatch = useDispatch();
+
+  const handleLike = () => {
+    axios
+      .patch(`/post/${_id}/like/${loggedInUser._id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then((res) => {
+        dispatch(postLiked(res.data.likes));
+      })
+      .catch((err) => {
+        console.log('ERROR: ', err);
+      });
+  };
+
+  const handleComment = () => {
+    axios
+      .post(
+        `/post/comment/${_id}`,
+        { comment },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
+      .then((res) => {
+        setComments(res.data.comments);
+        setComment('');
+        setShowCommentInput(false);
+        setShowCommentButton(true);
+      })
+      .catch((err) => {});
+  };
 
   return (
-    <div className="flex flex-col bg-white shadow-lg my-3">
+    <div className="flex flex-col bg-white shadow-lg my-3 post-box image-post">
       <div className="p-5 bg-white mt-5  shadow-sm">
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">
@@ -46,7 +98,7 @@ function Post({ postDesc, user, createdAt, image }) {
 
       {image && (
         <div className="relative  mx-2 md:mx-8 h-56 md:h-96">
-          <img src={image} className="object-cover image-post" alt="" />
+          <img src={image} className="w-full h-full object-cover" alt="" />
         </div>
       )}
 
@@ -56,11 +108,13 @@ function Post({ postDesc, user, createdAt, image }) {
               bg-white shadow-md text-gray-600 px-2  py-3 mt-2`}
       >
         <div className=" flex items-center justify-center">
-          <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
+          <div
+            className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
+            onClick={handleLike}
+          >
             <ThumbUpIcon className="h-6" />
             <p className="text-xs sm:text-base hidden md:inline-flex">
-              {' '}
-              12k Likes{' '}
+              {`${likes || 0} Likes`}
             </p>
           </div>
 
