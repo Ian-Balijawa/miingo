@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 function Post({ name, message, email, timestamp, postImage }) {
+
   const [user] = useLocalStorage('user');
+  
   return (
     <div className="flex flex-col bg-white shadow-lg my-3">
       <div className="p-5 bg-white mt-5  shadow-sm">
@@ -38,6 +40,7 @@ function Post({ name, message, email, timestamp, postImage }) {
         </div>
 
         <p className="pt-4 text-gray-600"> {message} </p>
+       
 
       </div>
 
