@@ -1,33 +1,44 @@
 import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/outline';
 
-import { useRef } from 'react';
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import useLocalStorage from '../hooks/useLocalStorage';
 
-function Post({ name, postDesc, email, createdAt, image }) {
-  const [isVisibleCommentField, setIsVisibleCommentField] = useState(false);
-  const commentRef = useRef();
+function Post({ postDesc, user, createdAt, image }) {
+  const [loggedInUser] = useLocalStorage('user');
 
   return (
-    <div className="flex flex-col bg-white shadow-xl my-3">
+    <div className="flex flex-col bg-white shadow-lg my-3">
       <div className="p-5 bg-white mt-5  shadow-sm">
         <div className="flex items-center justify-between space-x-2">
-          <div className="flex  items-center space-x-2">
-            <img className="rounded-full" src="/ml.jpg" alt="" />
+          <div className="flex items-center space-x-2">
+            <div className=" w-6 h-6 md:w-8 md:h-8">
+              <img
+                className="object-cover rounded-full"
+                src="/images/ml.jpg"
+                alt=""
+              />
+            </div>
+
             <div>
-              <p className="font-semibold  text-gray-500">{name}</p>
+              <p className="font-semibold  text-gray-500">
+                {user ? user.name : 'some user'}
+              </p>
               <p className="text-xs text-gray-400">{createdAt}</p>
             </div>
           </div>
 
           {/* About me */}
-          <div className="flex items-center">
+          <Link
+            to={`/profile/${user ? user._id : loggedInUser._id}`}
+            className="flex items-center"
+          >
             <button
               className={`flex  mx-auto text-white bg-regal-orange hover:bg-orange-400 px-3 py-1 md:px-5 rounded-full shadow-xl font-normal
                          hover:shadow-xl active:scale-90 transition duration-300 outline-none `}
             >
               About me
             </button>
-          </div>
+          </Link>
         </div>
 
         <p className="pt-4 text-gray-600"> {postDesc} </p>
@@ -35,7 +46,7 @@ function Post({ name, postDesc, email, createdAt, image }) {
 
       {image && (
         <div className="relative  mx-2 md:mx-8 h-56 md:h-96">
-          <img src={image} className="w-full h-full object-cover" alt="" />
+          <img src={image} className="object-cover image-post" alt="" />
         </div>
       )}
 
@@ -55,12 +66,7 @@ function Post({ name, postDesc, email, createdAt, image }) {
 
           <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
             <ChatAltIcon className="h-6" />
-            <p
-              className="text-xs sm:text-base"
-              onClick={() => setIsVisibleCommentField((prev) => !prev)}
-            >
-              comment
-            </p>
+            <p className="text-xs sm:text-base">comment</p>
           </div>
         </div>
 
@@ -88,20 +94,6 @@ function Post({ name, postDesc, email, createdAt, image }) {
           </div>
         </div>
       </div>
-      {isVisibleCommentField && (
-        <div>
-          <input
-            style={{
-              border: '1px solid #eee',
-              padding: '0.5em',
-              outline: 'none',
-              width: '100%'
-            }}
-            ref={commentRef}
-            placeholder="Add comment"
-          />
-        </div>
-      )}
     </div>
   );
 }

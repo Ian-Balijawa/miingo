@@ -1,3 +1,5 @@
+import { Link, useNavigate } from 'react-router-dom';
+
 import Boards from '../components/Boards';
 import BottomNav from '../components/BottomNav';
 import Feed from '../components/Feed';
@@ -10,7 +12,6 @@ import axios from '../services/axios-config';
 import { removeUser } from '../app/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useNavigate } from 'react-router-dom';
 
 const { useState } = React;
 
@@ -19,6 +20,7 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user] = useLocalStorage('user');
+  const [userName] = useState(user.name.split(' '));
 
   const showDropdown = () => {
     setLogout(!logout);
@@ -50,13 +52,16 @@ function Home() {
             </div>
 
             <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 sm:hidden">
-              {user.name}
+              {userName[0]}
             </p>
 
-            <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 ">
+            <Link
+              to={`/profile/${user._id}`}
+              className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
+            >
               {' '}
               Profile{' '}
-            </p>
+            </Link>
             <p
               onClick={handleLogout}
               className="text-sm hover:bg-gray-200 cursor-pointer flex items-center space-x-3"

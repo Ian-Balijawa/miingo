@@ -126,7 +126,7 @@ function Addfriends() {
   ];
 
   return (
-    <div className=" w-80 md:w-[640px] mx-auto flext items-center justify-center ">
+    <div className=" w-80 md:w-[640px] mx-auto flext items-center justify-center bg-miingo-gray">
       <div id="slider3" className="w-full h-full  overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide p-2">
         {friends.map(({ id, name, followers, following, image }) => (
           <AddFriend

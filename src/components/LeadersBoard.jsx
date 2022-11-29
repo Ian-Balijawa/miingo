@@ -30,7 +30,7 @@ function LeadersBoard() {
   ];
 
   return (
-    <div className=" flex flex-col font-serif bg-white rounded-lg shadow-2xl p-4 h-40 w-full">
+    <div className=" flex flex-col font-serif bg-white rounded-lg shadow-lg p-4 h-40 w-full">
       <h4 className="text-gray-700 font-medium m-2 mb-6 "> Leaders Board</h4>
 
       <div className="flex items-center justify-center space-x-2 h-10">
