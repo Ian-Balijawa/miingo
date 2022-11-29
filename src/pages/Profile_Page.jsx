@@ -31,13 +31,13 @@ const NewProfilePage = () => {
 					</div>
 				</div>
 
-				<div className="flex justify-between absolute items-center rounded-md sm:top-[390px] lg:top-[580px] px-4 bg-slate-200 lg:py-8 sm:py-5 shadow-3xl lg:ml-[40px] w-[95vh] ">
-					<p className="">About</p>
-					<p>Membership</p>
-					<p>Discussion</p>
-					<p>Groups</p>
-					<p>Video</p>
-					<p>Media</p>
+				<div className="flex justify-between absolute items-center rounded-md sm:top-[390px] lg:top-[580px] px-4 bg-slate-200 lg:py-8 sm:py-5 shadow-2xl lg:ml-[40px] w-[95vh] ">
+					<p className="inline-block p-4 text-regal-orange rounded-t-lg border-b-2 border-regal-orange active dark:text-regal-orange dark:border-regal-orange">About</p>
+					<p className="text-gray-400">Membership</p>
+					<p className="text-gray-400">Discussion</p>
+					<p className="text-gray-400">Groups</p>
+					<p className="text-gray-400">Video</p>
+					<p className="text-gray-400">Media</p>
 				</div>
 			</div>
 		</>
