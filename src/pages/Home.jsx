@@ -3,12 +3,11 @@ import BottomNav from '../components/BottomNav';
 import Feed from '../components/Feed';
 import Header from '../components/Header';
 import { HiOutlineLogout } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
 import React from 'react';
 import SideFeed from '../components/SideFeed';
 import Statuses from '../components/Statuses';
 import axios from '../services/axios-config';
-import { signout } from '../app/slices/authSlice';
+import { removeUser } from '../app/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router-dom';
@@ -30,11 +29,11 @@ function Home() {
 
     try {
       await axios.patch('/auth/logout');
-      dispatch(signout());
+      dispatch(removeUser());
     } catch (error) {
       console.error('ERROR: ', error);
     }
-    dispatch(signout());
+    dispatch(removeUser());
     navigate('/');
   };
 

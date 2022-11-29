@@ -13,7 +13,7 @@ import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
 import Input from '../Input';
 import axios from '../../services/axios-config';
-import { register } from '../../app/slices/authSlice';
+import { setUser } from '../../app/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -46,9 +46,7 @@ export const SignupForm = () => {
         password: user.password
       });
       const accessToken = res.data.accessToken;
-      console.log('TOK: ', accessToken);
-      console.log('USER: ', user);
-      dispatch(register({ user, accessToken }));
+      dispatch(setUser({ user, accessToken }));
       setIsLoading(false);
       navigate('/feed');
     } catch (err) {

@@ -2,11 +2,16 @@ import {
   ChatAltIcon,
   ShareIcon,
   ThumbDownIcon,
-  ThumbUpIcon,
-} from "@heroicons/react/outline";
-import React from "react";
+  ThumbUpIcon
+} from '@heroicons/react/outline';
+import React, { useRef } from 'react';
 
-function Post({ name, message, email, timestamp, postImage }) {
+import { useState } from 'react';
+
+function Post({ name, postDesc, email, createdAt, image }) {
+  const [isVisibleCommentField, setIsVisibleCommentField] = useState(false);
+  const commentRef = useRef();
+
   return (
     <div className="flex flex-col bg-white shadow-xl my-3">
       <div className="p-5 bg-white mt-5  shadow-sm">
@@ -15,7 +20,7 @@ function Post({ name, message, email, timestamp, postImage }) {
             <img className="rounded-full" src="/ml.jpg" alt="" />
             <div>
               <p className="font-semibold  text-gray-500">{name}</p>
-              <p className="text-xs text-gray-400">{timestamp}</p>
+              <p className="text-xs text-gray-400">{createdAt}</p>
             </div>
           </div>
 
@@ -30,32 +35,37 @@ function Post({ name, message, email, timestamp, postImage }) {
           </div>
         </div>
 
-        <p className="pt-4 text-gray-600"> {message} </p>
+        <p className="pt-4 text-gray-600"> {postDesc} </p>
       </div>
 
-      {postImage && (
+      {image && (
         <div className="relative  mx-2 md:mx-8 h-56 md:h-96">
-          <img src={postImage} className="w-full h-full object-cover" alt="" />
+          <img src={image} className="w-full h-full object-cover" alt="" />
         </div>
       )}
 
       {/* footer of post */}
       <div
-        className={`flex  justify-between  items-center 
+        className={`flex  justify-between  items-center
               bg-white shadow-md text-gray-600 px-2  py-3 mt-2`}
       >
         <div className=" flex items-center justify-center">
           <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
             <ThumbUpIcon className="h-6" />
             <p className="text-xs sm:text-base hidden md:inline-flex">
-              {" "}
-              12k Likes{" "}
+              {' '}
+              12k Likes{' '}
             </p>
           </div>
 
           <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
             <ChatAltIcon className="h-6" />
-            <p className="text-xs sm:text-base">comment</p>
+            <p
+              className="text-xs sm:text-base"
+              onClick={() => setIsVisibleCommentField((prev) => !prev)}
+            >
+              comment
+            </p>
           </div>
         </div>
 
@@ -83,6 +93,20 @@ function Post({ name, message, email, timestamp, postImage }) {
           </div>
         </div>
       </div>
+      {isVisibleCommentField && (
+        <div>
+          <input
+            style={{
+              border: '1px solid #eee',
+              padding: '0.5em',
+              outline: 'none',
+              width: '100%'
+            }}
+            ref={commentRef}
+            placeholder="Add comment"
+          />
+        </div>
+      )}
     </div>
   );
 }
