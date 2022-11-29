@@ -1,80 +1,71 @@
-import React, { useState } from 'react';
-import Addfriends from './Addfriends';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import Addfriends from './Addfriends';
 import Post from './Post';
+import axios from '../services/axios-config';
+import { postsAdded } from '../app/slices/postsSlice';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 function Posts() {
+  const [error, setError] = useState(null);
+  const [accessToken] = useLocalStorage('accessToken');
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts.postsList);
 
-    const [newPosts ] = useState([
-			{
-				id: 1,
-				name: "muwonge lawrence",
-				message: "how are you test one two",
-				email: "muwongelawrence44@gmail.com",
-				timestamp: "4 days ago",
-				postImage:
-					"https://res.cloudinary.com/itgenius/image/upload/v1668007542/pexels-mahdi-chaghari-12463279_cwiw1n.jpg",
-			},
+  useEffect(() => {
+    axios
+      .get('/post', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then((res) => {
+        dispatch(postsAdded(res.data));
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+  }, [accessToken, dispatch]);
 
-			{
-				id: 2,
-				name: "muwonge lawrence",
-				message: "how are you test one two",
-				email: "muwongelawrence44@gmail.com",
-				timestamp: " 1 hour ago ",
-				postImage:
-					"https://res.cloudinary.com/itgenius/image/upload/v1668007553/pexels-jonathan-borba-12031357_rzxxvm.jpg",
-			},
-			{
-				id: 3,
-				name: "muwonge lawrence",
-				message: "how are you test one two",
-				email: "muwongelawrence44@gmail.com",
-				timestamp: "36 minutes ago",
-				postImage:
-					"https://res.cloudinary.com/itgenius/image/upload/v1668007538/pexels-martin-boh%C3%A1%C4%8D-10288457_uwpcbd.jpg",
-			},
-			{
-				id: 4,
-				name: "muwonge lawrence",
-				message: "how are you test one two",
-				email: "muwongelawrence44@gmail.com",
-				timestamp: "2 minutes ago",
-				postImage:
-					"https://res.cloudinary.com/itgenius/image/upload/v1668007538/pexels-martin-boh%C3%A1%C4%8D-10288457_uwpcbd.jpg",
-			},
-		]);
+  const postsSorted = [...posts];
 
+  postsSorted.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 
-    return (
+  return (
+    <div className="space-y-4">
+      {postsSorted
+        .slice(0, 2)
+        .map(({ _id, postDesc, user, createdAt, image }) => (
+          <Post
+            key={_id}
+            name={user ? user.name : "creator's name"}
+            postDesc={postDesc}
+            email={user ? user.email : "creator's email"}
+            createdAt={createdAt}
+            image={image}
+          />
+        ))}
 
-        <div className = "space-y-4 bg-miingo-gray">
-            { newPosts.slice(0,2).map(({id , name ,message, email ,timestamp ,postImage })=> (
-                <Post 
-                 key = { id }
-                 name = { name }
-                 message = {message}
-                 email = {email}
-                 timestamp = {timestamp}
-                 postImage = {postImage}
-                 />
-            ))}
+      <Addfriends />
+      {postsSorted
+        .slice(2, postsSorted.length)
+        .map(({ _id, createdAt, postDesc, user, document, video, image }) => (
+          <Post
+            key={_id}
+            name={user ? user.name : "creator's name"}
+            postDesc={postDesc}
+            email={user ? user.email : "creator's email"}
+            createdAt={createdAt}
+            image={image}
+          />
+        ))}
 
-              <Addfriends />
-
-			  { newPosts.slice(2,newPosts.length).map(({id , name ,message, email ,timestamp ,postImage })=> (
-                <Post 
-                 key = { id }
-                 name = { name }
-                 message = {message}
-                 email = {email}
-                 timestamp = {timestamp}
-                 postImage = {postImage}
-                 />
-            ))}
-            
-        </div>
-    ); 
+      {error && <p className="text-red-500">{error}</p>}
+    </div>
+  );
 }
 
 export default Posts;

@@ -1,37 +1,35 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice( {
 	name: "auth",
-	initialState: { user: null, accessToken: null },
+	initialState: {
+		user: null,
+		accessToken: null,
+	},
 	reducers: {
-		signin: ( state, action ) => {
-			const { user, accessToken } = action.payload;
-			state.user = { ...user };
-			state.accessToken = accessToken;
-			localStorage.setItem( 'user', JSON.stringify( user ) );
-			localStorage.setItem( 'accessToken', JSON.stringify( accessToken ) );
+		// set the user and accessToken in the store
+		setUser ( state, action ) {
+			state.user = action.payload.user;
+			state.accessToken = action.payload.accessToken;
 		},
-		register: ( state, action ) => {
-			const { user, accessToken } = action.payload;
-			state.user = { ...user };
-			state.accessToken = accessToken;
-			localStorage.setItem( 'user', JSON.stringify( user ) );
-			localStorage.setItem( 'accessToken', JSON.stringify( accessToken ) );
-		},
-		setAccessToken: ( state, action ) => {
-			state.accessToken = action.payload
-		},
-		signout: ( state, action ) => {
+		// remove the user and accessToken from the store
+		removeUser ( state ) {
 			state.user = null;
 			state.accessToken = null;
-			localStorage.clear()
 		},
-	},
+		//we shall need to set the accessToken independently of the user after we refresh the token
+		setAccessToken ( state, action ) {
+			state.accessToken = action.payload.accessToken;
+		}
 
+	},
 } );
 
-export const { signin, signout, register, setAccessToken } = authSlice.actions;
-export const selectCurrentUser = ( state ) => state.auth.user;
-export const selectCurrentToken = ( state ) => state.auth.accessToken;
+// export the actions from the auth slice
+export const { setUser, removeUser, setAccessToken } = authSlice.actions;
 
+// export a selector that will be used to get the user from the store
+export const selectUser = ( state ) => state.auth.user;
+
+// export the reducer from the auth slice
 export default authSlice.reducer;

@@ -12,7 +12,7 @@ import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
 import Input from '../Input';
 import axios from '../../services/axios-config';
-import { signin } from '../../app/slices/authSlice';
+import { setUser } from '../../app/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -35,7 +35,7 @@ export const SigninForm = () => {
       });
 
       console.log('RES: ', data);
-      dispatch(signin(data));
+      dispatch(setUser(data));
       setIsLoading(false);
 
       delete data.user.accessToken;
