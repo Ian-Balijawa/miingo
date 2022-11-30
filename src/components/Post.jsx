@@ -1,35 +1,90 @@
 import {
   ChatAltIcon,
+  HeartIcon,
   ShareIcon,
-  ThumbDownIcon,
-  ThumbUpIcon,
-} from "@heroicons/react/outline";
-import React from "react";
-import { Link } from "react-router-dom";
-import useLocalStorage from "../hooks/useLocalStorage";
+  ThumbUpIcon
+} from '@heroicons/react/outline';
 
-function Post({ name, message, email, timestamp, postImage }) {
+import { Link } from 'react-router-dom';
+import axios from '../services/axios-config';
+import { postLiked } from '../app/slices/postsSlice';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useState } from 'react';
 
-  const [user] = useLocalStorage('user');
-  
+function Post({ postDesc, user, createdAt, image, likes, _id }) {
+  const [loggedInUser] = useLocalStorage('user');
+  const [accessToken] = useLocalStorage('accessToken');
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
+  const [showComments, setShowComments] = useState(false);
+  const [showCommentInput, setShowCommentInput] = useState(false);
+  const [showCommentButton, setShowCommentButton] = useState(true);
+  const dispatch = useDispatch();
+
+  const handleLike = () => {
+    axios
+      .patch(`/post/${_id}/like/${loggedInUser._id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then((res) => {
+        dispatch(postLiked(res.data.likes));
+        console.log('liked: ', res.data.likes);
+      })
+      .catch((err) => {
+        console.log('ERROR: ', err);
+      });
+  };
+
+  const handleComment = () => {
+    axios
+      .post(
+        `/post/comment/${_id}`,
+        { comment },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
+      .then((res) => {
+        setComments(res.data.comments);
+        setComment('');
+        setShowCommentInput(false);
+        setShowCommentButton(true);
+      })
+      .catch((err) => {});
+  };
+
   return (
-    <div className="flex flex-col bg-white shadow-lg my-3">
+    <div className="flex flex-col bg-white shadow-lg my-3 post-description">
       <div className="p-5 bg-white mt-5  shadow-sm">
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">
-
             <div className=" w-6 h-6 md:w-8 md:h-8">
-              <img className=" w-full h-full object-cover rounded-full" src="/images/ml.jpg" alt="" />
+              <img
+                className=" w-full h-full object-cover rounded-full"
+                src="/images/ml.jpg"
+                alt=""
+              />
             </div>
 
             <div>
-              <p className="font-semibold  text-gray-500">{name}</p>
-              <p className="text-xs text-gray-400">{timestamp}</p>
+              <p className="font-semibold  text-gray-500">
+                {user ? user.name : 'some user'}
+              </p>
+              <p className="text-xs text-gray-400">{createdAt}</p>
             </div>
           </div>
 
           {/* About me */}
-          <Link  to={`/profile/${user._id}`} className="flex items-center">
+          <Link
+            to={`/profile/${user ? user._id : loggedInUser._id}`}
+            className="flex items-center"
+          >
             <button
               className={`flex  mx-auto text-white bg-regal-orange hover:bg-orange-400 px-3 py-1 md:px-5 rounded-full shadow-xl font-normal
                          hover:shadow-xl active:scale-90 transition duration-300 outline-none `}
@@ -39,28 +94,32 @@ function Post({ name, message, email, timestamp, postImage }) {
           </Link>
         </div>
 
-        <p className="pt-4 text-gray-600"> {message} </p>
-       
+        <p className="pt-4 text-gray-600"> {postDesc} </p>
 
       </div>
 
-      {postImage && (
+      {image && (
         <div className="relative  mx-2 md:mx-8 h-56 md:h-96">
-          <img src={postImage} className="w-full h-full object-cover" alt="" />
+          <img src={image} className="w-full h-full object-cover" alt="" />
         </div>
       )}
 
       {/* footer of post */}
       <div
-        className={`flex  justify-between  items-center 
+        className={`flex  justify-between  items-center
               bg-white shadow-md text-gray-600 px-2  py-3 mt-2`}
       >
         <div className=" flex items-center justify-center">
-          <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
+          <div
+            className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
+            onClick={ handleLike }
+          >
             <ThumbUpIcon className="h-6" />
-            <p className="text-xs sm:text-base hidden md:inline-flex">
-              {" "}
-              12k Likes{" "}
+            <p className="text-xs sm:text-base">
+              {`${likes || 0}`}
+            </p>
+            <p className="text-sm hidden md:inline-flex ">
+                { likes === 1 ? " Like" : "Likes" }
             </p>
           </div>
 

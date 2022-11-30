@@ -4,7 +4,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
-import JwtDecode from 'jwt-decode';
 import LoadingScreen from './components/LoadingScreen';
 import api from './services/axios-config';
 import { setAccessToken } from './app/slices/authSlice';

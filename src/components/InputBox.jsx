@@ -1,34 +1,65 @@
-import React from "react";
-import { useDispatch , useSelector }  from 'react-redux';
-import { addPost } from "../app/slices/postSlice";
-
-const { useRef , useState}  =  React;
-
-
-
-
+import { Spinner } from '@chakra-ui/react';
+import axios from '../services/axios-config';
+import { postAdded } from '../app/slices/postsSlice';
+import { useDispatch } from 'react-redux';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useState } from 'react';
 
 function InputBox() {
-  const inputRef = useRef(null);
-  const filePickerRef = useRef(null);
-  const dispatch = useDispatch()
-  const [imageToPost, setImageToPost] = useState(null);
-  const [title , setTitle ] = useState("");
-  const [content , setContent]  = useState("")
+  const [accessToken] = useLocalStorage('accessToken');
+  const [user] = useLocalStorage('user');
+  const [document, setDocument] = useState(null);
+  const [image, setImage] = useState(null);
+  const [video, setVideo] = useState(null);
+  const [postDescription, setPostDescription] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const dispatch = useDispatch();
 
-  const onTitleChange =  (e) => e.target.value;
-  const onContentChange = (e) => e.target.value
+  console.log('document', document);
+  console.log('image', image);
+  console.log('video', video);
+  console.log('postDescription', postDescription);
 
-  const handlePost = (e) =>{
-      e.preventDefault()
-  }
+  const handlePost = async (e) => {
+    e.preventDefault();
 
-  const removeImage = () => {
-    setImageToPost(null);
+    const formData = new FormData();
+    formData.append('postDesc', postDescription);
+    formData.append('doc', document);
+    formData.append('image', image);
+    formData.append('video', video);
+    formData.append('user', user._id);
+    try {
+      setIsUploading(true);
+
+      const response = await axios.post('/post', formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+      setSuccessMessage(response.data.message);
+      console.log(response);
+      console.log('SUCCESS: ', response.data.message);
+      dispatch(postAdded(response.data));
+      setIsUploading(false);
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+      setIsUploading(false);
+      console.log(error);
+    } finally {
+      setIsUploading(false);
+      setDocument(null);
+      setImage(null);
+      setVideo(null);
+      setPostDescription('');
+    }
   };
 
   return (
-    <div className="bg-white p-2 shadow-md text-gray-500 font-medium mt-6 ">
+    <div className="bg-white flex flex-col p-2 shadow-md text-gray-500 font-medium mt-6 ">
+     
       <div className="flex space-x-4  p-4 items-center ">
         <div className=" w-10 h-10 hidden md:flex">
           <img
@@ -38,49 +69,24 @@ function InputBox() {
           />
         </div>
         <form className="flex flex-col space-y-2 w-full">
-          {/* <input
-            name="title"
-            type="text"
-            value=""
-            ref={inputRef}
-            className="rounded-lg h-12 bg-gray-100 flex-grow px-5 focus:outline-none "
-            placeholder={`Enter title`}
-          /> */}
-
-
           <textarea
-            id="comment"
-            name="comment"
+            id="postDescription"
+            name="postDescription"
             rows="8"
             cols="50"
-            ref = {inputRef}
+            value={postDescription}
+            onChange={(e) => setPostDescription(e.target.value)}
             className="font-sans text-gray-600 resize-none flex-grow bg-gray-100  h-20 w-full  px-5 py-3 focus:outline-none rounded-lg border"
             placeholder="Share what you are thinking here......."
             maxLength="200"
-            // onChange={handleChange("comment")}
-          ></textarea>
+          />
         </form>
-
-        {imageToPost && (
-          <div
-            onClick={removeImage}
-            className={`flex flex-col filter hover:brightness-110 
-                     transition duration-150 transform hover:scale-105 cursor-pointer`}
-          >
-            <img
-              src={imageToPost}
-              className=" object-contain"
-              alt=""
-            />
-
-            <p className="text-xs text-red-500 text-center"> Remove</p>
-          </div>
-        )}
       </div>
 
-      <div className="flex items-center  justify-around md:justify-between p-3 border-t">
-        <div className=" flex items-center justify-center space-x-2">
+      <div className="  flex items-center  justify-between p-3 border-t">
+        <div className=" flex items-center space-x-2">
           <div className="flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
+            <label htmlFor="upload" className='flex items-center space-x-2'>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -94,14 +100,20 @@ function InputBox() {
                 d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
               />
             </svg>
-
-            <p className="text-xs sm:text-sm xl:text-base">Video</p>
+              <span className="upload fa fa-upload hidden md:inline-flex">Video</span>
+            </label>
+            <input
+              type="file"
+              id="upload"
+              accept="video/*"
+              onChange={(e) => setVideo(e.target.files[0])}
+            />
           </div>
 
-          <div
-            onClick={() => filePickerRef.current.click()}
-            className="flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer "
-          >
+          <div className="flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer ">
+            
+            <label htmlFor="image-upload" className='flex items-center space-x-2'>
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -117,12 +129,19 @@ function InputBox() {
               />
             </svg>
 
-            <p className="text-xs sm:text-sm xl:text-base">Photo</p>
-
-            <input ref={filePickerRef} type="file" hidden />
+              <span className="upload fa fa-upload hidden md:inline-flex ">Photo</span>
+            </label>
+            <input
+              type="file"
+              id="image-upload"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
           </div>
 
           <div className="flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
+           
+            <label htmlFor="file-upload" className='flex items-center space-x-2'>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -138,11 +157,18 @@ function InputBox() {
               />
             </svg>
 
-            <p className="text-xs sm:text-sm xl:text-base">File</p>
+              <span className="upload fa fa-upload hidden md:inline-flex">File</span>
+            </label>
+            <input
+              type="file"
+              id="file-upload"
+              accept="application/*"
+              onChange={(e) => setDocument(e.target.files[0])}
+            />
           </div>
         </div>
 
-        <div className=" flex items-center justify-center ">
+        <div className=" flex items-center justify-center" onClick={ handlePost }>
           <h4> Post </h4>
           <span className="flex items-center justify-center ml-2 cursor-pointer active:scale-90 transition ease-in-out duration-300">
             <button className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 ">
@@ -157,6 +183,64 @@ function InputBox() {
             </button>
           </span>
         </div>
+
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexWrap: 'wrap'
+        }}
+      >
+        {errorMessage && (
+          <div
+            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <p className="text-red-500">{errorMessage}</p>
+          </div>
+        )}
+        {successMessage && (
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <p className="text-green-500">{successMessage}</p>
+          </div>
+        )}
+
+        {isUploading && (
+          <div style={{ padding: '2rem' }}>
+            <Spinner size={'lg'} color="blue" />{' '}
+          </div>
+        )}
+        {!isUploading && video && (
+          <video
+            src={URL.createObjectURL(video)}
+            width="200"
+            height="200"
+            style={{ background: 'black' }}
+            controls
+          />
+        )}
+        {!isUploading && image && (
+          <img
+            src={URL.createObjectURL(image)}
+            width="150"
+            height="200"
+            alt={image.name}
+          />
+        )}
+        {!isUploading && document && (
+          <iframe
+            src={URL.createObjectURL(document)}
+            width="150"
+            height="200"
+            controls
+            title="document"
+          />
+        )}
       </div>
     </div>
   );

@@ -36,3 +36,58 @@
     @apply w-5 md:w-8 h-5 md:h-8;
   }
 }
+/*
+input[type='file'] {
+  font-size: 2rem;
+  z-index: 9999;
+}
+::file-selector-button {
+  font-size: initial;
+}
+
+::file-selector-button {
+  background-color: #c44141;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  display: none;
+} */
+
+input,
+select {
+  transition: 1s;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  background-color: lightblue;
+  border: 2px solid blue;
+}
+
+label {
+  vertical-align: middle;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.fa-upload {
+  color: rgb(15, 15, 15);
+}
+label.file {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+input[type='file'] {
+  display: none;
+  z-index: 9999;
+}
+
+span.upload {
+  border-radius: 4px;
+}
