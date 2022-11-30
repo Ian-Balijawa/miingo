@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
 import { useLocation } from 'react-router-dom';
 import NewProfilePage from "./pages/Profile_Page";
+import ActivityCard from "./components/profile/ActivityCard";
 
 const Loadable = (Component) => (props) => {
 	return (
@@ -74,6 +75,7 @@ export default () => {
 				<Route path="login" element={<Signin />} />
 				<Route path="register" element={<Signup />} />
 				<Route path="ld" element={<NewProfilePage />} />
+				<Route path="ad" element={<ActivityCard />} />
 
 				<Route
 					path="profile"
