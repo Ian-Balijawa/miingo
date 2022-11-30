@@ -35,6 +35,8 @@ export default function ProfilePage() {
     } catch (error) {
       setError(error.response.data.message);
     }
+    dispatch(removeUser());
+    navigate('/');
   };
 
   return (

@@ -60,13 +60,13 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
   };
 
   return (
-    <div className="flex flex-col bg-white shadow-lg my-3 post-box image-post">
+    <div className="flex flex-col bg-white shadow-lg my-3 post-description">
       <div className="p-5 bg-white mt-5  shadow-sm">
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">
             <div className=" w-6 h-6 md:w-8 md:h-8">
               <img
-                className="object-cover rounded-full"
+                className=" w-full h-full object-cover rounded-full"
                 src="/images/ml.jpg"
                 alt=""
               />
@@ -93,7 +93,6 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
             </button>
           </Link>
         </div>
-
         <p className="pt-4 text-gray-600"> {postDesc} </p>
       </div>
 

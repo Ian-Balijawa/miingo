@@ -92,15 +92,3 @@ input[type='file'] {
 span.upload {
   border-radius: 4px;
 }
-
-.post-box {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-}
-
-@media (min-width: 768px) {
-  .post-box {
-    width: 100%;
-  }
-}

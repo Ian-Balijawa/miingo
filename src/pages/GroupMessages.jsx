@@ -12,10 +12,9 @@ import { useState } from "react";
 import GroupChart from "../components/GroupChats/GroupChart";
 
 function GroupMessages() {
-
   const location = useLocation();
-  const { src, name , members } = location.state;
-  //  console.log(online);
+  const { src, name, members } = location.state;
+  console.log(src);
 
   const [logout, setLogout] = useState(false);
   const [user] = useLocalStorage("user");
@@ -59,10 +58,13 @@ function GroupMessages() {
             {userName[0]}
           </p>
 
-          <Link  to={`/profile/${user._id}`} className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">
-              {" "}
-              Profile{" "}
-            </Link>
+          <Link
+            to={`/profile/${user._id}`}
+            className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
+          >
+            {" "}
+            Profile{" "}
+          </Link>
           <p
             onClick={handleLogout}
             className="text-sm hover:bg-gray-200 cursor-pointer flex items-center space-x-3"
@@ -75,17 +77,24 @@ function GroupMessages() {
         </div>
       )}
 
-      <Statuses />
+      <div className="px-5">
+        <div className=" w-full h-20 md:h-28">
+          <img
+            src={src}
+            className="h-full w-full object-cover"
+            alt="coverimage"
+          />
+        </div>
+      </div>
 
-      <main className="flex space-x-2 pr-3">
+      <main className="flex space-x-2 pr-3 mt-3">
         {/* Side_feed */}
 
-        <SideFeed />
+        <SideFeed  group ={true} />
 
         {/* Group_Messages */}
 
-    
-        <GroupChart name={name} src={src} members= { members } />
+        <GroupChart name={name} src={src} members={members} />
 
         {/* Boards */}
 

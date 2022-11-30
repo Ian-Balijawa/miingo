@@ -11,6 +11,7 @@ export default function Profile({ user }) {
   const [intro, setIntro] = useState('');
   const [birthDate, setbirthDate] = useState('');
   const [gender, setGender] = useState('');
+  const [error, setError] = useState('');
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
   const [relationship, setRelationship] = useState('');
@@ -22,7 +23,7 @@ export default function Profile({ user }) {
   const dispatch = useDispatch();
 
   const id = user._id;
-  console.log(id);
+  console.log(user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,40 +40,41 @@ export default function Profile({ user }) {
         relationship,
         city,
         email,
-        website
+        website,
+        id
       });
       console.log(data);
       setShowModal(false);
     } catch (err) {
-      // setError(err.response.data.message);
+      setError(err.response.data.message);
       setIsLoading(false);
     }
   };
 
   return (
     <>
-      <div className="p-16 overflow-y-auto scrollbar-hide flex-grow   h-screen  pb-56 ">
-        <div className="p-1 md:p-8  bg-white shadow mt-20">
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
+      <div class="p-25 md:p-16 overflow-y-auto scrollbar-hide flex-grow   h-screen  pb-56 ">
+        <div class="p-1 md:p-8  bg-white shadow mt-20">
+          <div class="grid grid-cols-1 md:grid-cols-3">
+            <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
               <div>
-                <p className="font-bold text-gray-700 text-xl">22</p>
-                <p className="text-gray-400">Friends</p>
+                <p class="font-bold text-gray-700 text-xl">22</p>
+                <p class="text-gray-400">Friends</p>
               </div>
               <div>
-                <p className="font-bold text-gray-700 text-xl">10</p>
-                <p className="text-gray-400">Photos</p>
+                <p class="font-bold text-gray-700 text-xl">10</p>
+                <p class="text-gray-400">Photos</p>
               </div>
               <div>
-                <p className="font-bold text-gray-700 text-xl">89</p>
-                <p className="text-gray-400">Comments</p>
+                <p class="font-bold text-gray-700 text-xl">89</p>
+                <p class="text-gray-400">Comments</p>
               </div>
             </div>
-            <div className="relative">
-              <div className="w-24 h-24 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+            <div class="relative">
+              <div class="w-24 h-24 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-12 w-12"
+                  class="h-12 w-12"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -85,33 +87,35 @@ export default function Profile({ user }) {
               </div>
             </div>
 
-            <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
+            <div class="space-x-4 flex justify-center md:justify-between mt-20 md:mt-0 md:justify-center">
               <button
                 onClick={() => setShowModal(true)}
                 data-bs-toggle="modal"
-                className=" text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5 mx-auto"
+                class=" text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
               >
                 Edit Profile
               </button>
             </div>
           </div>
 
-          <div className="mt-20 text-center border-b pb-12">
-            <h1 className="text-4xl font-medium text-gray-700">{user.name}</h1>
-            <p className="font-light text-gray-600 mt-3">{user.email}</p>
+          <div class="mt-20 text-center border-b pb-12">
+            <h1 class="text-4xl font-medium text-gray-700">{user.name}</h1>
+            <p class="font-light text-gray-600 mt-3">{user.email}</p>
 
-            <p className="mt-8 text-gray-500">Solution Manager</p>
-            <p className="mt-2 text-gray-500">University of Computer Science</p>
+            <p class="mt-8 text-gray-500">
+              Solution Manager - Creative Tim Officer
+            </p>
+            <p class="mt-2 text-gray-500">University of Computer Science</p>
           </div>
 
-          <div className="mt-12 flex flex-col justify-center">
-            <p className="text-gray-600 text-center font-light lg:px-16">
+          <div class="mt-12 flex flex-col justify-center">
+            <p class="text-gray-600 text-center font-light lg:px-16">
               An artist of considerable range, Ryan — the name taken by
               Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs
               and records all of his own music, giving it a warm, intimate feel
               with a solid groove structure. An artist of considerable range.
             </p>
-            <button className="text-indigo-500 py-2 px-4  font-medium mt-4">
+            <button class="text-indigo-500 py-2 px-4  font-medium mt-4">
               Show more
             </button>
           </div>
@@ -119,39 +123,39 @@ export default function Profile({ user }) {
       </div>
       {showModal ? (
         <>
-          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none shadow-2xl">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-auto my-3 mx-auto max-w-2xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl font=semibold">
+                <div className="flex items-center justify-center p-1 border-b border-solid border-gray-300 rounded-t ">
+                  <h3 className="text-xl text-gray-700 font=semibold">
                     General Information
                   </h3>
                 </div>
-                <div className="relative p-6 flex-auto">
+                <div className="relative p-1 flex-auto">
                   <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 rounded px-8 pt-6 pb-8 w-full">
-                    <Stack spacing="4">
-                      <label className="block text-black text-sm font-bold mb-1">
+                    <Stack spacing="2">
+                      <label className="block text-gray-700 text-sm font-bold mb-1">
                         Intro
                       </label>
                       <Input
                         value={intro}
                         onChange={({ target }) => setIntro(target.value)}
                       />
-                      <label className="block text-black text-sm font-bold mb-1">
+                      <label className="block text-gray-700 text-sm font-bold mb-1">
                         Phone
                       </label>
                       <Input
                         value={phone}
                         onChange={({ target }) => setPhone(target.value)}
                       />
-                      <label className="block text-black text-sm font-bold mb-1">
+                      <label className="block text-gray-700 text-sm font-bold mb-1">
                         Email
                       </label>
                       <Input
                         value={email}
                         onChange={({ target }) => setEmail(target.value)}
                       />
-                      <label className="block text-black text-sm font-bold mb-1">
+                      <label className="block text-gray-700 text-sm font-bold mb-1">
                         Lives In
                       </label>
 
@@ -162,33 +166,45 @@ export default function Profile({ user }) {
                     </Stack>
 
                     <Stack spacing="4">
-                      <label className="block text-black text-sm font-bold mb-1">
+                      <label className="block text-gray-700 text-sm font-bold mb-1">
                         Gender
                       </label>
                       <Select
+                        className="cursor-pointer"
                         placeholder="Select Gender"
                         onChange={({ target }) => setGender(target.value)}
                         value={gender}
                       >
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option
+                          value="male"
+                          className="block cursor-pointer text-gray-700 text-sm font-bold mb-1"
+                        >
+                          Male
+                        </option>
+                        <option
+                          value="female"
+                          className="block cursor-pointer text-gray-700 text-sm font-bold mb-1"
+                        >
+                          Female
+                        </option>
                       </Select>
-                      <label className="block text-black text-sm font-bold mb-1">
+                      <label className="block text-gray-700 text-sm font-bold mb-1">
                         Birth Date
                       </label>
                       <Input
+                        className="cursor-pointer"
                         type="date"
                         value={birthDate}
                         onChange={({ target }) => setbirthDate(target.value)}
                       />
-                      <label className="block text-black text-sm font-bold mb-1">
+                      <label className="block text-gray-700 text-sm font-bold mb-1">
                         Website
                       </label>
                       <Input
                         value={website}
                         onChange={({ target }) => setWebsite(target.value)}
                       />
-                      <label className="block text-black text-sm font-bold mb-1">
+                      <label className="block text-gray-700 text-sm font-bold mb-1">
                         RelationShip
                       </label>
                       <Input
@@ -198,7 +214,7 @@ export default function Profile({ user }) {
                     </Stack>
                   </form>
                 </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                <div className="flex items-center justify-end p-2 border-t border-solid border-blueGray-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
                     type="button"
@@ -209,7 +225,7 @@ export default function Profile({ user }) {
                   <Button
                     type="submit"
                     colorScheme="blue"
-                    size="lg"
+                    size="md"
                     fontSize="md"
                     onClick={handleSubmit}
                   >
