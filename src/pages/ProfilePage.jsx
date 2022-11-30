@@ -65,9 +65,12 @@ export default function ProfilePage() {
             </p>
           </div>
         )}
+         
+         {/* profile body */}
       <main className="">
         <Profile user={user} />
       </main>
+
     </div>
   );
 }

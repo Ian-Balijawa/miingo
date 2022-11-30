@@ -39,7 +39,17 @@ function Post({ name, message, email, timestamp, postImage }) {
           </Link>
         </div>
 
-        <p className="pt-4 text-gray-600"> {message} </p>
+        {/* <p className="pt-4 text-gray-600"> {message} </p> */}
+
+        <p className="pt-4 text-gray-600"> 
+           Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+           Error suscipit necessitatibus debitis iure aspernatur eius 
+           voluptatem explicabo repellat est molestiae, unde nulla ratione 
+           nisi fugiat libero voluptatibus voluptas consequuntur nostrum aliquid!
+            Pariatur impedit esse consequatur architecto, vero eos cupiditate, 
+            qui in reiciendis officia, ad accusantium id porro quo asperiores aut.
+        </p>
+
        
 
       </div>
