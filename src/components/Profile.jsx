@@ -38,7 +38,6 @@ export default function Profile({ user }) {
         country,
         city,
         relationship,
-        city,
         email,
         website,
         id
