@@ -32,6 +32,7 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
       })
       .then((res) => {
         dispatch(postLiked(res.data.likes));
+        console.log('liked: ', res.data.likes);
       })
       .catch((err) => {
         console.log('ERROR: ', err);

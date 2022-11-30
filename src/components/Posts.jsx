@@ -26,7 +26,7 @@ function Posts() {
       .catch((err) => {
         setError(err.response.data.message);
       });
-  }, []);
+  }, [accessToken, dispatch]);
 
   const postsSorted = [...posts];
 
@@ -43,7 +43,7 @@ function Posts() {
           postDesc={post.postDesc}
           email={post.user ? post.user.email : "creator's email"}
           createdAt={post.createdAt}
-          image={`https://api1.miingoapp.com/${post.image}`}
+          image={post.image ? `https://api1.miingoapp.com/${post.image}` : null}
         />
       ))}
 
@@ -55,7 +55,7 @@ function Posts() {
           postDesc={post.postDesc}
           email={post.user ? post.user.email : "creator's email"}
           createdAt={post.createdAt}
-          image={`https://api1.miingoapp.com/${post.image}`}
+          image={post.image ? `https://api1.miingoapp.com/${post.image}` : null}
           likes={post.likes.length}
           comments={post.comments}
           _id={post._id}
