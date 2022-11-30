@@ -12,6 +12,7 @@ import { useState } from 'react';
 export default function ProfilePage() {
   const [user] = useLocalStorage('user');
   const [logout, setLogout] = useState(false);
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userName] = useState(user.name.split(' '));
@@ -24,10 +25,15 @@ export default function ProfilePage() {
     e.preventDefault();
 
     try {
-      await axios.patch('/auth/logout');
+      await axios.patch('/auth/logout', {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      });
       dispatch(removeUser());
+      navigate('/');
     } catch (error) {
-      console.error('ERROR: ', error);
+      setError(error.response.data.message);
     }
     dispatch(removeUser());
     navigate('/');
@@ -35,7 +41,6 @@ export default function ProfilePage() {
 
   return (
     <div className="h-screen bg-miingo-gray overflow-hidden">
-      {/* Header */}
       <Header onPress={showDropdown} />
 
       {logout && (
@@ -64,6 +69,7 @@ export default function ProfilePage() {
             </span>
             <span>Logout</span>
           </p>
+          {error && <p className="text-red-500 text-xs">{error}</p>}
         </div>
       )}
       <main className="">

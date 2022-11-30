@@ -11,15 +11,19 @@ const authSlice = createSlice( {
 		setUser ( state, action ) {
 			state.user = action.payload.user;
 			state.accessToken = action.payload.accessToken;
+			localStorage.setItem( 'accessToken', JSON.stringify( action.payload.accessToken ) )
+			localStorage.setItem( 'user', JSON.stringify( action.payload.user ) )
 		},
 		// remove the user and accessToken from the store
 		removeUser ( state ) {
 			state.user = null;
 			state.accessToken = null;
+			localStorage.clear()
 		},
 		//we shall need to set the accessToken independently of the user after we refresh the token
 		setAccessToken ( state, action ) {
 			state.accessToken = action.payload.accessToken;
+			localStorage.setItem( 'accessToken', JSON.stringify( action.payload.accessToken ) )
 		}
 
 	},

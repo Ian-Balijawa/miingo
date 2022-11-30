@@ -1,17 +1,66 @@
-import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/outline';
+import {
+  ChatAltIcon,
+  HeartIcon,
+  ShareIcon,
+  ThumbUpIcon
+} from '@heroicons/react/outline';
 
 import { Link } from 'react-router-dom';
+import axios from '../services/axios-config';
+import { postLiked } from '../app/slices/postsSlice';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useRef } from 'react';
 import { useState } from 'react';
 
-function Post({ name, postDesc, user, email, createdAt, image }) {
-  const [isVisibleCommentField, setIsVisibleCommentField] = useState(false);
-  const commentRef = useRef();
+function Post({ postDesc, user, createdAt, image, likes, _id }) {
   const [loggedInUser] = useLocalStorage('user');
+  const [accessToken] = useLocalStorage('accessToken');
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
+  const [showComments, setShowComments] = useState(false);
+  const [showCommentInput, setShowCommentInput] = useState(false);
+  const [showCommentButton, setShowCommentButton] = useState(true);
+  const dispatch = useDispatch();
+
+  const handleLike = () => {
+    axios
+      .patch(`/post/${_id}/like/${loggedInUser._id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then((res) => {
+        dispatch(postLiked(res.data.likes));
+        console.log('liked: ', res.data.likes);
+      })
+      .catch((err) => {
+        console.log('ERROR: ', err);
+      });
+  };
+
+  const handleComment = () => {
+    axios
+      .post(
+        `/post/comment/${_id}`,
+        { comment },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
+      .then((res) => {
+        setComments(res.data.comments);
+        setComment('');
+        setShowCommentInput(false);
+        setShowCommentButton(true);
+      })
+      .catch((err) => {});
+  };
 
   return (
-    <div className="flex flex-col bg-white shadow-lg my-3">
+    <div className="flex flex-col bg-white shadow-lg my-3 post-description">
       <div className="p-5 bg-white mt-5  shadow-sm">
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">
@@ -24,7 +73,9 @@ function Post({ name, postDesc, user, email, createdAt, image }) {
             </div>
 
             <div>
-              <p className="font-semibold  text-gray-500">{name}</p>
+              <p className="font-semibold  text-gray-500">
+                {user ? user.name : 'some user'}
+              </p>
               <p className="text-xs text-gray-400">{createdAt}</p>
             </div>
           </div>
@@ -42,7 +93,6 @@ function Post({ name, postDesc, user, email, createdAt, image }) {
             </button>
           </Link>
         </div>
-
         <p className="pt-4 text-gray-600"> {postDesc} </p>
       </div>
 
@@ -58,22 +108,19 @@ function Post({ name, postDesc, user, email, createdAt, image }) {
               bg-white shadow-md text-gray-600 px-2  py-3 mt-2`}
       >
         <div className=" flex items-center justify-center">
-          <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
+          <div
+            className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
+            onClick={handleLike}
+          >
             <ThumbUpIcon className="h-6" />
             <p className="text-xs sm:text-base hidden md:inline-flex">
-              {' '}
-              12k Likes{' '}
+              {`${likes || 0} Likes`}
             </p>
           </div>
 
           <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
             <ChatAltIcon className="h-6" />
-            <p
-              className="text-xs sm:text-base"
-              onClick={() => setIsVisibleCommentField((prev) => !prev)}
-            >
-              comment
-            </p>
+            <p className="text-xs sm:text-base">comment</p>
           </div>
         </div>
 
@@ -101,20 +148,6 @@ function Post({ name, postDesc, user, email, createdAt, image }) {
           </div>
         </div>
       </div>
-      {isVisibleCommentField && (
-        <div>
-          <input
-            style={{
-              border: '1px solid #eee',
-              padding: '0.5em',
-              outline: 'none',
-              width: '100%'
-            }}
-            ref={commentRef}
-            placeholder="Add comment"
-          />
-        </div>
-      )}
     </div>
   );
 }

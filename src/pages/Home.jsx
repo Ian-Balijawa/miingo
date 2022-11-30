@@ -88,7 +88,7 @@ function Home() {
 
           {/* Boards */}
 
-          <Boards />
+          <Boards className="flex flex-grow" />
         </main>
 
         <BottomNav />
