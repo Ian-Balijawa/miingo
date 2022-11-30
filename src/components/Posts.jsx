@@ -48,6 +48,7 @@ function Posts() {
       ))}
 
       <Addfriends />
+      
       {postsSorted.slice(1, postsSorted.length).map((post) => (
         <Post
           key={post._id}

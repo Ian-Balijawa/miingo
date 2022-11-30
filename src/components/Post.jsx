@@ -112,11 +112,14 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
         <div className=" flex items-center justify-center">
           <div
             className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
-            onClick={handleLike}
+            onClick={ handleLike }
           >
             <ThumbUpIcon className="h-6" />
-            <p className="text-xs sm:text-base hidden md:inline-flex">
-              {`${likes || 0} Likes`}
+            <p className="text-xs sm:text-base">
+              {`${likes || 0}`}
+            </p>
+            <p className="text-sm hidden md:inline-flex ">
+                { likes === 1 ? " Like" : "Likes" }
             </p>
           </div>
 
