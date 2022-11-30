@@ -33,7 +33,7 @@ const data = [
 const ActivityCard = ({ cardTitle }) => {
 	return (
 		<>
-			<div className="bg-slate-100 lg:w-[400px] sm:w-[380px] lg:ml-7 mt-10 shadow-2xl lg:p-4  sm:p-2">
+			<div className=" hidden lg:block bg-slate-100 lg:w-[300px] sm:w-[380px] lg:ml-7 mt-10 shadow-2xl lg:p-4  sm:p-2">
 				<div className="font-bold justify-start leading-4  font-serif p-4">
 					<h2>{cardTitle}</h2>
 				</div>
