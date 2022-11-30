@@ -1,15 +1,12 @@
-import {
-  ChatAltIcon,
-  HeartIcon,
-  ShareIcon,
-  ThumbUpIcon
-} from '@heroicons/react/outline';
+import { Box, Button, Input } from '@chakra-ui/react';
+import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/outline';
 
+import { Image } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import axios from '../services/axios-config';
+import { elapsedTime } from '../utils/elapsedTime';
 import { postLiked } from '../app/slices/postsSlice';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useState } from 'react';
 
@@ -18,9 +15,7 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
   const [accessToken] = useLocalStorage('accessToken');
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
-  const [showComments, setShowComments] = useState(false);
-  const [showCommentInput, setShowCommentInput] = useState(false);
-  const [showCommentButton, setShowCommentButton] = useState(true);
+  const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const dispatch = useDispatch();
 
   const handleLike = () => {
@@ -53,8 +48,6 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
       .then((res) => {
         setComments(res.data.comments);
         setComment('');
-        setShowCommentInput(false);
-        setShowCommentButton(true);
       })
       .catch((err) => {});
   };
@@ -76,7 +69,7 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
               <p className="font-semibold  text-gray-500">
                 {user ? user.name : 'some user'}
               </p>
-              <p className="text-xs text-gray-400">{createdAt}</p>
+              <p className="text-xs text-gray-400">{elapsedTime(createdAt)}</p>
             </div>
           </div>
 
@@ -95,7 +88,6 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
         </div>
 
         <p className="pt-4 text-gray-600"> {postDesc} </p>
-
       </div>
 
       {image && (
@@ -107,7 +99,7 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
       {/* footer of post */}
       <div
         className={`flex  justify-between  items-center
-              bg-white shadow-md text-gray-600 px-2  py-3 mt-2`}
+              bg-white text-gray-600 px-2  py-3 mt-2`}
       >
         <div className=" flex items-center justify-center">
           <div
@@ -120,7 +112,12 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
             </p>
           </div>
 
-          <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
+          <div
+            className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
+            onClick={() => {
+              setIsCommentsVisible((isCommentsVisible) => !isCommentsVisible);
+            }}
+          >
             <ChatAltIcon className="h-6" />
             <p className="text-xs sm:text-base">comment</p>
           </div>
@@ -150,6 +147,56 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
           </div>
         </div>
       </div>
+
+      {isCommentsVisible && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            margin: '1rem 1.4rem'
+          }}
+        >
+          <img
+            src="/images/ml.jpg"
+            alt=""
+            width="30"
+            height="30"
+            style={{ borderRadius: '50%' }}
+          />
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              width: '100%'
+            }}
+          >
+            <input
+              type="text"
+              placeholder="write a comment...."
+              style={{
+                width: '80%',
+                padding: '0.6em',
+                borderRadius: '5px',
+                outline: 'none',
+                border: '1px solid #ccc'
+              }}
+            />
+            <button
+              style={{
+                background: '#FF6600',
+                color: 'white',
+                padding: '0.3rem 0.5rem',
+                borderRadius: '5px',
+                outline: 'none'
+              }}
+            >
+              Post
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
