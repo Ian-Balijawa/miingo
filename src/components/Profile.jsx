@@ -1,6 +1,6 @@
 import { Button, Select, Spinner, Stack } from '@chakra-ui/react';
 import React, { useState } from 'react';
-
+import ProfileTabs from './profile_details/ProfileTabs';
 import Input from './Input';
 import axios from '../services/axios-config';
 import { useDispatch } from 'react-redux';
@@ -53,7 +53,7 @@ export default function Profile({ user }) {
 
   return (
     <>
-      <div class="p-25 md:p-16 overflow-y-auto scrollbar-hide flex-grow   h-screen  pb-56 ">
+      <div class="overflow-y-auto scrollbar-hide flex-grow   h-screen  pb-2 ">
         <div class="p-1 md:p-8  bg-white shadow mt-20">
           <div class="grid grid-cols-1 md:grid-cols-3">
             <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
@@ -103,8 +103,8 @@ export default function Profile({ user }) {
             <p class="font-light text-gray-600 mt-3">{user.email}</p>
           </div>
 
-          <div class="mt-12 flex flex-col justify-center">
- 
+          <div class="mt-7 flex flex-col justify-center">
+              <ProfileTabs/>
           </div>
         </div>
       </div>
