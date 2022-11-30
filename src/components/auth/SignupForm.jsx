@@ -13,7 +13,7 @@ import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
 import Input from '../Input';
 import axios from '../../services/axios-config';
-import { register } from '../../app/slices/authSlice';
+import { setUser } from '../../app/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -34,21 +34,17 @@ export const SignupForm = () => {
     setIsLoading(true);
     try {
       const {
-        data: { user }
+        data: { user, accessToken }
       } = await axios.post('/auth/signup', {
         name,
         email,
         password,
+        dob: dateOfBirth,
         gender: selectedGender
       });
-      const res = await axios.post('/auth/signin', {
-        email: user.email,
-        password: user.password
-      });
-      const accessToken = res.data.accessToken;
-      console.log('TOK: ', accessToken);
-      console.log('USER: ', user);
-      dispatch(register({ user, accessToken }));
+
+      console.log('RES: ', user, accessToken);
+      dispatch(setUser({ user, accessToken }));
       setIsLoading(false);
       navigate('/feed');
     } catch (err) {
@@ -57,6 +53,11 @@ export const SignupForm = () => {
     }
   };
 
+  console.log('DATE: ', dateOfBirth);
+  console.log('TYPE: ', typeof dateOfBirth);
+  const handleDateChange = (e) => {
+    setDateOfBirth(e.target.value);
+  };
   return (
     <Box
       minH="100vh"
@@ -112,11 +113,7 @@ export const SignupForm = () => {
                   value={password}
                   onChange={({ target }) => setPassword(target.value)}
                 />
-                {error && (
-                  <Text color="red.500" fontSize="sm">
-                    {error}
-                  </Text>
-                )}
+
                 <label htmlFor="gender">Gender</label>
                 <Select
                   id="gender"
@@ -134,8 +131,13 @@ export const SignupForm = () => {
                   id="dateOfBirth"
                   name="dateOfBirth"
                   value={dateOfBirth}
-                  onChange={({ target }) => setDateOfBirth(target.value)}
+                  onChange={(e) => handleDateChange(e)}
                 />
+                {error && (
+                  <Text color="red.500" textAlign={'center'} fontSize="sm">
+                    {error}
+                  </Text>
+                )}
                 <Button
                   type="submit"
                   colorScheme="blue"
