@@ -11,7 +11,7 @@ function Posts() {
   const [error, setError] = useState(null);
   const [accessToken] = useLocalStorage('accessToken');
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts.postsList);
+  const posts = useSelector((state) => state.posts.value);
 
   useEffect(() => {
     axios
@@ -43,7 +43,11 @@ function Posts() {
           postDesc={post.postDesc}
           email={post.user ? post.user.email : "creator's email"}
           createdAt={post.createdAt}
-          image={post.image ? `https://api1.miingoapp.com/${post.image}` : null}
+          image={
+            post.image
+              ? `https://api1.miingoapp.com/${post.image}?not-from-cache-please`
+              : null
+          }
         />
       ))}
 
@@ -55,7 +59,11 @@ function Posts() {
           postDesc={post.postDesc}
           email={post.user ? post.user.email : "creator's email"}
           createdAt={post.createdAt}
-          image={post.image ? `https://api1.miingoapp.com/${post.image}` : null}
+          image={
+            post.image
+              ? `https://api1.miingoapp.com/${post.image}?not-from-cache-please`
+              : null
+          }
           likes={post.likes.length}
           comments={post.comments}
           _id={post._id}

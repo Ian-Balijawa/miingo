@@ -1,22 +1,35 @@
-import { Box, Button, Input } from '@chakra-ui/react';
-import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/outline';
+import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import {
+  ChatAltIcon,
+  ChevronDownIcon,
+  ShareIcon
+} from '@heroicons/react/outline';
+import { Link, useParams } from 'react-router-dom';
+import { postDeleted, postLiked } from '../app/slices/postsSlice';
+import { useEffect, useState } from 'react';
 
-import { Image } from '@nextui-org/react';
-import { Link } from 'react-router-dom';
+import BeatLoader from 'react-spinners/BeatLoader';
+import { FaThumbsUp } from 'react-icons/fa';
+import TimeAgo from 'timeago-react';
 import axios from '../services/axios-config';
 import { elapsedTime } from '../utils/elapsedTime';
-import { postLiked } from '../app/slices/postsSlice';
 import { useDispatch } from 'react-redux';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useState } from 'react';
 
-function Post({ postDesc, user, createdAt, image, likes, _id }) {
+function Post({ postDesc, user, createdAt, image, _id }) {
   const [loggedInUser] = useLocalStorage('user');
   const [accessToken] = useLocalStorage('accessToken');
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+  const [likes, setLikes] = useState([]);
+
+  const corsImageModified = new Image();
+  corsImageModified.crossOrigin = 'Anonymous';
+  corsImageModified.src = image + '?not-from-cache-please';
+  console.log('CORS IMAGE: ', corsImageModified);
 
   const handleLike = () => {
     axios
@@ -26,7 +39,9 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
         }
       })
       .then((res) => {
+        console.log('LIKED POST: ', _id);
         dispatch(postLiked(res.data.likes));
+        setLikes(res.data.likes);
         console.log('liked: ', res.data.likes);
       })
       .catch((err) => {
@@ -37,7 +52,7 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
   const handleComment = () => {
     axios
       .post(
-        `/post/comment/${_id}`,
+        `/comment/${_id}`,
         { comment },
         {
           headers: {
@@ -52,9 +67,14 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
       .catch((err) => {});
   };
 
+  const isLiked = () => {
+    if (likes.length === 0) return false;
+    return likes.find((like) => like._id === loggedInUser._id) !== undefined;
+  };
+
   return (
-    <div className="flex flex-col bg-white shadow-lg my-3 post-description">
-      <div className="p-5 bg-white mt-5  shadow-sm">
+    <div className="flex flex-col bg-white my-3 post-description">
+      <div className="p-5 bg-white">
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">
             <div className=" w-6 h-6 md:w-8 md:h-8">
@@ -69,7 +89,7 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
               <p className="font-semibold  text-gray-500">
                 {user ? user.name : 'some user'}
               </p>
-              <p className="text-xs text-gray-400">{elapsedTime(createdAt)}</p>
+              <TimeAgo datetime={createdAt} locale="en_US" />
             </div>
           </div>
 
@@ -106,9 +126,9 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
             className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
             onClick={handleLike}
           >
-            <ThumbUpIcon className="h-6" />
+            <FaThumbsUp color={likes.length > 0 ? 'red' : 'black'} />
             <p className="text-xs sm:text-base hidden md:inline-flex">
-              {`${likes || 0} Likes`}
+              {`${likes.length || 0} Likes`}
             </p>
           </div>
 
@@ -129,76 +149,243 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
             <p className="text-xs sm:text-base">share</p>
           </div>
 
-          <div className="  hover:bg-gray-100 p-2 hover:rounded-full cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-              />
-            </svg>
-          </div>
+          <PostMenu
+            postId={_id}
+            onClick={() => {
+              setIsOpen((isOpen) => !isOpen);
+            }}
+          />
         </div>
       </div>
 
-      {isCommentsVisible && (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            margin: '1rem 1.4rem'
-          }}
-        >
-          <img
-            src="/images/ml.jpg"
-            alt=""
-            width="30"
-            height="30"
-            style={{ borderRadius: '50%' }}
-          />
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-around',
-              width: '100%'
-            }}
-          >
-            <input
-              type="text"
-              placeholder="write a comment...."
-              style={{
-                width: '80%',
-                padding: '0.6em',
-                borderRadius: '5px',
-                outline: 'none',
-                border: '1px solid #ccc'
-              }}
-            />
-            <button
-              style={{
-                background: '#FF6600',
-                color: 'white',
-                padding: '0.3rem 0.5rem',
-                borderRadius: '5px',
-                outline: 'none'
-              }}
-            >
-              Post
-            </button>
-          </div>
-        </div>
-      )}
+      {isCommentsVisible && <CommentInputBox />}
     </div>
   );
 }
 
+const CommentInputBox = () => {
+  const [loggedInUser] = useLocalStorage('accessToken');
+  const [comment, setComment] = useState('');
+  const [accessToken] = useLocalStorage('accessToken');
+  const { _id } = useParams();
+  const [isCommentLoading, setIsCommentLoading] = useState(false);
+  const [comments, setComments] = useState([
+    {
+      _id: '1',
+      comment: 'this is a comment',
+      user: {
+        _id: '1',
+        name: loggedInUser.name
+      }
+    },
+    {
+      _id: '2',
+      comment: 'this is a comment',
+      user: {
+        _id: '2',
+        name: loggedInUser.name
+      }
+    },
+    {
+      _id: '3',
+      comment: 'this is a comment',
+      user: {
+        _id: '3',
+        name: loggedInUser.name
+      }
+    },
+    {
+      _id: '4',
+      comment: 'this is a comment',
+      user: {
+        _id: '4',
+        name: loggedInUser.name
+      }
+    }
+  ]);
+
+  const handleComment = () => {
+    axios
+      .post(
+        `/post/comment/${_id}`,
+        { comment },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
+      .then((res) => {
+        setComments(res.data.comments);
+        setComment('');
+      })
+      .catch((err) => {});
+  };
+  const handleCommentLoading = (e) => {
+    setIsCommentLoading(true);
+    setTimeout(() => {
+      setIsCommentLoading(false);
+    }, 1000);
+  };
+
+  const sortedComments = [...comments].sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+  return (
+    <div className="flex flex-col bg-white my-3 post-description">
+      <div className="p-5 bg-white">
+        <div className="flex items-center justify-between space-x-2">
+          <div className="flex items-center space-x-2">
+            <div className=" w-6 h-6 md:w-8 md:h-8">
+              <img
+                className=" w-full h-full object-cover rounded-full"
+                src="/images/ml.jpg"
+                alt=""
+              />
+            </div>
+
+            <div>
+              <p className="font-semibold  text-gray-500">
+                {loggedInUser ? loggedInUser.name : 'some user'}
+              </p>
+              <p className="text-xs text-gray-400">1 hour ago</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center mt-3 space-x-2">
+          <input
+            type="text"
+            className="w-full bg-gray-100 rounded-md p-2 outline-none"
+            placeholder="Write a comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <button
+            className="flex items-center justify-center w-12 h-8 rounded-md bg-regal-orange text-white"
+            onClick={() => {
+              handleComment();
+              setComments([...comments, { comment, user: loggedInUser }]);
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div className="flex flex-col space-y-2 p-2">
+        {comments.map((comment) => (
+          <Comment comment={comment} />
+        ))}
+
+        <Button
+          isLoading={isCommentLoading}
+          colorScheme="gray"
+          onClick={handleCommentLoading}
+          spinner={<BeatLoader size={8} color="black" />}
+        >
+          Load more comments
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const Comment = ({ comment }) => {
+  return (
+    <div className="flex items-center space-x-2 p-2 bg-white mt-2">
+      <div className=" w-6 h-6 md:w-8 md:h-8">
+        <img
+          className=" w-full h-full object-cover rounded-full"
+          src="/images/ml.jpg"
+          alt=""
+        />
+      </div>
+
+      <div>
+        <p className="font-semibold  text-gray-500">{comment.user.name}</p>
+        <p className="text-xs text-gray-400">{comment.comment}</p>
+      </div>
+    </div>
+  );
+};
+
 export default Post;
+
+const PostMenu = ({ postId }) => {
+  const [accessToken] = useLocalStorage('accessToken');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const dispatch = useDispatch();
+
+  const handlePostDelete = () => {
+    axios
+      .delete(`/post/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then((res) => {
+        setIsDeleting(true);
+        console.log('DELETED POST: ', res.data);
+        setIsDeleting(false);
+        dispatch(postDeleted({ _id: postId }));
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsDeleting(false);
+      });
+  };
+
+  return (
+    <Menu>
+      {({ isOpen }) => (
+        <>
+          <MenuButton
+            isActive={isOpen}
+            as={Button}
+            rightIcon={<ChevronDownIcon />}
+          >
+            {isOpen ? 'Close' : <Ellipsis />}
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={handlePostDelete}>
+              {isDeleting ? <BeatLoader size="8" color="black" /> : 'Delete'}
+            </MenuItem>
+          </MenuList>
+        </>
+      )}
+    </Menu>
+  );
+};
+
+const Ellipsis = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-6 h-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+      />
+    </svg>
+  );
+};

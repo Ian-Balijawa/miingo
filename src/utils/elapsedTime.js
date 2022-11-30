@@ -32,5 +32,5 @@ export const elapsedTime = ( date ) => {
 	}
 	return Math.floor( interval ) > 1
 		? Math.floor( seconds ) + ' seconds ago'
-		: Math.floor( seconds ) + ' second ago';
+		: 0 + ' seconds ago';
 };
