@@ -93,7 +93,9 @@ function Post({ postDesc, user, createdAt, image, likes, _id }) {
             </button>
           </Link>
         </div>
+
         <p className="pt-4 text-gray-600"> {postDesc} </p>
+
       </div>
 
       {image && (

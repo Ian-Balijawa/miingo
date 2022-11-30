@@ -72,9 +72,11 @@ export default function ProfilePage() {
           {error && <p className="text-red-500 text-xs">{error}</p>}
         </div>
       )}
+      
       <main className="">
         <Profile user={user} />
       </main>
+
     </div>
   );
 }
