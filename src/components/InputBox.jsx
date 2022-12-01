@@ -92,7 +92,7 @@ function InputBox() {
                 />
               </svg>
               <span className="upload fa fa-upload hidden md:inline-flex">
-                Video
+                video
               </span>
             </label>
             <input
