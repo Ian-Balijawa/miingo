@@ -35,14 +35,11 @@ function InputBox() {
         }
       });
       setSuccessMessage(response.data.message);
-      console.log(response);
-      console.log('SUCCESS: ', response.data.message);
       snapshot.addPost(response.data);
       setIsUploading(false);
     } catch (error) {
       setErrorMessage(error.response.data.message);
       setIsUploading(false);
-      console.log(error);
     } finally {
       setIsUploading(false);
       setDocument(null);

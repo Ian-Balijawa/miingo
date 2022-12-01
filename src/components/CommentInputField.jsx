@@ -34,12 +34,9 @@ export const CommentInputBox = ({ postId }) => {
       )
       .then((res) => {
         state.comments?.push(res.data);
-        console.log('COMMENT ADDED: ', res.data);
         setComment('');
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const handleCommentLoading = (e) => {
     setIsCommentLoading(true);

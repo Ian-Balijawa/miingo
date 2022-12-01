@@ -1,24 +1,23 @@
-import { Link, useLocation } from "react-router-dom";
-import Boards from "../components/Boards";
-import Chat from "../components/Chats/Chat";
-import Header from "../components/Header";
-import SideFeed from "../components/SideFeed";
-import { useNavigate } from "react-router-dom";
-import Statuses from "../components/Statuses";
-import axios from "../services/axios-config";
-import { HiOutlineLogout } from "react-icons/hi";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { useState } from "react";
+import { Link, useLocation } from 'react-router-dom';
+
+import Boards from '../components/Boards';
+import Chat from '../components/Chats/Chat';
+import Header from '../components/Header';
+import { HiOutlineLogout } from 'react-icons/hi';
+import SideFeed from '../components/SideFeed';
+import Statuses from '../components/Statuses';
+import axios from '../services/axios-config';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Messages() {
-  //  const { name }= useParams();
   const location = useLocation();
   const { src, online, name } = location.state;
-  //  console.log(online);
 
   const [logout, setLogout] = useState(false);
-  const [user] = useLocalStorage("user");
-  const [userName] = useState(user.name.split(" "));
+  const [user] = useLocalStorage('user');
+  const [userName] = useState(user.name.split(' '));
 
   const navigate = useNavigate();
 
@@ -30,18 +29,16 @@ export default function Messages() {
     e.preventDefault();
 
     try {
-      const res = await axios.patch("/auth/logout");
+      const res = await axios.patch('/auth/logout');
     } catch (error) {
       if (error) {
-        console.log(error);
       }
     }
 
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
 
-    navigate("/");
+    navigate('/');
   };
-
 
   return (
     <div className="relative h-screen bg-miingo-gray overflow-hidden">
@@ -59,9 +56,12 @@ export default function Messages() {
             {userName[0]}
           </p>
 
-          <Link  to={`/profile/${user._id}`} className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">
-              {" "}
-              Profile{" "}
+          <Link
+            to={`/profile/${user._id}`}
+            className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
+          >
+            {' '}
+            Profile{' '}
           </Link>
           <p
             onClick={handleLogout}
@@ -84,9 +84,7 @@ export default function Messages() {
 
         {/* Messages */}
 
-
         <Chat name={name} src={src} online={online} />
-
 
         {/* Boards */}
 

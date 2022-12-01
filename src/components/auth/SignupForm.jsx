@@ -52,8 +52,6 @@ export const SignupForm = () => {
     }
   };
 
-  console.log('DATE: ', dateOfBirth);
-  console.log('TYPE: ', typeof dateOfBirth);
   const handleDateChange = (e) => {
     setDateOfBirth(e.target.value);
   };

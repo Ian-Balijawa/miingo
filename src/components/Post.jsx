@@ -31,13 +31,9 @@ function Post({ postDesc, user, createdAt, image, _id }) {
         }
       })
       .then((res) => {
-        console.log('LIKED POST: ', _id);
         setLikes(res.data.likes);
-        console.log('liked: ', res.data.likes);
       })
-      .catch((err) => {
-        console.log('ERROR: ', err);
-      });
+      .catch((err) => {});
   };
 
   return (
@@ -143,12 +139,10 @@ const PostMenu = ({ postId }) => {
       })
       .then((res) => {
         setIsDeleting(true);
-        console.log('DELETED POST: ', res.data);
         setIsDeleting(false);
         snapshot.deletePost(postId);
       })
       .catch((err) => {
-        console.log(err);
         setIsDeleting(false);
       });
   };

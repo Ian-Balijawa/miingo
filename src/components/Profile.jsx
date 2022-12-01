@@ -1,11 +1,11 @@
 import { Button, Select, Spinner, Stack } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import ProfileTabs from './profile_details/ProfileTabs';
+
 import Input from './Input';
+import ProfileTabs from './profile_details/ProfileTabs';
 import axios from '../services/axios-config';
 
 export default function Profile({ user }) {
-
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [intro, setIntro] = useState('');
@@ -21,12 +21,10 @@ export default function Profile({ user }) {
   const [country, setCountry] = useState('Uganda');
 
   const id = user._id;
-  console.log(user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log(isLoading);
     try {
       const { data } = await axios.patch(`/user/profile/${id}`, {
         intro,
@@ -40,7 +38,6 @@ export default function Profile({ user }) {
         website,
         id
       });
-      console.log(data);
       setShowModal(false);
     } catch (err) {
       setError(err.response.data.message);
@@ -101,7 +98,7 @@ export default function Profile({ user }) {
           </div>
 
           <div class="mt-7 flex flex-col justify-center">
-              <ProfileTabs/>
+            <ProfileTabs />
           </div>
         </div>
       </div>
@@ -211,7 +208,7 @@ export default function Profile({ user }) {
                     colorScheme="blue"
                     size="md"
                     fontSize="md"
-                    onClick={ handleSubmit }
+                    onClick={handleSubmit}
                   >
                     {isLoading ? <Spinner size="sm" color="white" /> : 'Save'}
                   </Button>

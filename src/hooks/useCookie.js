@@ -15,7 +15,6 @@ export default () => {
 	useEffect( () => {
 		if ( ( Cookies.get( "accessToken" ) ) ) {
 			axios.get( "refresh_url_here/" ).then( ( res ) => {
-				console.log( "REFRESHED TOKEN: ", Cookies.get( "accessToken" ) )
 
 			} )
 			/*what you do here, is try to have a

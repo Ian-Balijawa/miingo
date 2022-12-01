@@ -1,24 +1,24 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import Boards from "../components/Boards";
-import Header from "../components/Header";
-import SideFeed from "../components/SideFeed";
-import { useNavigate } from "react-router-dom";
-import Statuses from "../components/Statuses";
-import axios from "../services/axios-config";
-import { HiOutlineLogout } from "react-icons/hi";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { useState } from "react";
-import GroupChart from "../components/GroupChats/GroupChart";
+import { Link, useLocation } from 'react-router-dom';
+
+import Boards from '../components/Boards';
+import GroupChart from '../components/GroupChats/GroupChart';
+import Header from '../components/Header';
+import { HiOutlineLogout } from 'react-icons/hi';
+import React from 'react';
+import SideFeed from '../components/SideFeed';
+import Statuses from '../components/Statuses';
+import axios from '../services/axios-config';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function GroupMessages() {
   const location = useLocation();
   const { src, name, members } = location.state;
-  console.log(src);
 
   const [logout, setLogout] = useState(false);
-  const [user] = useLocalStorage("user");
-  const [userName] = useState(user.name.split(" "));
+  const [user] = useLocalStorage('user');
+  const [userName] = useState(user.name.split(' '));
 
   const navigate = useNavigate();
 
@@ -30,16 +30,15 @@ function GroupMessages() {
     e.preventDefault();
 
     try {
-      const res = await axios.patch("/auth/logout");
+      const res = await axios.patch('/auth/logout');
     } catch (error) {
       if (error) {
-        console.log(error);
       }
     }
 
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
 
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -62,8 +61,8 @@ function GroupMessages() {
             to={`/profile/${user._id}`}
             className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
           >
-            {" "}
-            Profile{" "}
+            {' '}
+            Profile{' '}
           </Link>
           <p
             onClick={handleLogout}
@@ -90,7 +89,7 @@ function GroupMessages() {
       <main className="flex space-x-2 pr-3 mt-3">
         {/* Side_feed */}
 
-        <SideFeed  group ={true} />
+        <SideFeed group={true} />
 
         {/* Group_Messages */}
 
