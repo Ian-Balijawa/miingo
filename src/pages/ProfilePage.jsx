@@ -8,6 +8,10 @@ import { useDispatch } from 'react-redux';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import ProfileBanner from '../components/profile_details/ProfileBanner';
+import ProfileSideFeed from '../components/profile_details/ProfileSideFeed';
+import ProfileFeed from '../components/profile_details/ProfileFeed';
+import ProfileBoards from '../components/profile_details/ProfileBoards';
 
 export default function ProfilePage() {
   const [user] = useLocalStorage('user');
@@ -40,7 +44,8 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="h-screen bg-miingo-gray overflow-hidden">
+    <div className="h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden">
+
       <Header onPress={showDropdown} />
 
       {logout && (
@@ -72,10 +77,28 @@ export default function ProfilePage() {
           {error && <p className="text-red-500 text-xs">{error}</p>}
         </div>
       )}
-      
-      <main className="">
-        <Profile user={user} />
+
+      <ProfileBanner user = { user } />
+
+
+      <main className=" flex space-x-2 pr-3 pb-10">
+         
+          {/* Profile Side Feed /> */}
+          <ProfileSideFeed />
+
+          {/* Profile  Feed */}
+
+          <ProfileFeed />
+
+          {/*  Profile Boards */}
+        
+         <ProfileBoards  />
+          
       </main>
+             
+      {/* <main className="">
+        <Profile user={user} />
+      </main> */}
 
     </div>
   );

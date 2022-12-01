@@ -35,7 +35,7 @@ function Posts() {
   });
 
   return (
-    <div className="w-full md:w-[640px] space-y-4">
+    <div className="w-full space-y-4">
       {postsSorted.slice(0, 1).map((post) => (
         <Post
           key={post._id}

@@ -6,6 +6,7 @@ import axios from '../services/axios-config';
 import { useDispatch } from 'react-redux';
 
 export default function Profile({ user }) {
+
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [intro, setIntro] = useState('');
@@ -227,7 +228,7 @@ export default function Profile({ user }) {
                     colorScheme="blue"
                     size="md"
                     fontSize="md"
-                    onClick={handleSubmit}
+                    onClick={ handleSubmit }
                   >
                     {isLoading ? <Spinner size="sm" color="white" /> : 'Save'}
                   </Button>

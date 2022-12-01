@@ -1,17 +1,17 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 
-import Boards from '../components/Boards';
-import BottomNav from '../components/BottomNav';
-import Feed from '../components/Feed';
-import Header from '../components/Header';
-import { HiOutlineLogout } from 'react-icons/hi';
-import React from 'react';
-import SideFeed from '../components/SideFeed';
-import Statuses from '../components/Statuses';
-import axios from '../services/axios-config';
-import { removeUser } from '../app/slices/authSlice';
-import { useDispatch } from 'react-redux';
-import useLocalStorage from '../hooks/useLocalStorage';
+import Boards from "../components/Boards";
+import BottomNav from "../components/BottomNav";
+import Feed from "../components/Feed";
+import Header from "../components/Header";
+import { HiOutlineLogout } from "react-icons/hi";
+import React from "react";
+import SideFeed from "../components/SideFeed";
+import Statuses from "../components/Statuses";
+import axios from "../services/axios-config";
+import { removeUser } from "../app/slices/authSlice";
+import { useDispatch } from "react-redux";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const { useState } = React;
 
@@ -19,8 +19,8 @@ function Home() {
   const [logout, setLogout] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [user] = useLocalStorage('user');
-  const [userName] = useState(user.name.split(' '));
+  const [user] = useLocalStorage("user");
+  const [userName] = useState(user.name.split(" "));
 
   const showDropdown = () => {
     setLogout(!logout);
@@ -30,18 +30,18 @@ function Home() {
     e.preventDefault();
 
     try {
-      await axios.patch('/auth/logout');
+      await axios.patch("/auth/logout");
       dispatch(removeUser());
     } catch (error) {
-      console.error('ERROR: ', error);
+      console.error("ERROR: ", error);
     }
     dispatch(removeUser());
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <div className="">
-      <div className=" relative h-screen bg-miingo-gray overflow-hidden font-serif">
+      <div className=" h-screen w-full bg-miingo-gray  font-serif overflow-y-auto overflow-x-hidden ">
         {/* Header */}
         <Header onPress={showDropdown} />
 
@@ -59,8 +59,8 @@ function Home() {
               to={`/profile/${user._id}`}
               className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
             >
-              {' '}
-              Profile{' '}
+              {" "}
+              Profile{" "}
             </Link>
             <p
               onClick={handleLogout}
@@ -74,22 +74,24 @@ function Home() {
           </div>
         )}
 
-        <Statuses />
+        
+          <Statuses />
 
-        <main className=" flex space-x-2 pr-3">
-          {/* chat */}
+          <main className="relative flex space-x-2 pr-3 pb-10 ">
+            {/* chat */}
 
-          {/* <Widgets /> */}
-          <SideFeed />
+            {/* <Widgets /> */}
+            <SideFeed />
 
-          {/* Feed */}
+            {/* Feed */}
 
-          <Feed />
+            <Feed />
 
-          {/* Boards */}
+            {/* Boards */}
 
-          <Boards className="flex flex-grow" />
-        </main>
+            <Boards />
+          </main>
+        
 
         <BottomNav />
       </div>
