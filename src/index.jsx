@@ -9,14 +9,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-const qc = new QueryClient();
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ChakraProvider>
-        <QueryClientProvider client={qc}>
+        <QueryClientProvider client={queryClient}>
           <Routes>
             <Route path="/*" element={<App />} />
           </Routes>

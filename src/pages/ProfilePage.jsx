@@ -1,21 +1,23 @@
 import Header from '../components/Header';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
-import Profile from '../components/Profile';
+import ProfileBanner from '../components/profile_details/ProfileBanner';
+import ProfileBoards from '../components/profile_details/ProfileBoards';
+import ProfileFeed from '../components/profile_details/ProfileFeed';
+import ProfileSideFeed from '../components/profile_details/ProfileSideFeed';
 import axios from '../services/axios-config';
-import { removeUser } from '../app/slices/authSlice';
-import { useDispatch } from 'react-redux';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { state } from '../state';
 import { useNavigate } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 import { useState } from 'react';
 
 export default function ProfilePage() {
-  const [user] = useLocalStorage('user');
+  const snapshot = useSnapshot(state);
   const [logout, setLogout] = useState(false);
   const [error, setError] = useState(null);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userName] = useState(user.name.split(' '));
+  const user = snapshot.user;
+  const userName = user?.name?.split(' ')[0];
 
   const showDropdown = () => {
     setLogout(!logout);
@@ -27,20 +29,18 @@ export default function ProfilePage() {
     try {
       await axios.patch('/auth/logout', {
         headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${snapshot.accessToken}`
         }
       });
-      dispatch(removeUser());
       navigate('/');
     } catch (error) {
       setError(error.response.data.message);
     }
-    dispatch(removeUser());
     navigate('/');
   };
 
   return (
-    <div className="h-screen bg-miingo-gray overflow-hidden">
+    <div className="h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden">
       <Header onPress={showDropdown} />
 
       {logout && (
@@ -50,11 +50,11 @@ export default function ProfilePage() {
           </div>
 
           <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 sm:hidden">
-            {userName[0]}
+            {userName}
           </p>
 
           <Link
-            to={`/profile/${user._id}`}
+            to={`/profile/${user?._id}`}
             className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
           >
             {' '}
@@ -72,11 +72,25 @@ export default function ProfilePage() {
           {error && <p className="text-red-500 text-xs">{error}</p>}
         </div>
       )}
-      
-      <main className="">
-        <Profile user={user} />
+
+      <ProfileBanner user={user} />
+
+      <main className=" flex space-x-2 pr-3 pb-10">
+        {/* Profile Side Feed /> */}
+        <ProfileSideFeed />
+
+        {/* Profile  Feed */}
+
+        <ProfileFeed />
+
+        {/*  Profile Boards */}
+
+        <ProfileBoards />
       </main>
 
+      {/* <main className="">
+        <Profile user={user} />
+      </main> */}
     </div>
   );
 }

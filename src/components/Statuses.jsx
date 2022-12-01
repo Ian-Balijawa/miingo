@@ -94,7 +94,7 @@ function Statuses() {
   };
 
   return (
-    <div className=" flex  items-center justify-between space-x-2  w-screen bg-miingo-gray px-3 py-1 mx-2 ">
+    <div className="sticky top-0 z-40 flex  items-center justify-between space-x-2  w-screen bg-miingo-gray px-3 py-1 mx-2 ">
      
       <div className=" flex md:pl-4  w-20 md:w-24">
         <div className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-regal-orange shadow-lg  flex items-center justify-center  hover:shadow-xl active:scale-90 transition duration-300">

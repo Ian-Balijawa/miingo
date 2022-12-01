@@ -1,15 +1,16 @@
 module.exports = {
-  mode: "jit",
-  content: ["./public/**/*.html", "./src/**/*.{js,jsx,ts,tsx}"],
-  theme: {
-    extend: {
-      backgroundImage: {
-        seconds_bg: "url('/public/images/bg2.jpg')",
-        logo_bg: "url('/public/images/logo.png')",
+	mode: "jit",
+	content: ["./public/**/*.html", "./src/**/*.{js,jsx,ts,tsx}"],
+	theme: {
+		extend: {
+			backgroundImage: {
+				seconds_bg: "url('/public/images/bg2.jpg')",
+				logo_bg: "url('/public/images/logo.png')",
+				profile:
+					"url('https://res.cloudinary.com/itgenius/image/upload/v1669735929/u-bg_mwcezz.jpg)",
+			},
 
-      },
-
-      colors: {
+			colors: {
 				"regal-orange": "#ff6600",
 				"miingo-gray": "#fafafa",
 				"miingo-pink": "#c23abd",
@@ -21,7 +22,10 @@ module.exports = {
 				none: "none",
 				blur: "blur(20px)",
 			},
-    },
-  },
-  plugins: [require("tailwind-scrollbar-hide"), require("@tailwindcss/line-clamp")],
+		},
+	},
+	plugins: [
+		require("tailwind-scrollbar-hide"),
+		require("@tailwindcss/line-clamp"),
+	],
 };

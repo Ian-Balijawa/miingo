@@ -30,7 +30,11 @@ function Home() {
     e.preventDefault();
 
     try {
-      await axios.patch('/auth/logout');
+      await axios.patch('/auth/logout', {
+        headers: {
+          Authorization: `Bearer ${snapshot.accessToken}`
+        }
+      });
       snapshot.removeUser();
       snapshot.removeAccessToken();
     } catch (error) {
@@ -43,7 +47,7 @@ function Home() {
 
   return (
     <div className="">
-      <div className=" relative h-screen bg-miingo-gray overflow-hidden font-serif">
+      <div className=" h-screen w-full bg-miingo-gray  font-serif overflow-y-auto overflow-x-hidden ">
         {/* Header */}
         <Header onPress={showDropdown} />
 
@@ -58,7 +62,7 @@ function Home() {
             </p>
 
             <Link
-              to={`/profile/${snapshot.user._id}`}
+              to={`/profile/${snapshot.user?._id}`}
               className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
             >
               {' '}
@@ -78,7 +82,7 @@ function Home() {
 
         <Statuses />
 
-        <main className=" flex space-x-2 pr-3">
+        <main className="relative flex space-x-2 pr-3 pb-10 ">
           {/* chat */}
 
           {/* <Widgets /> */}
@@ -90,7 +94,7 @@ function Home() {
 
           {/* Boards */}
 
-          <Boards className="flex flex-grow" />
+          <Boards />
         </main>
 
         <BottomNav />

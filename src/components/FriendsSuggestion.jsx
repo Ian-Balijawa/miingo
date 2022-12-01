@@ -5,7 +5,7 @@ import Suggestion from "./Suggestion";
 import { HiChevronRight } from "react-icons/hi";
 import { HiChevronLeft } from "react-icons/hi";
 
-function FriendsSuggestion() {
+function FriendsSuggestion({ profile }) {
   const suggestions = [
     {
       id: 1,
@@ -106,7 +106,9 @@ function FriendsSuggestion() {
     <div className="flex flex-col space-y-2 bg-white rounded-lg shadow-lg h-64 w-full font-serif ">
       <div className=" w-72 flex items-center justify-between mx-4 mt-2 p-2">
         <div className="text-gray-600">
-          <h3 className="font-semibold">Friend Suggestion</h3>
+          <h3 className="font-semibold">
+               { profile ? "Suggested Friends " : "Friend Suggestion"}
+          </h3>
         </div>
 
         <div className="flex items-center justify-around space-x-3">

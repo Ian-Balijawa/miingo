@@ -4,7 +4,9 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
+import ActivityCard from './components/profile/ActivityCard';
 import LoadingScreen from './components/LoadingScreen';
+import NewProfilePage from './pages/Profile_Page';
 import api from './services/axios-config';
 import { devtools } from 'valtio/utils';
 import { state } from './state';
@@ -77,11 +79,13 @@ export default () => {
         <Route path="/" element={<Signin />} />
         <Route path="login" element={<Signin />} />
         <Route path="register" element={<Signup />} />
+        <Route path="ld" element={<NewProfilePage />} />
+        <Route path="ad" element={<ActivityCard />} />
 
         <Route
           path="profile"
           element={
-            <RequireAuth redirectTo="/login">
+            <RequireAuth>
               <Profile />
             </RequireAuth>
           }
@@ -89,7 +93,7 @@ export default () => {
         <Route
           path="feed"
           element={
-            <RequireAuth redirectTo="/login">
+            <RequireAuth>
               <Home />
             </RequireAuth>
           }
@@ -97,7 +101,7 @@ export default () => {
         <Route
           path="messages"
           element={
-            <RequireAuth redirectTo="/login">
+            <RequireAuth>
               <Messages />
             </RequireAuth>
           }
@@ -106,7 +110,7 @@ export default () => {
         <Route
           path="group_messages"
           element={
-            <RequireAuth redirectTo="/login">
+            <RequireAuth>
               <GroupMessages />
             </RequireAuth>
           }
@@ -115,7 +119,7 @@ export default () => {
         <Route
           path="/profile/:id"
           element={
-            <RequireAuth redirectTo="/login">
+            <RequireAuth>
               <Profile />
             </RequireAuth>
           }
@@ -124,7 +128,7 @@ export default () => {
         <Route
           path="groups"
           element={
-            <RequireAuth redirectTo="/login">
+            <RequireAuth>
               <GroupFeeds />
             </RequireAuth>
           }
@@ -134,8 +138,8 @@ export default () => {
   );
 };
 
-const RequireAuth = ({ children, redirectTo }) => {
+const RequireAuth = ({ children }) => {
   const [user] = useLocalStorage('user');
 
-  return user ? children : <Navigate to={redirectTo} />;
+  return user ? children : <Navigate to="/login" />;
 };

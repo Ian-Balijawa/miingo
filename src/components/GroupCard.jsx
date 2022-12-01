@@ -5,7 +5,7 @@ function GroupCard({ id, src, name, email, image }) {
   return (
     <div className="flex flex-col bg-white rounded-lg shadow-xl h-auto w-full overflow-hidden font-serif">
       <div className=" w-full h-28">
-        <img src={image} className="w-full h-full object-cover" alt="bg-pic" />
+        <img src={ image } className="w-full h-full object-cover" alt="bg-pic" />
       </div>
 
       <div className="relative flex items-center justify-between space-x-2 p-4 ">
@@ -19,8 +19,8 @@ function GroupCard({ id, src, name, email, image }) {
 
         <div className="pl-12 md:pl-16 lg:pl-20 flex items-center justify-between space-x-2 lg:space-x-4">
           <div className="w-28 lg:w-44">
-            <h1 className="text-gray-700 font-semibold"> {name}</h1>
-            <p className="text-gray-600 text-xs "> {email}</p>
+            <h1 className="text-gray-700 font-semibold"> { name }</h1>
+            <p className="text-gray-600 text-xs "> { email }</p>
           </div>
 
           <div className="flex items-center  space-x-3 flex-grow">

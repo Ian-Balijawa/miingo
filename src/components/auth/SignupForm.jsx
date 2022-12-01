@@ -15,11 +15,13 @@ import Input from '../Input';
 import axios from '../../services/axios-config';
 import { state } from '../../state';
 import { useNavigate } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 import { useState } from 'react';
 
 export const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
+  const snapshot = useSnapshot(state);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [selectedGender, setSelectedGender] = useState('');
@@ -40,9 +42,8 @@ export const SignupForm = () => {
         dob: dateOfBirth,
         gender: selectedGender
       });
-
-      state.user = user;
-      state.accessToken = accessToken;
+      snapshot.setUser(user);
+      snapshot.setAccessToken(accessToken);
       setIsLoading(false);
       navigate('/feed');
     } catch (err) {

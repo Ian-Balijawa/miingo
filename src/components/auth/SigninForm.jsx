@@ -34,7 +34,6 @@ export const SigninForm = () => {
         password
       });
 
-      console.log('RES: ', data);
       snapshot.setUser(data.user);
       snapshot.setAccessToken(data.accessToken);
 

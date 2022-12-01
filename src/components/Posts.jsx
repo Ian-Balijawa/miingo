@@ -17,14 +17,11 @@ function Posts() {
         }
       })
       .then((res) => {
-        console.log('RES: ', res);
-        console.log('DATA: ', res.data);
         state.posts = res.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
       })
       .catch((err) => {
-        console.log('ERR: ', err);
         setError(err.response.data.message);
       });
   }, [snapshot.accessToken]);

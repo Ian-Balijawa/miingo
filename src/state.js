@@ -1,11 +1,11 @@
-import { proxy } from "valtio"
+import { proxy, ref } from "valtio"
 
 export const state = proxy( {
 	user: null,
 	accessToken: null,
 	posts: [],
 	comments: [],
-	socket: null,
+	socket: ref( document.body ),
 	setUser ( user ) {
 		state.user = user
 		localStorage.setItem( 'user', JSON.stringify( user ) )
@@ -33,9 +33,6 @@ export const state = proxy( {
 	},
 	updatePost ( post ) {
 		state.posts = state.posts.map( p => p._id === post._id ? post : p )
-	},
-	addComments ( comments ) {
-		state.comments.concat( [...comments] )
 	},
 	addComment ( comment ) {
 		state.comments.push( comment )
