@@ -9,7 +9,7 @@ function Header({ onPress }) {
   const [userName] = useState(user.name.split(" "));
 
   return (
-    <div className=" bg-white sticky top-0 z-50  flex justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
+    <div className=" bg-white  sticky top-0 z-50 flex justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
       {/* left */}
       <Link to="/feed" className="w-56">
           <div className="flex items-center justify-center rounded-full bg-regal-orange w-14 md:w-16  h-14 md:h-16">
@@ -97,7 +97,7 @@ function Header({ onPress }) {
         </div>
 
         <div className=" flex items-center space-x-2">
-          <div onClick={onPress} className=" relative w-14 h-14 cursor-pointer">
+          <div onClick={ onPress } className=" relative w-14 h-14 cursor-pointer">
             <img
               src="https://res.cloudinary.com/itgenius/image/upload/v1668007542/pexels-mahdi-chaghari-12463279_cwiw1n.jpg"
               alt=""
