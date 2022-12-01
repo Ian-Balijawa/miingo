@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 
 import Input from './Input';
 import axios from '../services/axios-config';
-import { useDispatch } from 'react-redux';
 
 export default function Profile({ user }) {
   const [showModal, setShowModal] = useState(false);
@@ -19,8 +18,6 @@ export default function Profile({ user }) {
   const [email, setEmail] = useState('');
   const [website, setWebsite] = useState('');
   const [country, setCountry] = useState('Uganda');
-
-  const dispatch = useDispatch();
 
   const id = user._id;
   console.log(user);

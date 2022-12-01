@@ -15,7 +15,7 @@ function InputBox() {
   const [isUploading, setIsUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const snap = useSnapshot(state);
+  const snapshot = useSnapshot(state);
 
   const handlePost = async (e) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ function InputBox() {
       setSuccessMessage(response.data.message);
       console.log(response);
       console.log('SUCCESS: ', response.data.message);
-      snap.addPost(response.data);
+      snapshot.addPost(response.data);
       setIsUploading(false);
     } catch (error) {
       setErrorMessage(error.response.data.message);

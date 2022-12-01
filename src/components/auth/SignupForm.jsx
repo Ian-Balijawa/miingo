@@ -13,8 +13,7 @@ import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
 import Input from '../Input';
 import axios from '../../services/axios-config';
-import { setUser } from '../../app/slices/authSlice';
-import { useDispatch } from 'react-redux';
+import { state } from '../../state';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -27,7 +26,6 @@ export const SignupForm = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -43,8 +41,8 @@ export const SignupForm = () => {
         gender: selectedGender
       });
 
-      console.log('RES: ', user, accessToken);
-      dispatch(setUser({ user, accessToken }));
+      state.user = user;
+      state.accessToken = accessToken;
       setIsLoading(false);
       navigate('/feed');
     } catch (err) {

@@ -32,7 +32,7 @@ const Profile = Loadable(lazy(() => import('./pages/ProfilePage')));
 
 export default () => {
   const location = useLocation();
-  const snap = useSnapshot(state);
+  const snapshot = useSnapshot(state);
 
   useEffect(
     () => () =>
@@ -52,7 +52,7 @@ export default () => {
         api
           .get('/auth/refresh-token', {
             headers: {
-              Authorization: `Bearer ${snap.accessToken}`
+              Authorization: `Bearer ${snapshot.accessToken}`
             }
           })
           .then((res) => {
@@ -69,7 +69,7 @@ export default () => {
     }, 50 * 60 * 1000);
 
     return () => clearInterval(intervalID);
-  }, [snap.accessToken, location.pathname]);
+  }, [snapshot.accessToken, location.pathname]);
 
   return (
     <>

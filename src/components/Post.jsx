@@ -20,9 +20,9 @@ function Post({ postDesc, user, createdAt, image, _id }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [likes, setLikes] = useState([]);
-  const snap = useSnapshot(state);
-  const loggedInUser = snap.user;
-  const accessToken = snap.accessToken;
+  const snapshot = useSnapshot(state);
+  const loggedInUser = snapshot.user;
+  const accessToken = snapshot.accessToken;
 
   const handleLike = () => {
     axios
@@ -150,9 +150,9 @@ function Post({ postDesc, user, createdAt, image, _id }) {
 }
 
 const CommentInputBox = () => {
-  const snap = useSnapshot(state);
-  const loggedInUser = snap.user;
-  const accessToken = snap.accessToken;
+  const snapshot = useSnapshot(state);
+  const loggedInUser = snapshot.user;
+  const accessToken = snapshot.accessToken;
   const [comment, setComment] = useState('');
   const { _id } = useParams();
   const [isCommentLoading, setIsCommentLoading] = useState(false);
@@ -313,9 +313,9 @@ const Comment = ({ comment }) => {
 export default Post;
 
 const PostMenu = ({ postId }) => {
-  const snap = useSnapshot(state);
+  const snapshot = useSnapshot(state);
   const [isDeleting, setIsDeleting] = useState(false);
-  const accessToken = snap.accessToken;
+  const accessToken = snapshot.accessToken;
 
   const handlePostDelete = () => {
     axios
@@ -328,7 +328,7 @@ const PostMenu = ({ postId }) => {
         setIsDeleting(true);
         console.log('DELETED POST: ', res.data);
         setIsDeleting(false);
-        snap.deletePost(postId);
+        snapshot.deletePost(postId);
       })
       .catch((err) => {
         console.log(err);

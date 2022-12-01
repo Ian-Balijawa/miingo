@@ -17,8 +17,8 @@ const { useState } = React;
 function Home() {
   const [logout, setLogout] = useState(false);
   const navigate = useNavigate();
-  const snap = useSnapshot(state);
-  const name = snap.user?.name;
+  const snapshot = useSnapshot(state);
+  const name = snapshot.user?.name;
 
   const userName = name?.split(' ')[0];
 
@@ -31,13 +31,13 @@ function Home() {
 
     try {
       await axios.patch('/auth/logout');
-      snap.removeUser();
-      snap.removeAccessToken();
+      snapshot.removeUser();
+      snapshot.removeAccessToken();
     } catch (error) {
       console.error('ERROR: ', error);
     }
-    snap.removeUser();
-    snap.removeAccessToken();
+    snapshot.removeUser();
+    snapshot.removeAccessToken();
     navigate('/');
   };
 
@@ -58,7 +58,7 @@ function Home() {
             </p>
 
             <Link
-              to={`/profile/${snap.user._id}`}
+              to={`/profile/${snapshot.user._id}`}
               className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
             >
               {' '}

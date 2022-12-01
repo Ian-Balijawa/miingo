@@ -7,13 +7,13 @@ import { state } from '../state';
 import { useSnapshot } from 'valtio';
 
 function Posts() {
-  const snap = useSnapshot(state);
+  const snapshot = useSnapshot(state);
   const [error, setError] = useState(null);
   useEffect(() => {
     axios
       .get('/post', {
         headers: {
-          Authorization: `Bearer ${snap.accessToken}`
+          Authorization: `Bearer ${snapshot.accessToken}`
         }
       })
       .then((res) => {
@@ -27,11 +27,11 @@ function Posts() {
         console.log('ERR: ', err);
         setError(err.response.data.message);
       });
-  }, [snap.accessToken]);
+  }, [snapshot.accessToken]);
 
   return (
     <div className="w-full md:w-[640px] space-y-4">
-      {snap.posts.slice(0, 1).map((post) => (
+      {snapshot.posts.slice(0, 1).map((post) => (
         <Post
           key={post._id}
           name={post.user ? post.user.name : "creator's name"}
@@ -48,7 +48,7 @@ function Posts() {
       ))}
 
       <Addfriends />
-      {snap.posts.slice(1, snap.posts.length).map((post) => (
+      {snapshot.posts.slice(1, snapshot.posts.length).map((post) => (
         <Post
           key={post._id}
           name={post.user ? post.user.name : "creator's name"}

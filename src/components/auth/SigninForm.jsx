@@ -24,7 +24,7 @@ export const SigninForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const snap = useSnapshot(state);
+  const snapshot = useSnapshot(state);
   const handleSignin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -35,8 +35,8 @@ export const SigninForm = () => {
       });
 
       console.log('RES: ', data);
-      snap.setUser(data.user);
-      snap.setAccessToken(data.accessToken);
+      snapshot.setUser(data.user);
+      snapshot.setAccessToken(data.accessToken);
 
       setIsLoading(false);
       navigate('/feed');
