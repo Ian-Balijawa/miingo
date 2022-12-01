@@ -95,6 +95,7 @@ function About() {
   return (
     <div className="hidden lg:flex flex-col  mt-5 shadow-lg bg-white rounded-md  h-auto overflow-hidden">
       <div className=" bg-white flex items-center justify-between text-gray-700 mb-5 px-3 border-b">
+
         <div className="">
           <h2 className="  text-lg text-gray-700 font-medium  py-4 font-sans">
             About

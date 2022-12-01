@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import moment from "moment"
 import Addfriends from './Addfriends';
 import Post from './Post';
 import axios from '../services/axios-config';
@@ -12,7 +12,7 @@ function Posts() {
   const [accessToken] = useLocalStorage('accessToken');
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.postsList);
-
+  console.log(posts);
   useEffect(() => {
     axios
       .get('/post', {
@@ -42,7 +42,7 @@ function Posts() {
           name={post.user ? post.user.name : "creator's name"}
           postDesc={post.postDesc}
           email={post.user ? post.user.email : "creator's email"}
-          createdAt={post.createdAt}
+          createdAt={moment(post.createdAt).startOf('ss').fromNow()}
           image={post.image ? `https://api1.miingoapp.com/${post.image}` : null}
         />
       ))}
@@ -55,7 +55,7 @@ function Posts() {
           name={post.user ? post.user.name : "creator's name"}
           postDesc={post.postDesc}
           email={post.user ? post.user.email : "creator's email"}
-          createdAt={post.createdAt}
+          createdAt={moment(post.createdAt).startOf('ss').fromNow()}
           image={post.image ? `https://api1.miingoapp.com/${post.image}` : null}
           likes={post.likes.length}
           comments={post.comments}
