@@ -1,11 +1,12 @@
 import { Button, Select, Spinner, Stack } from '@chakra-ui/react';
 import React, { useState } from 'react';
-
+import ProfileTabs from './profile_details/ProfileTabs';
 import Input from './Input';
 import axios from '../services/axios-config';
 import { useDispatch } from 'react-redux';
 
 export default function Profile({ user }) {
+
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [intro, setIntro] = useState('');
@@ -53,7 +54,7 @@ export default function Profile({ user }) {
 
   return (
     <>
-      <div class="p-25 md:p-16 overflow-y-auto scrollbar-hide flex-grow   h-screen  pb-56 ">
+      <div class="overflow-y-auto scrollbar-hide flex-grow   h-screen  pb-2 ">
         <div class="p-1 md:p-8  bg-white shadow mt-20">
           <div class="grid grid-cols-1 md:grid-cols-3">
             <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
@@ -101,23 +102,10 @@ export default function Profile({ user }) {
           <div class="mt-20 text-center border-b pb-12">
             <h1 class="text-4xl font-medium text-gray-700">{user.name}</h1>
             <p class="font-light text-gray-600 mt-3">{user.email}</p>
-
-            <p class="mt-8 text-gray-500">
-              Solution Manager - Creative Tim Officer
-            </p>
-            <p class="mt-2 text-gray-500">University of Computer Science</p>
           </div>
 
-          <div class="mt-12 flex flex-col justify-center">
-            <p class="text-gray-600 text-center font-light lg:px-16">
-              An artist of considerable range, Ryan — the name taken by
-              Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs
-              and records all of his own music, giving it a warm, intimate feel
-              with a solid groove structure. An artist of considerable range.
-            </p>
-            <button class="text-indigo-500 py-2 px-4  font-medium mt-4">
-              Show more
-            </button>
+          <div class="mt-7 flex flex-col justify-center">
+              <ProfileTabs/>
           </div>
         </div>
       </div>
@@ -227,7 +215,7 @@ export default function Profile({ user }) {
                     colorScheme="blue"
                     size="md"
                     fontSize="md"
-                    onClick={handleSubmit}
+                    onClick={ handleSubmit }
                   >
                     {isLoading ? <Spinner size="sm" color="white" /> : 'Save'}
                   </Button>

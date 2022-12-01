@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HiOutlineUser, HiOutlineX } from "react-icons/hi";
-import { HiPencil } from "react-icons/hi";
+import { HiTemplate } from "react-icons/hi";
 import { HiDocument } from "react-icons/hi";
 import CollegeStatus from "./CollegeStatus";
 
@@ -36,8 +36,8 @@ function CollegeMeet() {
   ];
 
   return (
-    <div className=" relative hidden lg:flex flex-col  mt-5 shadow-lg bg-white rounded-md  h-96">
-      <div className=" bg-white sticky top-0 z-50 flex items-center justify-between text-gray-700 px-3 border-b">
+    <div className="hidden lg:flex flex-col  mt-5 pb-5 shadow-lg bg-white rounded-md  h-auto overflow-hidden">
+      <div className=" bg-white  flex items-center justify-between text-gray-700 px-3 border-b">
         <div className="">
           <h2 className="  text-lg text-gray-700 font-medium  py-4 font-sans">
             College Meet
@@ -63,7 +63,7 @@ function CollegeMeet() {
               }}
               className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 font-bold  p-2 cursor-pointer"
             >
-              <HiPencil className="h-6 w-6" />
+              <HiTemplate className="h-6 w-6" />
             </div>
           )}
 
