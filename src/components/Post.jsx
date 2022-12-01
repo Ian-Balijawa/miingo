@@ -5,31 +5,24 @@ import {
   ShareIcon
 } from '@heroicons/react/outline';
 import { Link, useParams } from 'react-router-dom';
-import { postDeleted, postLiked } from '../app/slices/postsSlice';
-import { useEffect, useState } from 'react';
 
 import BeatLoader from 'react-spinners/BeatLoader';
 import { FaThumbsUp } from 'react-icons/fa';
 import TimeAgo from 'timeago-react';
 import axios from '../services/axios-config';
-import { elapsedTime } from '../utils/elapsedTime';
-import { useDispatch } from 'react-redux';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { state } from '../state';
+import { useSnapshot } from 'valtio';
+import { useState } from 'react';
 
 function Post({ postDesc, user, createdAt, image, _id }) {
-  const [loggedInUser] = useLocalStorage('user');
-  const [accessToken] = useLocalStorage('accessToken');
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
-  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [likes, setLikes] = useState([]);
-
-  const corsImageModified = new Image();
-  corsImageModified.crossOrigin = 'Anonymous';
-  corsImageModified.src = image + '?not-from-cache-please';
-  console.log('CORS IMAGE: ', corsImageModified);
+  const snap = useSnapshot(state);
+  const loggedInUser = snap.user;
+  const accessToken = snap.accessToken;
 
   const handleLike = () => {
     axios
@@ -40,7 +33,6 @@ function Post({ postDesc, user, createdAt, image, _id }) {
       })
       .then((res) => {
         console.log('LIKED POST: ', _id);
-        dispatch(postLiked(res.data.likes));
         setLikes(res.data.likes);
         console.log('liked: ', res.data.likes);
       })
@@ -67,11 +59,6 @@ function Post({ postDesc, user, createdAt, image, _id }) {
       .catch((err) => {});
   };
 
-  const isLiked = () => {
-    if (likes.length === 0) return false;
-    return likes.find((like) => like._id === loggedInUser._id) !== undefined;
-  };
-
   return (
     <div className="flex flex-col bg-white my-3 post-description">
       <div className="p-5 bg-white">
@@ -95,12 +82,11 @@ function Post({ postDesc, user, createdAt, image, _id }) {
 
           {/* About me */}
           <Link
-            to={`/profile/${user ? user._id : loggedInUser._id}`}
+            to={`/profile/${user ? user?._id : loggedInUser?._id}`}
             className="flex items-center"
           >
             <button
-              className={`flex  mx-auto text-white bg-regal-orange hover:bg-orange-400 px-3 py-1 md:px-5 rounded-full shadow-xl font-normal
-                         hover:shadow-xl active:scale-90 transition duration-300 outline-none `}
+              className={`flex  mx-auto text-white bg-regal-orange hover:bg-orange-400 px-3 py-1 md:px-5 rounded-full shadow-xl font-normalhover:shadow-xl active:scale-90 transition duration-300 outline-none `}
             >
               About me
             </button>
@@ -164,9 +150,10 @@ function Post({ postDesc, user, createdAt, image, _id }) {
 }
 
 const CommentInputBox = () => {
-  const [loggedInUser] = useLocalStorage('accessToken');
+  const snap = useSnapshot(state);
+  const loggedInUser = snap.user;
+  const accessToken = snap.accessToken;
   const [comment, setComment] = useState('');
-  const [accessToken] = useLocalStorage('accessToken');
   const { _id } = useParams();
   const [isCommentLoading, setIsCommentLoading] = useState(false);
   const [comments, setComments] = useState([
@@ -326,9 +313,9 @@ const Comment = ({ comment }) => {
 export default Post;
 
 const PostMenu = ({ postId }) => {
-  const [accessToken] = useLocalStorage('accessToken');
+  const snap = useSnapshot(state);
   const [isDeleting, setIsDeleting] = useState(false);
-  const dispatch = useDispatch();
+  const accessToken = snap.accessToken;
 
   const handlePostDelete = () => {
     axios
@@ -341,7 +328,7 @@ const PostMenu = ({ postId }) => {
         setIsDeleting(true);
         console.log('DELETED POST: ', res.data);
         setIsDeleting(false);
-        dispatch(postDeleted({ _id: postId }));
+        snap.deletePost(postId);
       })
       .catch((err) => {
         console.log(err);

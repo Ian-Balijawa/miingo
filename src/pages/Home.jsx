@@ -9,18 +9,18 @@ import React from 'react';
 import SideFeed from '../components/SideFeed';
 import Statuses from '../components/Statuses';
 import axios from '../services/axios-config';
-import { removeUser } from '../app/slices/authSlice';
-import { useDispatch } from 'react-redux';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { state } from '../state';
+import { useSnapshot } from 'valtio';
 
 const { useState } = React;
 
 function Home() {
   const [logout, setLogout] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [user] = useLocalStorage('user');
-  const [userName] = useState(user.name.split(' '));
+  const snap = useSnapshot(state);
+  const name = snap.user?.name;
+
+  const userName = name?.split(' ')[0];
 
   const showDropdown = () => {
     setLogout(!logout);
@@ -31,11 +31,13 @@ function Home() {
 
     try {
       await axios.patch('/auth/logout');
-      dispatch(removeUser());
+      snap.removeUser();
+      snap.removeAccessToken();
     } catch (error) {
       console.error('ERROR: ', error);
     }
-    dispatch(removeUser());
+    snap.removeUser();
+    snap.removeAccessToken();
     navigate('/');
   };
 
@@ -52,11 +54,11 @@ function Home() {
             </div>
 
             <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 sm:hidden">
-              {userName[0]}
+              {userName}
             </p>
 
             <Link
-              to={`/profile/${user._id}`}
+              to={`/profile/${snap.user._id}`}
               className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
             >
               {' '}

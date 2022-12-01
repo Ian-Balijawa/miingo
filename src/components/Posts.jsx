@@ -1,48 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import Addfriends from './Addfriends';
 import Post from './Post';
 import axios from '../services/axios-config';
-import { postsAdded } from '../app/slices/postsSlice';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { state } from '../state';
+import { useSnapshot } from 'valtio';
 
 function Posts() {
+  const snap = useSnapshot(state);
   const [error, setError] = useState(null);
-  const [accessToken] = useLocalStorage('accessToken');
-  const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts.value);
-
   useEffect(() => {
     axios
       .get('/post', {
         headers: {
-          Authorization: `Bearer ${accessToken}`
+          Authorization: `Bearer ${snap.accessToken}`
         }
       })
       .then((res) => {
-        dispatch(postsAdded(res.data));
+        console.log('RES: ', res);
+        console.log('DATA: ', res.data);
+        state.posts = res.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
       })
       .catch((err) => {
+        console.log('ERR: ', err);
         setError(err.response.data.message);
       });
-  }, [accessToken, dispatch]);
-
-  const postsSorted = [...posts];
-
-  postsSorted.sort((a, b) => {
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
+  }, [snap.accessToken]);
 
   return (
     <div className="w-full md:w-[640px] space-y-4">
-      {postsSorted.slice(0, 1).map((post) => (
+      {snap.posts.slice(0, 1).map((post) => (
         <Post
           key={post._id}
           name={post.user ? post.user.name : "creator's name"}
           postDesc={post.postDesc}
           email={post.user ? post.user.email : "creator's email"}
           createdAt={post.createdAt}
+          user={post.user}
           image={
             post.image
               ? `https://api1.miingoapp.com/${post.image}?not-from-cache-please`
@@ -52,7 +48,7 @@ function Posts() {
       ))}
 
       <Addfriends />
-      {postsSorted.slice(1, postsSorted.length).map((post) => (
+      {snap.posts.slice(1, snap.posts.length).map((post) => (
         <Post
           key={post._id}
           name={post.user ? post.user.name : "creator's name"}

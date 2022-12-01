@@ -12,9 +12,9 @@ import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
 import Input from '../Input';
 import axios from '../../services/axios-config';
-import { setUser } from '../../app/slices/authSlice';
-import { useDispatch } from 'react-redux';
+import { state } from '../../state';
 import { useNavigate } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 import { useState } from 'react';
 
 export const SigninForm = () => {
@@ -23,8 +23,8 @@ export const SigninForm = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
+  const snap = useSnapshot(state);
   const handleSignin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -35,11 +35,10 @@ export const SigninForm = () => {
       });
 
       console.log('RES: ', data);
-      dispatch(setUser(data));
+      snap.setUser(data.user);
+      snap.setAccessToken(data.accessToken);
+
       setIsLoading(false);
-
-      delete data.user.accessToken;
-
       navigate('/feed');
     } catch (err) {
       setError(err.response.data.message);

@@ -1,8 +1,8 @@
 import { Spinner } from '@chakra-ui/react';
 import axios from '../services/axios-config';
-import { postAdded } from '../app/slices/postsSlice';
-import { useDispatch } from 'react-redux';
+import { state } from './../state';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useSnapshot } from 'valtio';
 import { useState } from 'react';
 
 function InputBox() {
@@ -15,12 +15,7 @@ function InputBox() {
   const [isUploading, setIsUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const dispatch = useDispatch();
-
-  console.log('document', document);
-  console.log('image', image);
-  console.log('video', video);
-  console.log('postDescription', postDescription);
+  const snap = useSnapshot(state);
 
   const handlePost = async (e) => {
     e.preventDefault();
@@ -42,7 +37,7 @@ function InputBox() {
       setSuccessMessage(response.data.message);
       console.log(response);
       console.log('SUCCESS: ', response.data.message);
-      dispatch(postAdded(response.data));
+      snap.addPost(response.data);
       setIsUploading(false);
     } catch (error) {
       setErrorMessage(error.response.data.message);
@@ -59,7 +54,6 @@ function InputBox() {
 
   return (
     <div className="bg-white flex flex-col p-2 shadow-md text-gray-500 font-medium mt-6 ">
-     
       <div className="flex space-x-4  p-4 items-center ">
         <div className=" w-10 h-10 hidden md:flex">
           <img
@@ -86,21 +80,23 @@ function InputBox() {
       <div className="  flex items-center  justify-between p-3 border-t">
         <div className=" flex items-center space-x-2">
           <div className="flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
-            <label htmlFor="upload" className='flex items-center space-x-2'>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
-              />
-            </svg>
-              <span className="upload fa fa-upload hidden md:inline-flex">Video</span>
+            <label htmlFor="upload" className="flex items-center space-x-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
+                />
+              </svg>
+              <span className="upload fa fa-upload hidden md:inline-flex">
+                Video
+              </span>
             </label>
             <input
               type="file"
@@ -111,25 +107,28 @@ function InputBox() {
           </div>
 
           <div className="flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer ">
-            
-            <label htmlFor="image-upload" className='flex items-center space-x-2'>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
+            <label
+              htmlFor="image-upload"
+              className="flex items-center space-x-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-              />
-            </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                />
+              </svg>
 
-              <span className="upload fa fa-upload hidden md:inline-flex ">Photo</span>
+              <span className="upload fa fa-upload hidden md:inline-flex ">
+                Photo
+              </span>
             </label>
             <input
               type="file"
@@ -140,24 +139,28 @@ function InputBox() {
           </div>
 
           <div className="flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
-           
-            <label htmlFor="file-upload" className='flex items-center space-x-2'>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
+            <label
+              htmlFor="file-upload"
+              className="flex items-center space-x-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13"
-              />
-            </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13"
+                />
+              </svg>
 
-              <span className="upload fa fa-upload hidden md:inline-flex">File</span>
+              <span className="upload fa fa-upload hidden md:inline-flex">
+                File
+              </span>
             </label>
             <input
               type="file"
@@ -168,7 +171,7 @@ function InputBox() {
           </div>
         </div>
 
-        <div className=" flex items-center justify-center" onClick={ handlePost }>
+        <div className=" flex items-center justify-center" onClick={handlePost}>
           <h4> Post </h4>
           <span className="flex items-center justify-center ml-2 cursor-pointer active:scale-90 transition ease-in-out duration-300">
             <button className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 ">
@@ -183,7 +186,6 @@ function InputBox() {
             </button>
           </span>
         </div>
-
       </div>
 
       <div
