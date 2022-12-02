@@ -1,46 +1,85 @@
+import { derive, subscribeKey } from "valtio/utils"
 import { proxy, ref } from "valtio"
 
-export const state = proxy( {
+import { getTokenPayload } from './utils/getTokenPayload';
+
+const state = proxy( {
 	user: null,
 	accessToken: null,
 	posts: [],
 	comments: [],
-	socket: ref( document.body ),
-	setUser ( user ) {
+	socket: null,
+	isLoading: false,
+	wsErrors: ref( [] ),
+	get isLoggedIn () {
+		return !!this.user
+	},
+	get hasAccessToken () {
+		return !!this.accessToken
+	},
+	get hasPosts () {
+		return !!this.posts.length
+	},
+	get hasComments () {
+		return !!this.comments.length
+	},
+	get hasSocket () {
+		return !!this.socket
+	},
+	get hasWsErrors () {
+		return !!this.wsErrors.length
+	},
+	get me () {
+		const accessToken = this.accessToken
+		if ( !accessToken ) return null
+		const payload = getTokenPayload( accessToken )
+
+		return {
+			id: payload.sub,
+			name: payload.name,
+			email: payload.email,
+		}
+	},
+} )
+
+const actions = {
+	startLoading: () => {
+		state.isLoading = true
+	},
+	stopLoading: () => {
+		state.isLoading = false
+	},
+	setUser: ( user ) => {
 		state.user = user
 		localStorage.setItem( 'user', JSON.stringify( user ) )
 	},
-	removeUser () {
-		state.user = null
-		localStorage.clear()
+	setAccessToken: ( accessToken ) => {
+		state.accessToken = accessToken
 	},
-	removeAccessToken () {
-		state.accessToken = null
-		localStorage.clear()
+	setPosts: ( posts ) => {
+		state.posts = [state.posts, ...posts].sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
-	setAccessToken ( token ) {
-		state.accessToken = token
+	addPost: ( post ) => {
+		state.posts = [post, ...state.posts].sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
-	addPosts ( posts ) {
-		state.posts = [...posts].sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
+	addComment: ( comment ) => {
+		state.comments = [comment, ...state.comments].sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
-	addPost ( post ) {
-		state.posts.push( post )
-	},
-	deletePost ( postId ) {
-		state.posts = state.posts.filter( p => p._id !== postId )
-	},
-	updatePost ( post ) {
-		state.posts = state.posts.map( p => p._id === post._id ? post : p )
-	},
-	addComment ( comment ) {
-		state.comments.push( comment )
-	},
-	deleteComment ( comment ) {
-		state.comments = state.comments.filter( c => c._id !== comment._id )
-	},
-	updateComment ( comment ) {
-		state.comments = state.comments.map( c => c._id === comment._id ? comment : c )
-	},
+	setSocket: ( socket ) => {
+		state.socket = socket
+	}
+}
 
+subscribeKey( state, 'accessToken', () => {
+	if ( !state.accessToken ) {
+		actions.setAccessToken( null )
+		localStorage.setItem( 'accessToken', null )
+		console.log( 'accessToken removed', state?.accessToken )
+
+	} else {
+		localStorage.setItem( 'accessToken', state?.accessToken )
+		console.log( 'accessToken set', state?.accessToken )
+	}
 } )
+
+export { state, actions }
