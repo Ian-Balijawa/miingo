@@ -9,16 +9,16 @@ import React from 'react';
 import SideFeed from '../components/SideFeed';
 import Statuses from '../components/Statuses';
 import axios from '../services/axios-config';
-import { state } from '../state';
-import { useSnapshot } from 'valtio';
+import { actions, state } from '../state';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const { useState } = React;
 
 function Home() {
   const [logout, setLogout] = useState(false);
   const navigate = useNavigate();
-  const snapshot = useSnapshot(state);
-  const name = snapshot.user?.name;
+  const [user] = useLocalStorage('user');
+  const name = user?.name;
 
   const userName = name?.split(' ')[0];
 
@@ -32,16 +32,16 @@ function Home() {
     try {
       await axios.patch('/auth/logout', {
         headers: {
-          Authorization: `Bearer ${snapshot.accessToken}`
+          Authorization: `Bearer ${state.accessToken}`
         }
       });
-      snapshot.removeUser();
-      snapshot.removeAccessToken();
+      actions.setUser(null);
+      actions.setAccessToken(null);
     } catch (error) {
       console.error('ERROR: ', error);
     }
-    snapshot.removeUser();
-    snapshot.removeAccessToken();
+    actions.setUser(null);
+    actions.setAccessToken(null);
     navigate('/');
   };
 
@@ -62,7 +62,7 @@ function Home() {
             </p>
 
             <Link
-              to={`/profile/${snapshot.user?._id}`}
+              to={`/profile/${state.user?._id}`}
               className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
             >
               {' '}

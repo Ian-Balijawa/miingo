@@ -7,14 +7,13 @@ import {
   Text,
   useColorModeValue as mode
 } from '@chakra-ui/react';
+import { actions, state } from '../../state';
 
 import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
 import Input from '../Input';
 import axios from '../../services/axios-config';
-import { state } from '../../state';
 import { useNavigate } from 'react-router-dom';
-import { useSnapshot } from 'valtio';
 import { useState } from 'react';
 
 export const SigninForm = () => {
@@ -24,7 +23,6 @@ export const SigninForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const snapshot = useSnapshot(state);
   const handleSignin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -34,8 +32,8 @@ export const SigninForm = () => {
         password
       });
 
-      snapshot.setUser(data.user);
-      snapshot.setAccessToken(data.accessToken);
+      actions.setUser(data?.user);
+      actions.setAccessToken(data?.accessToken);
 
       setIsLoading(false);
       navigate('/feed');

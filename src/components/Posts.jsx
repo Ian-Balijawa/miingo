@@ -3,32 +3,28 @@ import React, { useEffect, useState } from 'react';
 import Addfriends from './Addfriends';
 import Post from './Post';
 import axios from '../services/axios-config';
-import { state } from '../state';
+import { state, actions } from '../state';
 import { useSnapshot } from 'valtio';
 
 function Posts() {
-  const snapshot = useSnapshot(state);
   const [error, setError] = useState(null);
+  const snapshot = useSnapshot(state);
   useEffect(() => {
     axios
       .get('/post', {
         headers: {
-          Authorization: `Bearer ${snapshot.accessToken}`
+          Authorization: `Bearer ${state.accessToken}`
         }
       })
       .then((res) => {
-        state.posts = res.data.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
+        actions.addPosts(res.data);
       })
       .catch((err) => {
         setError(err.response.data.message);
       });
-  }, [snapshot.accessToken]);
+  }, []);
 
-  const posts = [...state.posts].sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
+  const posts = snapshot.posts;
 
   return (
     <div className="w-full md:w-[640px] space-y-4">
@@ -49,7 +45,7 @@ function Posts() {
       ))}
 
       <Addfriends />
-      {posts.slice(1, snapshot.posts.length).map((post) => (
+      {posts.slice(1, state.posts.length).map((post) => (
         <Post
           key={post._id}
           name={post.user ? post.user.name : "creator's name"}

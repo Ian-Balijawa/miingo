@@ -2,15 +2,14 @@ import BeatLoader from 'react-spinners/BeatLoader';
 import { Button } from '@chakra-ui/react';
 import { Comment } from './Comment';
 import axios from '../services/axios-config';
-import { state } from '../state';
+import { state, actions } from '../state';
 import { useEffect } from 'react';
-import { useSnapshot } from 'valtio';
 import { useState } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export const CommentInputBox = ({ postId }) => {
-  const snapshot = useSnapshot(state);
-  const loggedInUser = snapshot.user;
-  const accessToken = snapshot.accessToken;
+  const [user] = useLocalStorage('user');
+  const [accessToken] = useLocalStorage('accessToken');
   const [comment, setComment] = useState('');
   const [isCommentLoading, setIsCommentLoading] = useState(false);
 
@@ -24,7 +23,7 @@ export const CommentInputBox = ({ postId }) => {
     e.preventDefault();
     axios
       .post(
-        `/post/comment/${postId}/user/${loggedInUser?._id}`,
+        `/post/comment/${postId}/user/${user?._id}`,
         { comment },
         {
           headers: {
@@ -34,6 +33,7 @@ export const CommentInputBox = ({ postId }) => {
       )
       .then((res) => {
         state.comments?.push(res.data);
+        actions.addComment(res.data);
         setComment('');
       })
       .catch((err) => {});
@@ -63,7 +63,7 @@ export const CommentInputBox = ({ postId }) => {
 
             <div>
               <p className="font-semibold  text-gray-500">
-                {loggedInUser ? loggedInUser.name : 'some user'}
+                {user ? user?.name : 'some user'}
               </p>
               <p className="text-xs text-gray-400">1 hour ago</p>
             </div>

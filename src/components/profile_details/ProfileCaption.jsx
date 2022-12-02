@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 
 import { HiCamera } from 'react-icons/hi';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import { state } from '../../state';
-import { useSnapshot } from 'valtio';
 
 function ProfileCaption({ handleEdit }) {
-  const snapshot = useSnapshot(state);
-  const user = snapshot.user;
+  const [user] = useLocalStorage('user');
   const [editProfile, setEditProfile] = useState(true);
 
   return (

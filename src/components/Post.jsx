@@ -11,17 +11,16 @@ import { FaThumbsUp } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'timeago-react';
 import axios from '../services/axios-config';
-import { state } from '../state';
-import { useSnapshot } from 'valtio';
+import { actions } from '../state';
 import { useState } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 function Post({ postDesc, user, createdAt, image, _id }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [likes, setLikes] = useState([]);
-  const snapshot = useSnapshot(state);
-  const loggedInUser = snapshot.user;
-  const accessToken = snapshot.accessToken;
+  const [loggedInUser] = useLocalStorage('user');
+  const [accessToken] = useLocalStorage('accessToken');
 
   const handleLike = () => {
     axios
@@ -126,9 +125,8 @@ function Post({ postDesc, user, createdAt, image, _id }) {
 export default Post;
 
 const PostMenu = ({ postId }) => {
-  const snapshot = useSnapshot(state);
   const [isDeleting, setIsDeleting] = useState(false);
-  const accessToken = snapshot.accessToken;
+  const [accessToken] = useLocalStorage('accessToken');
 
   const handlePostDelete = () => {
     axios
@@ -140,7 +138,7 @@ const PostMenu = ({ postId }) => {
       .then((res) => {
         setIsDeleting(true);
         setIsDeleting(false);
-        snapshot.deletePost(postId);
+        actions.deletePost(postId);
       })
       .catch((err) => {
         setIsDeleting(false);

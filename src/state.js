@@ -56,17 +56,29 @@ const actions = {
 	setAccessToken: ( accessToken ) => {
 		state.accessToken = accessToken
 	},
-	setPosts: ( posts ) => {
-		state.posts = [state.posts, ...posts].sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
-	},
 	addPost: ( post ) => {
-		state.posts = [post, ...state.posts].sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
+		state.posts = [post, ...state.posts]
+		state.posts.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
+	},
+	addPosts: ( posts ) => {
+		state.posts = posts
+		state.posts.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	addComment: ( comment ) => {
 		state.comments = [comment, ...state.comments].sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
+	addComments: ( comments ) => {
+		state.comments = comments
+		state.comments.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
+	},
 	setSocket: ( socket ) => {
 		state.socket = socket
+	},
+	deletePost ( id ) {
+		state.posts = state.posts.filter( post => post.id !== id )
+	},
+	deleteComment ( id ) {
+		state.comments = state.comments.filter( comment => comment.id !== id )
 	}
 }
 

@@ -3,6 +3,7 @@
 
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
+import { actions, state } from './state';
 
 import ActivityCard from './components/profile/ActivityCard';
 import Gallery from './components/Album/ImageGallery';
@@ -11,11 +12,9 @@ import NewProfilePage from './pages/Profile_Page';
 import StatusCarousel from './components/StatusCarousel';
 import api from './services/axios-config';
 import { devtools } from 'valtio/utils';
-import { state } from './state';
 import { useEffect } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
 import { useLocation } from 'react-router-dom';
-import { useSnapshot } from 'valtio';
 
 const Loadable = (Component) => (props) => {
   return (
@@ -36,7 +35,7 @@ const Profile = Loadable(lazy(() => import('./pages/ProfilePage')));
 
 export default () => {
   const location = useLocation();
-  const snapshot = useSnapshot(state);
+  const [accessToken] = useLocalStorage('accessToken');
 
   useEffect(
     () => () =>
@@ -56,7 +55,7 @@ export default () => {
         api
           .get('/auth/refresh-token', {
             headers: {
-              Authorization: `Bearer ${snapshot.accessToken}`
+              Authorization: `Bearer ${accessToken}`
             }
           })
           .then((res) => {
@@ -73,7 +72,7 @@ export default () => {
     }, 50 * 60 * 1000);
 
     return () => clearInterval(intervalID);
-  }, [snapshot.accessToken, location.pathname]);
+  }, [accessToken, location.pathname]);
 
   return (
     <>
