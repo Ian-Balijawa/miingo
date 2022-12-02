@@ -6,17 +6,25 @@ import { state, actions } from '../state';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useSnapshot } from 'valtio';
 
 export const CommentInputBox = ({ postId }) => {
   const [user] = useLocalStorage('user');
   const [accessToken] = useLocalStorage('accessToken');
-  const [comment, setComment] = useState('');
+  const snapshot = useSnapshot(state);
   const [isCommentLoading, setIsCommentLoading] = useState(false);
+  const [comment, setComment] = useState('');
 
   useEffect(() => {
-    axios.get(`/post/comment/${postId}`).then((res) => {
-      state.comments = res.data.comments;
-    });
+    axios
+      .get(`/post/comment/${postId}`)
+      .then((res) => {
+        actions.addComments(res.data);
+        console.log('COMMENTS : ', res.data);
+      })
+      .catch((err) => {
+        console.log('ERROR LOADING COMMENTS: ', err);
+      });
   }, [postId]);
 
   const handleComment = (e) => {
@@ -32,11 +40,13 @@ export const CommentInputBox = ({ postId }) => {
         }
       )
       .then((res) => {
-        state.comments?.push(res.data);
         actions.addComment(res.data);
+        console.log('COMMENT: ', res.data);
         setComment('');
       })
-      .catch((err) => {});
+      .catch((error) => {
+        console.log('ERROR FETCHING COMMENTS: ', error);
+      });
   };
   const handleCommentLoading = (e) => {
     setIsCommentLoading(true);
@@ -45,9 +55,7 @@ export const CommentInputBox = ({ postId }) => {
     }, 1000);
   };
 
-  const sortedComments = [state.comments].sort((a, b) => {
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
+  const comments = snapshot.comments;
   return (
     <div className="flex flex-col bg-white my-3 post-description">
       <div className="p-5 bg-white">
@@ -101,8 +109,8 @@ export const CommentInputBox = ({ postId }) => {
       </div>
 
       <div className="flex flex-col space-y-2 p-2">
-        {sortedComments.map((comment) => (
-          <Comment key={JSON.stringify(comment)} comment={comment?.comment} />
+        {comments?.map((comment, index) => (
+          <Comment key={`${comment._id} ${index}`} comment={comment?.comment} />
         ))}
 
         <Button

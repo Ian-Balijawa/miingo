@@ -11,26 +11,18 @@ const state = proxy( {
 	socket: null,
 	isLoading: false,
 	wsErrors: ref( [] ),
-	get isLoggedIn () {
-		return !!this.user
-	},
-	get hasAccessToken () {
-		return !!this.accessToken
-	},
-	get hasPosts () {
-		return !!this.posts.length
-	},
-	get hasComments () {
-		return !!this.comments.length
-	},
-	get hasSocket () {
-		return !!this.socket
-	},
-	get hasWsErrors () {
-		return !!this.wsErrors.length
-	},
-	get me () {
-		const accessToken = this.accessToken
+
+} );
+
+derive( {
+	isLoggedIn: ( get ) => get( state ).user,
+	hasAccessToken: ( get ) => get( state ).accessToken,
+	hasPosts: ( get ) => get( state ).posts.length,
+	hasComments: ( get ) => get( state ).comments?.length,
+	hasSocket: ( get ) => get( state ).socket,
+	hasWsErrors: ( get ) => get( state ).wsErrors.length,
+	me: ( get ) => {
+		const accessToken = get( state ).accessToken
 		if ( !accessToken ) return null
 		const payload = getTokenPayload( accessToken )
 
@@ -39,8 +31,14 @@ const state = proxy( {
 			name: payload.name,
 			email: payload.email,
 		}
-	},
-} )
+	}
+},
+
+	{
+		proxy: state,
+	}
+);
+
 
 const actions = {
 	startLoading: () => {
@@ -65,10 +63,11 @@ const actions = {
 		state.posts.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	addComment: ( comment ) => {
-		state.comments = [comment, ...state.comments].sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
+		state.comments = [comment, ...state.comments]
+		state.comments.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	addComments: ( comments ) => {
-		state.comments = comments
+		state.comments = [...comments, ...state.comments]
 		state.comments.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	setSocket: ( socket ) => {

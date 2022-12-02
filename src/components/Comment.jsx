@@ -1,13 +1,17 @@
 import React from 'react';
 import { state } from '../state';
+import { useSnapshot } from 'valtio';
+
 export const Comment = ({ postId }) => {
-  const comments = state.comments?.filter(
+  const snapshot = useSnapshot(state);
+  const comments = snapshot.comments;
+  const commentsForPost = comments?.filter(
     (comment) => comment?.post === postId
   );
 
   return (
     <div className="flex items-center space-x-2 p-2 bg-white mt-2">
-      {comments?.map((comment) => (
+      {commentsForPost?.map((comment) => (
         <React.Fragment>
           <div className=" w-6 h-6 md:w-8 md:h-8">
             <img
