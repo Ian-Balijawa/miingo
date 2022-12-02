@@ -5,8 +5,10 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 
 import ActivityCard from './components/profile/ActivityCard';
+import Gallery from './components/Album/ImageGallery';
 import LoadingScreen from './components/LoadingScreen';
 import NewProfilePage from './pages/Profile_Page';
+import StatusCarousel from './components/StatusCarousel';
 import api from './services/axios-config';
 import { devtools } from 'valtio/utils';
 import { state } from './state';
@@ -81,7 +83,8 @@ export default () => {
         <Route path="register" element={<Signup />} />
         <Route path="ld" element={<NewProfilePage />} />
         <Route path="ad" element={<ActivityCard />} />
-
+        <Route path="gallery" element={<Gallery />} />
+        <Route path="status" element={<StatusCarousel />} />
         <Route
           path="profile"
           element={
