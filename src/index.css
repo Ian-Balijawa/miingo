@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer components {
+
   *,
   *::after,
   *::before,
@@ -36,6 +37,7 @@
     @apply w-5 md:w-8 h-5 md:h-8;
   } */
 }
+
 /*
 input[type='file'] {
   font-size: 2rem;
@@ -78,6 +80,7 @@ label {
 .fa-upload {
   color: rgb(15, 15, 15);
 }
+
 label.file {
   vertical-align: middle;
   display: inline-block;
@@ -90,4 +93,17 @@ input[type='file'] {
 
 span.upload {
   border-radius: 4px;
+}
+
+
+.photo_zone {
+  min-height: 50px;
+}
+
+.modalClass {
+  z-index: 1000;
+}
+
+.modalOverlayClass {
+  z-index: 999;
 }
