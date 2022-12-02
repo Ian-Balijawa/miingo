@@ -20,7 +20,6 @@ export const state = proxy( {
 	},
 	setAccessToken ( token ) {
 		state.accessToken = token
-		localStorage.setItem( 'accessToken', JSON.stringify( state.accessToken ) )
 	},
 	addPosts ( posts ) {
 		state.posts = [...posts].sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
