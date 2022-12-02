@@ -26,9 +26,13 @@ function Posts() {
       });
   }, [snapshot.accessToken]);
 
+  const posts = [...state.posts].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   return (
     <div className="w-full md:w-[640px] space-y-4">
-      {snapshot?.posts?.slice(0, 1).map((post) => (
+      {posts.slice(0, 1).map((post) => (
         <Post
           key={post._id}
           name={post.user ? post.user.name : "creator's name"}
@@ -45,7 +49,7 @@ function Posts() {
       ))}
 
       <Addfriends />
-      {snapshot?.posts?.slice(1, snapshot.posts.length).map((post) => (
+      {posts.slice(1, snapshot.posts.length).map((post) => (
         <Post
           key={post._id}
           name={post.user ? post.user.name : "creator's name"}
