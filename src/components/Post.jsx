@@ -18,9 +18,8 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
 import { useState } from 'react';
 
-function Post({ postDesc, user, createdAt, image, _id, likes }) {
+function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [loggedInUser] = useLocalStorage('user');
   const [deletePost, setDeletePost] = useState(false);
   const [accessToken] = useLocalStorage('accessToken');
@@ -85,6 +84,11 @@ function Post({ postDesc, user, createdAt, image, _id, likes }) {
       {image && (
         <div className="relative  mx-2 md:mx-8 h-56 md:h-96">
           <img src={image} className="w-full h-full object-cover" alt="" />
+        </div>
+      )}
+      {video && (
+        <div className="relative  mx-2 md:mx-8 h-56 md:h-96">
+          <video src={video} className="w-full h-full object-cover" controls />
         </div>
       )}
 
