@@ -39,12 +39,6 @@ function Post({ postDesc, user, createdAt, image, _id, likes }) {
       });
   };
 
-  useEffect(() => {
-    axios.get(`/post/comment/${_id}`).then((res) => {
-      actions.setCommentCountForPost(_id, res.data.length);
-    });
-  }, [_id]);
-
   return (
     <div className="flex flex-col bg-white my-3 post-description">
       <div className="p-5 bg-white">
