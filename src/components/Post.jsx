@@ -1,43 +1,44 @@
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import {
   ChatAltIcon,
   ChevronDownIcon,
-  ShareIcon,
-} from "@heroicons/react/outline";
+  ShareIcon
+} from '@heroicons/react/outline';
+import { actions, state } from '../state';
 
-import { HiDotsVertical } from "react-icons/hi";
-import { HiX } from "react-icons/hi";
+import BeatLoader from 'react-spinners/BeatLoader';
+import { CommentInputBox } from './CommentInputField';
+import { FaThumbsUp } from 'react-icons/fa';
+import { HiDotsVertical } from 'react-icons/hi';
+import { HiX } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
+import TimeAgo from 'timeago-react';
+import axios from '../services/axios-config';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useSnapshot } from 'valtio';
+import { useState } from 'react';
 
-import BeatLoader from "react-spinners/BeatLoader";
-import { CommentInputBox } from "./CommentInputField";
-import { FaThumbsUp } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import TimeAgo from "timeago-react";
-import axios from "../services/axios-config";
-import { state } from "../state";
-import { useSnapshot } from "valtio";
-import { useState } from "react";
-
-function Post({ postDesc, user, createdAt, image, _id }) {
+function Post({ postDesc, user, createdAt, image, _id, likes }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [likes, setLikes] = useState([]);
+  const [loggedInUser] = useLocalStorage('user');
   const [deletePost, setDeletePost] = useState(false);
+  const [accessToken] = useLocalStorage('accessToken');
   const snapshot = useSnapshot(state);
-  const loggedInUser = snapshot.user;
-  const accessToken = snapshot.accessToken;
 
   const handleLike = () => {
     axios
-      .patch(`/post/${_id}/like/${loggedInUser._id}`, {
+      .patch(`/post/like/${_id}/user/${loggedInUser._id}`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+          Authorization: `Bearer ${accessToken}`
+        }
       })
       .then((res) => {
-        setLikes(res.data.likes);
+        actions.likePost(res.data.likes, _id);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log('ERROR LIKING POST: ', err.response.data.message);
+      });
   };
 
   const handleDelete = (e) => {
@@ -53,20 +54,19 @@ function Post({ postDesc, user, createdAt, image, _id }) {
             <div className=" w-6 h-6 md:w-8 md:h-8">
               <img
                 className=" w-full h-full object-cover rounded-full"
-                src="/images/ml.jpg"
+                src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
                 alt=""
               />
             </div>
 
             <div>
               <p className="font-semibold  text-gray-500">
-                {user ? user.name : "some user"}
+                {user ? user.name : 'Anonymous'}
               </p>
               <TimeAgo datetime={createdAt} locale="en_US" />
             </div>
           </div>
 
-          {/* About me */}
           <Link
             to={`/profile/${user ? user?._id : loggedInUser?._id}`}
             className="flex items-center"
@@ -97,10 +97,9 @@ function Post({ postDesc, user, createdAt, image, _id }) {
             className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
             onClick={handleLike}
           >
-            <FaThumbsUp color={likes.length > 0 ? "red" : "black"} />
-
+            <FaThumbsUp color={likes > 0 ? 'red' : 'black'} />
             <p className="text-xs sm:text-base hidden md:inline-flex">
-              {`${likes.length || 0} Likes`}
+              {`${likes} ${likes === 1 ? 'Like' : 'likes'}`}
             </p>
           </div>
 
@@ -108,8 +107,10 @@ function Post({ postDesc, user, createdAt, image, _id }) {
             className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
             onClick={() => setIsCommentsVisible(!isCommentsVisible)}
           >
+            <p className="text-xs sm:text-base hidden md:inline-flex">
+              {snapshot.commentCountForPost[_id]}
+            </p>
             <ChatAltIcon className="h-6" />
-            <p className="text-xs sm:text-base">comment</p>
           </div>
         </div>
 
@@ -132,10 +133,9 @@ function Post({ postDesc, user, createdAt, image, _id }) {
 
           {deletePost && (
             <div className=" absolute -bottom-10 z-30 shadow-lg flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer">
-               <div className="text-xs sm:text-base">Delete</div>
+              <div className="text-xs sm:text-base">Delete</div>
             </div>
           )}
-          
         </div>
       </div>
 
@@ -147,21 +147,20 @@ function Post({ postDesc, user, createdAt, image, _id }) {
 export default Post;
 
 const PostMenu = ({ postId }) => {
-  const snapshot = useSnapshot(state);
   const [isDeleting, setIsDeleting] = useState(false);
-  const accessToken = snapshot.accessToken;
+  const [accessToken] = useLocalStorage('accessToken');
 
   const handlePostDelete = () => {
     axios
       .delete(`/post/${postId}`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+          Authorization: `Bearer ${accessToken}`
+        }
       })
       .then((res) => {
         setIsDeleting(true);
         setIsDeleting(false);
-        snapshot.deletePost(postId);
+        actions.deletePost(postId);
       })
       .catch((err) => {
         setIsDeleting(false);
@@ -177,11 +176,11 @@ const PostMenu = ({ postId }) => {
             as={Button}
             rightIcon={<ChevronDownIcon />}
           >
-            {isOpen ? "Close" : <Ellipsis />}
+            {isOpen ? 'Close' : <Ellipsis />}
           </MenuButton>
           <MenuList>
             <MenuItem onClick={handlePostDelete}>
-              {isDeleting ? <BeatLoader size="8" color="black" /> : "Delete"}
+              {isDeleting ? <BeatLoader size="8" color="black" /> : 'Delete'}
             </MenuItem>
           </MenuList>
         </>

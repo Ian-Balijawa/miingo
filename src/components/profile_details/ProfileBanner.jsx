@@ -6,12 +6,11 @@ import ProfileButton from './ProfileButton';
 import ProfileCaption from './ProfileCaption';
 import { ThumbUpIcon } from '@heroicons/react/outline';
 import { state } from '../../state';
-import { useSnapshot } from 'valtio';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 function ProfileBanner() {
   const [likes] = useState(2);
-  const snapshot = useSnapshot(state);
-  const user = snapshot.user;
+  const [user] = useLocalStorage('user');
   const [follow, setFollow] = useState(true);
 
   const [partialEdit, setPartialEdit] = useState(false);

@@ -12,16 +12,14 @@ import {
 import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
 import Input from '../Input';
+import { actions } from '../../state';
 import axios from '../../services/axios-config';
-import { state } from '../../state';
 import { useNavigate } from 'react-router-dom';
-import { useSnapshot } from 'valtio';
 import { useState } from 'react';
 
 export const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
-  const snapshot = useSnapshot(state);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [selectedGender, setSelectedGender] = useState('');
@@ -42,8 +40,8 @@ export const SignupForm = () => {
         dob: dateOfBirth,
         gender: selectedGender
       });
-      snapshot.setUser(user);
-      snapshot.setAccessToken(accessToken);
+      actions.setUser(user);
+      actions.setAccessToken(accessToken);
       setIsLoading(false);
       navigate('/feed');
     } catch (err) {

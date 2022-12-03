@@ -1,21 +1,18 @@
-import { HomeIcon, SearchIcon } from "@heroicons/react/outline";
+import { HomeIcon, SearchIcon } from '@heroicons/react/outline';
 
-import useLocalStorage from "../hooks/useLocalStorage";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 function Header({ onPress }) {
-  const [user, _] = useLocalStorage("user");
-  const [userName] = useState(user.name.split(" "));
+  const [user, _] = useLocalStorage('user');
 
   return (
     <div className=" bg-white  sticky top-0 z-50 flex justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
       {/* left */}
       <Link to="/feed" className="w-56">
-          <div className="flex items-center justify-center rounded-full bg-regal-orange w-14 md:w-16  h-14 md:h-16">
-            <p className="text-white text-base text-center">Logo</p>
-          </div>
-        
+        <div className="flex items-center justify-center rounded-full bg-regal-orange w-14 md:w-16  h-14 md:h-16">
+          <p className="text-white text-base text-center">Logo</p>
+        </div>
       </Link>
 
       {/* center */}
@@ -31,9 +28,9 @@ function Header({ onPress }) {
           <SearchIcon className="h-6 text-gray-600" />
         </div>
 
-       <Link to="/feed">
-         <HomeIcon className="h-6 w-6 hidden md:inline-flex" />
-       </Link>
+        <Link to="/feed">
+          <HomeIcon className="h-6 w-6 hidden md:inline-flex" />
+        </Link>
 
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +52,7 @@ function Header({ onPress }) {
       <div className="flex justify-around items-center sm:space-x-2 md:space-x-6 w-56 md:w-80">
         <div className="hidden md:inline-flex items-center relative ">
           <span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
-            {" "}
+            {' '}
             8
           </span>
           <svg
@@ -97,9 +94,9 @@ function Header({ onPress }) {
         </div>
 
         <div className=" flex items-center space-x-2">
-          <div onClick={ onPress } className=" relative w-14 h-14 cursor-pointer">
+          <div onClick={onPress} className=" relative w-14 h-14 cursor-pointer">
             <img
-              src="https://res.cloudinary.com/itgenius/image/upload/v1668007542/pexels-mahdi-chaghari-12463279_cwiw1n.jpg"
+              src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
               alt=""
               className=" w-full h-full rounded-full object-cover"
             />
@@ -107,11 +104,9 @@ function Header({ onPress }) {
           </div>
 
           <div className="hidden md:inline-flex md:flex-col">
-
-            <p className="text-gray-700 "> {userName[0]} </p>
+            <p className="text-gray-700 "> {user?.name.split(' ')[0]} </p>
 
             <h3 className="text-xs text-gray-600">Active Now</h3>
-
           </div>
         </div>
       </div>

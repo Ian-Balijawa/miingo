@@ -3,12 +3,10 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { HiOutlineCake } from 'react-icons/hi';
 import { HiSun } from 'react-icons/hi';
 import React from 'react';
-import { state } from './../state';
-import { useSnapshot } from 'valtio';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const BirthdayCard = () => {
-  const snapshot = useSnapshot(state);
-  const user = snapshot.user;
+  const [user] = useLocalStorage('user');
   return (
     <div className="flex flex-col space-y-4 bg-gradient-to-r from-miingo-pinksh to-miingo-pink  bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60 border rounded-lg shadow-lg p-4 font-serif relative overflow-hidden">
       <div className="flex justify-evenly">

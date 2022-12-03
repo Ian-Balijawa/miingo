@@ -1,12 +1,10 @@
 import { FiMail, FiMoreHorizontal } from 'react-icons/fi';
 
-import React from 'react';
-import { state } from '../state';
-import { useSnapshot } from 'valtio';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const NewProfilePage = () => {
-  const snapshot = useSnapshot(state);
-  const user = snapshot.user;
+  const [user] = useLocalStorage('user');
+
   return (
     <>
       {/* // container */}

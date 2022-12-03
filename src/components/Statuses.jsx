@@ -2,9 +2,15 @@ import Status from "./Status";
 import { HiChevronRight } from "react-icons/hi";
 import { HiChevronLeft } from "react-icons/hi";
 
+import { GoPlus} from "react-icons/go";
 
 
-function Statuses() {
+
+
+
+function Statuses({handlePostStatus}) {
+
+
   const statuses = [
     {
       id: 1,
@@ -83,6 +89,8 @@ function Statuses() {
     },
   ];
 
+ 
+
   const slideLeft2 = () => {
     var slider = document.getElementById("slider2");
     slider.scrollLeft = slider.scrollLeft - 500;
@@ -97,22 +105,10 @@ function Statuses() {
     <div className="sticky top-0 z-40 flex  items-center justify-between space-x-2  w-screen bg-miingo-gray px-3 py-1 mx-2 ">
      
       <div className=" flex md:pl-4  w-20 md:w-24">
-        <div className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-regal-orange shadow-lg  flex items-center justify-center  hover:shadow-xl active:scale-90 transition duration-300">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 text-white "
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 6v12m6-6H6"
-            />
-          </svg>
-        </div>
+        <button onClick = {handlePostStatus} className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-regal-orange shadow-lg  flex items-center justify-center  hover:shadow-xl active:scale-90 transition duration-300">
+         
+            <GoPlus className="font-extrabold text-white"  />
+        </button>
       </div>
 
       

@@ -1,24 +1,30 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { actions, state } from '../state';
 
 import Boards from '../components/Boards';
 import BottomNav from '../components/BottomNav';
+import { DropzoneArea } from 'material-ui-dropzone';
 import Feed from '../components/Feed';
 import Header from '../components/Header';
 import { HiOutlineLogout } from 'react-icons/hi';
+import ModalWrapper from '../components/modal/ModalWrapper';
 import React from 'react';
 import SideFeed from '../components/SideFeed';
 import Statuses from '../components/Statuses';
 import axios from '../services/axios-config';
-import { state } from '../state';
+import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
 
 const { useState } = React;
 
-function Home() {
+function Home({ contentType }) {
   const [logout, setLogout] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [content, setContent] = useState('');
+  const [accessToken] = useLocalStorage('accessToken');
   const navigate = useNavigate();
-  const snapshot = useSnapshot(state);
-  const name = snapshot.user?.name;
+  const [user] = useLocalStorage('user');
+  const name = user?.name;
 
   const userName = name?.split(' ')[0];
 
@@ -32,16 +38,16 @@ function Home() {
     try {
       await axios.patch('/auth/logout', {
         headers: {
-          Authorization: `Bearer ${snapshot.accessToken}`
+          Authorization: `Bearer ${accessToken}`
         }
       });
-      snapshot.removeUser();
-      snapshot.removeAccessToken();
+      actions.setUser(null);
+      actions.setAccessToken(null);
     } catch (error) {
       console.error('ERROR: ', error);
     }
-    snapshot.removeUser();
-    snapshot.removeAccessToken();
+    actions.setUser(null);
+    actions.setAccessToken(null);
     navigate('/');
   };
 
@@ -62,7 +68,7 @@ function Home() {
             </p>
 
             <Link
-              to={`/profile/${snapshot.user?._id}`}
+              to={`/profile/${user?._id}`}
               className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
             >
               {' '}
@@ -80,7 +86,48 @@ function Home() {
           </div>
         )}
 
-        <Statuses />
+        <Statuses handlePostStatus={() => setShowModal(true)} />
+        {showModal ? (
+          <ModalWrapper
+            title="Upload Status"
+            closeModal={() => setShowModal(false)}
+            bodyContent={
+              <div className="pt-6">
+                <div>
+                  <label className="font-semibold text-textparagraph text-sm">
+                    UPLOAD
+                  </label>
+                  <DropzoneArea
+                    className="g-lightgraybg"
+                    filesLimit={1}
+                    // useChipsForPreview={
+                    //   contentType.toLowerCase === 'photo' ? false : true
+                    // }
+                    showAlerts={false}
+                    showFileNames
+                    maxFileSize={200000000} // 200mb limit
+                    // acceptedFiles={fileType()}
+                    onChange={(files) => setContent(files)}
+                  />
+                </div>
+              </div>
+            }
+            footer={true}
+            footerContent={
+              <>
+                <button
+                  className="w-full h-14 falsefocus:shadow-outline  bg-regal-orange text-white font-semibold font-display text-xl px-6 py-3 rounded-md shadow hover:bg-navyblue outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                  type="submit"
+                  // onClick={(e) => handleSubmit(e)}
+                  // disabled={loading}
+                >
+                  {/* {loading ? <PuffLoader color='white' /> : 'Submit'} */}
+                  Submit
+                </button>
+              </>
+            }
+          />
+        ) : null}
 
         <main className="relative flex space-x-2 pr-3 pb-10 ">
           {/* chat */}
