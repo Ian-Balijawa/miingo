@@ -100,6 +100,16 @@ const actions = {
 	},
 	deleteComment ( id ) {
 		state.comments = state.comments.filter( comment => comment.id !== id )
+	},
+	likePost ( likes, id ) {
+		const likedPost = state.posts.find( post => post._id === id )
+		likedPost.likes = likes
+
+		const currentPosts = [...state.posts]
+		const index = currentPosts.findIndex( post => post._id === id )
+		currentPosts[index] = likedPost
+		state.posts = currentPosts
+
 	}
 }
 

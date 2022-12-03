@@ -10,29 +10,30 @@ import { CommentInputBox } from './CommentInputField';
 import { FaThumbsUp } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'timeago-react';
-import axios from '../services/axios-config';
 import { actions } from '../state';
-import { useState } from 'react';
+import axios from '../services/axios-config';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useState } from 'react';
 
-function Post({ postDesc, user, createdAt, image, _id }) {
+function Post({ postDesc, user, createdAt, image, _id, likes }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [likes, setLikes] = useState([]);
   const [loggedInUser] = useLocalStorage('user');
   const [accessToken] = useLocalStorage('accessToken');
 
   const handleLike = () => {
     axios
-      .patch(`/post/${_id}/like/${loggedInUser._id}`, {
+      .patch(`/post/like/${_id}/user/${loggedInUser._id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       })
       .then((res) => {
-        setLikes(res.data.likes);
+        actions.likePost(res.data.likes, _id);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log('ERROR LIKING POST: ', err.response.data.message);
+      });
   };
 
   return (
@@ -87,9 +88,9 @@ function Post({ postDesc, user, createdAt, image, _id }) {
             className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
             onClick={handleLike}
           >
-            <FaThumbsUp color={likes.length > 0 ? 'red' : 'black'} />
+            <FaThumbsUp color={likes > 0 ? 'red' : 'black'} />
             <p className="text-xs sm:text-base hidden md:inline-flex">
-              {`${likes.length || 0} Likes`}
+              {`${likes} ${likes === 1 ? 'Like' : 'likes'}`}
             </p>
           </div>
 
