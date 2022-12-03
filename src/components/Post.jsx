@@ -14,7 +14,6 @@ import { actions, state } from '../state';
 import axios from '../services/axios-config';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
 
 function Post({ postDesc, user, createdAt, image, _id, likes }) {
