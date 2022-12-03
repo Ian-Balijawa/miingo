@@ -63,11 +63,33 @@ const actions = {
 		state.posts.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	addComment: ( comment ) => {
-		state.comments = [comment, ...state.comments]
+		const currentComments = [...state.comments]
+		if ( !currentComments.length === 0 ) {
+			state.comments = [comment]
+			return
+		}
+		const index = currentComments.findIndex( c => c._id === comment._id )
+		if ( index === -1 ) {
+			state.comments = [comment, ...currentComments]
+		} else {
+			state.comments = [
+				...currentComments.slice( 0, index ),
+				comment,
+				...currentComments.slice( index + 1 ),
+			]
+		}
+
 		state.comments.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	addComments: ( comments ) => {
-		state.comments = [...comments, ...state.comments]
+		const currentComments = [...state.comments]
+		currentComments.forEach( ( comment ) => {
+			const index = comments.findIndex( ( c ) => c._id === comment._id )
+			if ( index !== -1 ) {
+				comments[index] = comment
+			}
+		} )
+		state.comments = comments
 		state.comments.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	setSocket: ( socket ) => {
@@ -85,11 +107,11 @@ subscribeKey( state, 'accessToken', () => {
 	if ( !state.accessToken ) {
 		actions.setAccessToken( null )
 		localStorage.setItem( 'accessToken', null )
-		console.log( 'accessToken removed', state?.accessToken )
+		console.log( 'accessToken removed', state.accessToken )
 
 	} else {
-		localStorage.setItem( 'accessToken', state?.accessToken )
-		console.log( 'accessToken set', state?.accessToken )
+		localStorage.setItem( 'accessToken', state.accessToken )
+		console.log( 'accessToken set', state.accessToken )
 	}
 } )
 

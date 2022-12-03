@@ -1,19 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { actions, state } from '../state';
 
 import Boards from '../components/Boards';
 import BottomNav from '../components/BottomNav';
+import { DropzoneArea } from 'material-ui-dropzone';
 import Feed from '../components/Feed';
 import Header from '../components/Header';
 import { HiOutlineLogout } from 'react-icons/hi';
+import ModalWrapper from '../components/modal/ModalWrapper';
 import React from 'react';
 import SideFeed from '../components/SideFeed';
 import Statuses from '../components/Statuses';
 import axios from '../services/axios-config';
-import { actions, state } from '../state';
-import { useSnapshot } from 'valtio';
-import ModalWrapper from '../components/modal/ModalWrapper';
-import { DropzoneArea } from 'material-ui-dropzone';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useSnapshot } from 'valtio';
 
 const { useState } = React;
 
@@ -21,7 +21,7 @@ function Home({ contentType }) {
   const [logout, setLogout] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState('');
-
+  const [accessToken] = useLocalStorage('accessToken');
   const navigate = useNavigate();
   const [user] = useLocalStorage('user');
   const name = user?.name;
@@ -32,20 +32,13 @@ function Home({ contentType }) {
     setLogout(!logout);
   };
 
-  // const fileType = () => {
-  //   if (contentType.toLowerCase() === 'photo') return ['image/*'];
-  //   if (contentType.toLowerCase() === 'article') return ['application/pdf'];
-  //   if (contentType.toLowerCase() === 'video')
-  //     return ['video/mp4', 'video/webm'];
-  // };
-
   const handleLogout = async (e) => {
     e.preventDefault();
 
     try {
       await axios.patch('/auth/logout', {
         headers: {
-          Authorization: `Bearer ${state.accessToken}`
+          Authorization: `Bearer ${accessToken}`
         }
       });
       actions.setUser(null);
@@ -75,7 +68,7 @@ function Home({ contentType }) {
             </p>
 
             <Link
-              to={`/profile/${state.user?._id}`}
+              to={`/profile/${user?._id}`}
               className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
             >
               {' '}

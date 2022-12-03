@@ -7,15 +7,16 @@ import ProfileFeed from '../components/profile_details/ProfileFeed';
 import ProfileSideFeed from '../components/profile_details/ProfileSideFeed';
 import axios from '../services/axios-config';
 import { state } from '../state';
+import useLocalStorage from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
 
 export default function ProfilePage() {
   const [logout, setLogout] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [user] = useLocalStorage('user');
+  const [accessToken] = useLocalStorage('accessToken');
   const userName = user?.name?.split(' ')[0];
 
   const showDropdown = () => {
@@ -28,7 +29,7 @@ export default function ProfilePage() {
     try {
       await axios.patch('/auth/logout', {
         headers: {
-          Authorization: `Bearer ${state.accessToken}`
+          Authorization: `Bearer ${accessToken}`
         }
       });
       navigate('/');

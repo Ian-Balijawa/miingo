@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer components {
-
   *,
   *::after,
   *::before,
@@ -94,7 +93,6 @@ input[type='file'] {
 span.upload {
   border-radius: 4px;
 }
-
 
 .photo_zone {
   min-height: 50px;

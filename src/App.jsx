@@ -135,6 +135,24 @@ export default () => {
             </RequireAuth>
           }
         />
+
+        <Route
+          path="groups/:id"
+          element={
+            <RequireAuth>
+              <GroupFeeds />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path="feed"
+          element={
+            <IsUserNavigate user={state.user} loggedInPath="/feed">
+              <Home />
+            </IsUserNavigate>
+          }
+        />
       </Routes>
     </>
   );
@@ -144,4 +162,23 @@ const RequireAuth = ({ children }) => {
   const [user] = useLocalStorage('user');
 
   return user ? children : <Navigate to="/login" />;
+};
+
+const IsUserNavigate = ({ children, loggedInPath, ...rest }) => {
+  const [user] = useLocalStorage('user');
+
+  return (
+    <Route
+      {...rest}
+      element={user ? <Navigate to={loggedInPath} /> : children}
+    />
+  );
+};
+
+const ProtectedRoute = ({ children, ...rest }) => {
+  const [user] = useLocalStorage('user');
+
+  return (
+    <Route {...rest} element={user ? children : <Navigate to="/login" />} />
+  );
 };

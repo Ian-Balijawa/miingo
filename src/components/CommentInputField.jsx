@@ -1,12 +1,13 @@
+import { actions, state } from '../state';
+
 import BeatLoader from 'react-spinners/BeatLoader';
 import { Button } from '@chakra-ui/react';
 import { Comment } from './Comment';
 import axios from '../services/axios-config';
-import { state, actions } from '../state';
 import { useEffect } from 'react';
-import { useState } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
+import { useState } from 'react';
 
 export const CommentInputBox = ({ postId }) => {
   const [user] = useLocalStorage('user');
@@ -56,6 +57,10 @@ export const CommentInputBox = ({ postId }) => {
   };
 
   const comments = snapshot.comments;
+  const commentsForPost = comments?.filter(
+    (comment) => comment?.post === postId
+  );
+
   return (
     <div className="flex flex-col bg-white my-3 post-description">
       <div className="p-5 bg-white">
@@ -70,10 +75,7 @@ export const CommentInputBox = ({ postId }) => {
             </div>
 
             <div>
-              <p className="font-semibold  text-gray-500">
-                {user ? user?.name : 'some user'}
-              </p>
-              <p className="text-xs text-gray-400">1 hour ago</p>
+              <p className="font-semibold  text-gray-500">{user.name}</p>
             </div>
           </div>
         </div>
@@ -84,6 +86,9 @@ export const CommentInputBox = ({ postId }) => {
             className="w-full bg-gray-100 rounded-md p-2 outline-none"
             placeholder="Write a comment..."
             value={comment}
+            style={{
+              border: '1px solid #ccc'
+            }}
             onChange={(e) => setComment(e.target.value)}
           />
           <button
@@ -110,7 +115,11 @@ export const CommentInputBox = ({ postId }) => {
 
       <div className="flex flex-col space-y-2 p-2">
         {comments?.map((comment, index) => (
-          <Comment key={`${comment._id} ${index}`} comment={comment?.comment} />
+          <Comment
+            key={`${comment?._id} ${index}`}
+            comment={comment}
+            postId={postId}
+          />
         ))}
 
         <Button
