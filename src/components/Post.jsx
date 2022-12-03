@@ -10,16 +10,19 @@ import { CommentInputBox } from './CommentInputField';
 import { FaThumbsUp } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'timeago-react';
-import { actions } from '../state';
+import { actions, state } from '../state';
 import axios from '../services/axios-config';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { useSnapshot } from 'valtio';
 
 function Post({ postDesc, user, createdAt, image, _id, likes }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [loggedInUser] = useLocalStorage('user');
   const [accessToken] = useLocalStorage('accessToken');
+  const snapshot = useSnapshot(state);
 
   const handleLike = () => {
     axios
@@ -36,6 +39,12 @@ function Post({ postDesc, user, createdAt, image, _id, likes }) {
       });
   };
 
+  useEffect(() => {
+    axios.get(`/post/comment/${_id}`).then((res) => {
+      actions.setCommentCountForPost(_id, res.data.length);
+    });
+  }, [_id]);
+
   return (
     <div className="flex flex-col bg-white my-3 post-description">
       <div className="p-5 bg-white">
@@ -44,20 +53,19 @@ function Post({ postDesc, user, createdAt, image, _id, likes }) {
             <div className=" w-6 h-6 md:w-8 md:h-8">
               <img
                 className=" w-full h-full object-cover rounded-full"
-                src="/images/ml.jpg"
+                src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
                 alt=""
               />
             </div>
 
             <div>
               <p className="font-semibold  text-gray-500">
-                {user ? user.name : 'some user'}
+                {user ? user.name : 'Anonymous'}
               </p>
               <TimeAgo datetime={createdAt} locale="en_US" />
             </div>
           </div>
 
-          {/* About me */}
           <Link
             to={`/profile/${user ? user?._id : loggedInUser?._id}`}
             className="flex items-center"
@@ -98,8 +106,10 @@ function Post({ postDesc, user, createdAt, image, _id, likes }) {
             className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
             onClick={() => setIsCommentsVisible(!isCommentsVisible)}
           >
+            <p className="text-xs sm:text-base hidden md:inline-flex">
+              {snapshot.commentCountForPost[_id]}
+            </p>
             <ChatAltIcon className="h-6" />
-            <p className="text-xs sm:text-base">comment</p>
           </div>
         </div>
 

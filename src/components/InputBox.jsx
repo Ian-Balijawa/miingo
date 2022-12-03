@@ -1,8 +1,9 @@
+import { actions } from './../state';
+
 import { Spinner } from '@chakra-ui/react';
 import axios from '../services/axios-config';
-import { state, actions } from './../state';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function InputBox() {
   const [accessToken] = useLocalStorage('accessToken');
@@ -20,9 +21,10 @@ function InputBox() {
 
     const formData = new FormData();
     formData.append('postDesc', postDescription);
-    formData.append('doc', document);
-    formData.append('image', image);
-    formData.append('video', video);
+    if (document) formData.append('document', document);
+    if (image) formData.append('image', image);
+    if (video) formData.append('video', video);
+
     formData.append('user', user._id);
     try {
       setIsUploading(true);
@@ -47,13 +49,21 @@ function InputBox() {
     }
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSuccessMessage('');
+      setErrorMessage('');
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [errorMessage, successMessage]);
+
   return (
     <div className="bg-white flex flex-col p-2 shadow-md text-gray-500 font-medium mt-6 ">
       <div className="flex space-x-4  p-4 items-center ">
         <div className=" w-10 h-10 hidden md:flex">
           <img
             className="w-full h-full rounded-full object-cover "
-            src="/images/ml.jpg"
+            src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
             alt="profile"
           />
         </div>

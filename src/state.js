@@ -8,6 +8,7 @@ const state = proxy( {
 	accessToken: null,
 	posts: [],
 	comments: [],
+	commentCountForPost: {},
 	socket: null,
 	isLoading: false,
 	wsErrors: ref( [] ),
@@ -31,7 +32,11 @@ derive( {
 			name: payload.name,
 			email: payload.email,
 		}
-	}
+	},
+	getCommentCountForPost: ( get ) => ( postId ) => {
+		const commentCountForPost = get( state ).commentCountForPost
+		return commentCountForPost[postId] || 0
+	},
 },
 
 	{
@@ -110,6 +115,9 @@ const actions = {
 		currentPosts[index] = likedPost
 		state.posts = currentPosts
 
+	},
+	setCommentCountForPost ( postId, count ) {
+		state.commentCountForPost[postId] = count
 	}
 }
 
