@@ -23,7 +23,7 @@ function ProfileCaption({ handleEdit }) {
               />
             </div>
 
-            <div className=" absolute top-0 right-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer p-2 rounded-full">
+            <div className=" absolute bottom-0 right-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer p-2 rounded-full">
               <HiCamera className=" w-4 h-4 text-white " />
             </div>
           </div>

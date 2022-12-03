@@ -1,24 +1,28 @@
-import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import {
   ChatAltIcon,
   ChevronDownIcon,
-  ShareIcon
-} from '@heroicons/react/outline';
+  ShareIcon,
+} from "@heroicons/react/outline";
 
-import BeatLoader from 'react-spinners/BeatLoader';
-import { CommentInputBox } from './CommentInputField';
-import { FaThumbsUp } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import TimeAgo from 'timeago-react';
-import axios from '../services/axios-config';
-import { state } from '../state';
-import { useSnapshot } from 'valtio';
-import { useState } from 'react';
+import { HiDotsVertical } from "react-icons/hi";
+import { HiX } from "react-icons/hi";
+
+import BeatLoader from "react-spinners/BeatLoader";
+import { CommentInputBox } from "./CommentInputField";
+import { FaThumbsUp } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import TimeAgo from "timeago-react";
+import axios from "../services/axios-config";
+import { state } from "../state";
+import { useSnapshot } from "valtio";
+import { useState } from "react";
 
 function Post({ postDesc, user, createdAt, image, _id }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [likes, setLikes] = useState([]);
+  const [deletePost, setDeletePost] = useState(false);
   const snapshot = useSnapshot(state);
   const loggedInUser = snapshot.user;
   const accessToken = snapshot.accessToken;
@@ -27,13 +31,18 @@ function Post({ postDesc, user, createdAt, image, _id }) {
     axios
       .patch(`/post/${_id}/like/${loggedInUser._id}`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
+          Authorization: `Bearer ${accessToken}`,
+        },
       })
       .then((res) => {
         setLikes(res.data.likes);
       })
       .catch((err) => {});
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    setDeletePost(!deletePost);
   };
 
   return (
@@ -51,7 +60,7 @@ function Post({ postDesc, user, createdAt, image, _id }) {
 
             <div>
               <p className="font-semibold  text-gray-500">
-                {user ? user.name : 'some user'}
+                {user ? user.name : "some user"}
               </p>
               <TimeAgo datetime={createdAt} locale="en_US" />
             </div>
@@ -88,7 +97,8 @@ function Post({ postDesc, user, createdAt, image, _id }) {
             className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer"
             onClick={handleLike}
           >
-            <FaThumbsUp color={likes.length > 0 ? 'red' : 'black'} />
+            <FaThumbsUp color={likes.length > 0 ? "red" : "black"} />
+
             <p className="text-xs sm:text-base hidden md:inline-flex">
               {`${likes.length || 0} Likes`}
             </p>
@@ -103,18 +113,29 @@ function Post({ postDesc, user, createdAt, image, _id }) {
           </div>
         </div>
 
-        <div className=" flex items-center justify-center">
+        <div className="relative flex items-center justify-center">
           <div className="rounded-none flex items-center space-x-2 hover:bg-gray-100 p-2 hover:rounded-lg cursor-pointer">
             <ShareIcon className="h-4" />
             <p className="text-xs sm:text-base">share</p>
           </div>
 
-          <PostMenu
-            postId={_id}
-            onClick={() => {
-              setIsOpen((isOpen) => !isOpen);
-            }}
-          />
+          <div
+            onClick={handleDelete}
+            className="rounded-none flex items-center space-x-2 hover:bg-gray-100 p-2 hover:rounded-full cursor-pointer"
+          >
+            {deletePost ? (
+              <HiX className="h-4" />
+            ) : (
+              <HiDotsVertical className="h-4" />
+            )}
+          </div>
+
+          {deletePost && (
+            <div className=" absolute -bottom-10 z-30 shadow-lg flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer">
+               <div className="text-xs sm:text-base">Delete</div>
+            </div>
+          )}
+          
         </div>
       </div>
 
@@ -134,8 +155,8 @@ const PostMenu = ({ postId }) => {
     axios
       .delete(`/post/${postId}`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
+          Authorization: `Bearer ${accessToken}`,
+        },
       })
       .then((res) => {
         setIsDeleting(true);
@@ -156,11 +177,11 @@ const PostMenu = ({ postId }) => {
             as={Button}
             rightIcon={<ChevronDownIcon />}
           >
-            {isOpen ? 'Close' : <Ellipsis />}
+            {isOpen ? "Close" : <Ellipsis />}
           </MenuButton>
           <MenuList>
             <MenuItem onClick={handlePostDelete}>
-              {isDeleting ? <BeatLoader size="8" color="black" /> : 'Delete'}
+              {isDeleting ? <BeatLoader size="8" color="black" /> : "Delete"}
             </MenuItem>
           </MenuList>
         </>
