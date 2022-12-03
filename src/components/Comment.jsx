@@ -18,7 +18,27 @@ export const Comment = ({ postId }) => {
     axios
       .post(
         `/post/comment/${postId}/user/${user._id}`,
-        { comment: data.text },
+        { comment: data.text, parent: null },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
+      .then((res) => {
+        actions.addComment(res.data);
+        console.log('COMMENT: ', res.data);
+      })
+      .catch((error) => {
+        console.log('ERROR FETCHING COMMENTS: ', error);
+      });
+  };
+
+  const handleReplyToComment = (data) => {
+    axios
+      .post(
+        `/post/comment/${postId}/user/${user._id}`,
+        { comment: data.text, parent: data._id },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`
@@ -66,7 +86,7 @@ export const Comment = ({ postId }) => {
       currentData={(data) => {
         console.log('current data', data);
       }}
-      onReplyAction={(data) => console.log('reply', data)}
+      onReplyAction={(data) => handleReplyToComment(data)}
     />
   );
 };

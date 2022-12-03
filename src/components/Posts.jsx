@@ -40,7 +40,12 @@ function Posts() {
           user={post.user}
           image={
             post.image
-              ? `https://api1.miingoapp.com/${post.image}?not-from-cache-please`
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.image}`
+              : null
+          }
+          video={
+            post.video
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.video}`
               : null
           }
           _id={post._id}
@@ -57,9 +62,15 @@ function Posts() {
           postDesc={post.postDesc}
           email={post.user ? post.user.email : "creator's email"}
           createdAt={post.createdAt}
+          user={post.user}
           image={
             post.image
-              ? `https://api1.miingoapp.com/${post.image}?not-from-cache-please`
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.image}`
+              : null
+          }
+          video={
+            post.video
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.video}`
               : null
           }
           likes={post.likes.length}
