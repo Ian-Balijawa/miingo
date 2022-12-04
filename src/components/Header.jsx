@@ -50,8 +50,8 @@ function Header({ onPress }) {
 
       {/*  Right */}
       <div className="flex justify-around items-center sm:space-x-2 md:space-x-6 w-56 md:w-80">
-        <div className="hidden md:inline-flex items-center relative ">
-          <span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
+        <div className="hidden md:inline-flex items-center relative  cursor-pointer">
+          <span className="absolute top-0 right-0  h-4 w-4 bg-red text-center rounded-full text-white text-xs font-bold">
             {' '}
             8
           </span>

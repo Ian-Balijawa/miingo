@@ -102,7 +102,7 @@ function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
             onClick={handleLike}
           >
             <FaThumbsUp color={likes > 0 ? 'red' : 'black'} />
-            <p className="text-xs sm:text-base hidden md:inline-flex">
+            <p className="text-xs sm:text-base text-center">
               {`${likes} ${likes === 1 ? 'Like' : 'likes'}`}
             </p>
           </div>

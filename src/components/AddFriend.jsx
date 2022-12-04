@@ -19,7 +19,7 @@ function AddFriend({ name, followers, following, image }) {
               />
             </div>
 
-            <span className="absolute top-0 right-2 text-white bg-blue-600 rounded-full">
+            <span className="absolute top-0 right-2 text-white bg-blue rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -42,13 +42,13 @@ function AddFriend({ name, followers, following, image }) {
               <h3 className="text-gray-600"> {name} </h3>
               <span>
                 {" "}
-                <HiHeart className="h-4 w-4 text-red-700" />
+                <HiHeart className="h-4 w-4 text-red" />
               </span>
             </p>
           </div>
 
           <div className=" flex items-center justify-center space-x-2 text-gray-600">
-            <div className="border-r border-blue-300 px-2">
+            <div className="border-r border-blue px-2">
               <p className="flex flex-col items-center justify-center space-y-2">
                 <h3 className="text-gray-600"> {following} </h3>
                 <h4>Following</h4>
@@ -68,9 +68,9 @@ function AddFriend({ name, followers, following, image }) {
                  e.preventDefault();
                  setFollow(!follow);
               }}
-              className={`flex  mx-auto ${ !follow ? "bg-blue-600 text-white" :"text-blue-600"} px-3 py-1 
+              className={`flex  mx-auto ${ !follow ? "bg-blue text-white" :"text-blue"} px-3 py-1 
                           md:px-5 rounded-lg shadow-xl font-normal hover:shadow-xl active:scale-90 
-                          transition duration-300 border border-blue-600`}
+                          transition duration-300 border border-blue`}
             >
               { follow ? "Follow" : "UnFollow"}
             </button>

@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { actions, state } from '../state';
-
 import Boards from '../components/Boards';
 import BottomNav from '../components/BottomNav';
 import { DropzoneArea } from 'material-ui-dropzone';
@@ -53,6 +52,7 @@ function Home({ contentType }) {
 
   return (
     <div className="">
+      
       <div className=" h-screen w-full bg-miingo-gray  font-serif overflow-y-auto overflow-x-hidden ">
         {/* Header */}
         <Header onPress={showDropdown} />
@@ -87,6 +87,7 @@ function Home({ contentType }) {
         )}
 
         <Statuses handlePostStatus={() => setShowModal(true)} />
+
         {showModal ? (
           <ModalWrapper
             title="Upload Status"

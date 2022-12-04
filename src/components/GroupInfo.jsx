@@ -6,7 +6,7 @@ function GroupInfo({ id, image, members, name, active }) {
     <Link to={`/group_messages`} state={{ src: image , name:name, members:members }}>
       <div
         className={`flex items-center justify-between space-x-3  
-       mb-2 relative hover:bg-gray-200 cursor-pointer p-2 pr-10 rounded-xl
+       mb-2 relative hover:bg-gray3 cursor-pointer p-2 pr-10 rounded-xl
     `}
       >
         <div className=" flex items-center space-x-3">
