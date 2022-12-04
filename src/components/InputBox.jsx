@@ -1,9 +1,10 @@
-import { actions } from './../state';
+import { useEffect, useState } from 'react';
 
 import { Spinner } from '@chakra-ui/react';
+import { actions } from './../state';
 import axios from '../services/axios-config';
+import { compressImage } from '../services/compressor';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useState, useEffect } from 'react';
 
 function InputBox() {
   const [accessToken] = useLocalStorage('accessToken');
@@ -22,8 +23,13 @@ function InputBox() {
     const formData = new FormData();
     formData.append('postDesc', postDescription);
     if (document) formData.append('document', document);
-    if (image) formData.append('image', image);
-    if (video) formData.append('video', video);
+    if (image) {
+      const compressedImage = await compressImage(image);
+      formData.append('image', compressedImage);
+    }
+    if (video) {
+      formData.append('video', video);
+    }
 
     formData.append('user', user._id);
     try {

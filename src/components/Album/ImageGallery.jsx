@@ -1,4 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
+
 import React, { useState } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
@@ -35,4 +36,8 @@ export default () => {
       <SortableGallery items={items} onSortEnd={onSortEnd} axis={'xy'} />
     </div>
   );
+};
+
+export const ImageBox = (photos) => {
+  return <SortableGallery items={photos} axis={'xy'} />;
 };

@@ -4,26 +4,32 @@ import {
   ChevronDownIcon,
   ShareIcon
 } from '@heroicons/react/outline';
+import { HiDotsVertical, HiX } from 'react-icons/hi';
+import React, { useState } from 'react';
 import { actions, state } from '../state';
 
 import BeatLoader from 'react-spinners/BeatLoader';
 import { CommentInputBox } from './CommentInputField';
 import { FaThumbsUp } from 'react-icons/fa';
-import { HiDotsVertical } from 'react-icons/hi';
-import { HiX } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'timeago-react';
 import axios from '../services/axios-config';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useSnapshot } from 'valtio';
-import { useState } from 'react';
 
-function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
+function Post({
+  postDesc,
+  user,
+  createdAt,
+  image,
+  _id,
+  video,
+  likes,
+  commentsCount
+}) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [loggedInUser] = useLocalStorage('user');
   const [deletePost, setDeletePost] = useState(false);
   const [accessToken] = useLocalStorage('accessToken');
-  const snapshot = useSnapshot(state);
 
   const handleLike = () => {
     axios
@@ -83,7 +89,11 @@ function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
 
       {image && (
         <div className="relative  mx-2 md:mx-8 h-56 md:h-96">
-          <img src={image} className="w-full h-full object-cover" alt="" />
+          <img
+            src={image}
+            className="w-full h-full object-contain bg-black"
+            alt=""
+          />
         </div>
       )}
       {video && (
@@ -112,7 +122,9 @@ function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
             onClick={() => setIsCommentsVisible(!isCommentsVisible)}
           >
             <p className="text-xs sm:text-base hidden md:inline-flex">
-              {snapshot.commentCountForPost[_id]}
+              {`${commentsCount} ${
+                commentsCount === 1 ? 'Comment' : 'Comments'
+              }`}
             </p>
             <ChatAltIcon className="h-6" />
           </div>

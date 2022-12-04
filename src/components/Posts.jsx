@@ -9,7 +9,7 @@ import { useSnapshot } from 'valtio';
 
 function Posts() {
   const [error, setError] = useState(null);
-  const snapshot = useSnapshot(state);
+  const snap = useSnapshot(state);
   const [accessToken] = useLocalStorage('accessToken');
   useEffect(() => {
     axios
@@ -26,7 +26,7 @@ function Posts() {
       });
   }, [accessToken]);
 
-  const posts = snapshot.posts;
+  const posts = snap.posts;
 
   return (
     <div className="w-full md:w-[640px] space-y-4">
@@ -50,6 +50,7 @@ function Posts() {
           }
           _id={post._id}
           likes={post.likes.length}
+          commentsCount={post.commentsCount}
         />
       ))}
 
@@ -74,7 +75,7 @@ function Posts() {
               : null
           }
           likes={post.likes.length}
-          comments={post.comments}
+          commentsCount={post.commentsCount}
           _id={post._id}
         />
       ))}
