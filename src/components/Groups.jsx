@@ -30,7 +30,7 @@ function Groups() {
 
 				<div className="flex items-center">
 					<button
-						className={`flex  mx-auto text-white bg-blue-600 hover:bg-blue-600 px-3 py-1 md:px-5 rounded-full shadow-xl font-normal
+						className={`flex  mx-auto text-white bg-blue px-3 py-1 md:px-5 rounded-full shadow-xl font-normal
                          hover:shadow-xl active:scale-90 transition duration-300`}
 					>
 						Create Group
@@ -38,7 +38,7 @@ function Groups() {
 				</div>
 			</div>
 
-			<div className="flex flex-col justify-center space-y-2 h-56 mt-2">
+			<div className="flex flex-col justify-center space-y-2 h-56 mt-2 ">
 				{Leaders?.map(({ id, image, members, name, active }) => (
 					<GroupInfo
 						key={id}

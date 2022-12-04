@@ -15,7 +15,7 @@ function ProfileCaption({ handleEdit }) {
           <div className="relative flex items-center justify-center w-20">
             <div className="w-14 h-14 md:w-20 md:h-20 rounded-full">
               <img
-                src="https://res.cloudinary.com/itgenius/image/upload/v1668007542/pexels-mahdi-chaghari-12463279_cwiw1n.jpg"
+                src= {`https://ui-avatars.com/api/name=${user?.name}&background=random`}
                 loading="lazy"
                 className="w-full h-full rounded-full object-cover"
                 alt="profile_caption"
@@ -42,7 +42,7 @@ function ProfileCaption({ handleEdit }) {
               </p>
             </div>
 
-            <div className="border-r border-blue-300 h-7 " />
+            <div className="border-r border-blue h-7 " />
 
             <div className="  px-2">
               <p className="flex flex-col items-center justify-center space-y-2">
@@ -51,7 +51,7 @@ function ProfileCaption({ handleEdit }) {
               </p>
             </div>
 
-            <div className="border-r border-blue-300 h-7 " />
+            <div className="border-r border-blue h-7 " />
 
             <div className="">
               <p className="flex flex-col items-center justify-center space-y-2">
@@ -65,10 +65,10 @@ function ProfileCaption({ handleEdit }) {
             <button
               onClick={handleEdit}
               className={`flex  mx-auto ${
-                !editProfile ? 'bg-blue-600 text-white' : 'text-blue-600'
+                !editProfile ? 'bg-blue text-white' : 'text-blue'
               } px-3 py-1
                         md:px-5 rounded-lg  font-normal hover:shadow-xl active:scale-90
-                        transition duration-300 border border-blue-600`}
+                        transition duration-300 border border-blue`}
             >
               EDIT PROFILE
             </button>

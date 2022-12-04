@@ -12,7 +12,7 @@ function LikedPages() {
       pagetitle: "Chrimson Agency",
       subtitle: "Clothing Store",
       likes: "15k",
-      color: "bg-blue-600"
+      color: "bg-blue"
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ function LikedPages() {
       pagetitle: "Digital Pixel",
       subtitle: "Software",
       likes: "158k",
-      color: "bg-pink-600"
+      color: "bg-pink"
     },
     {
       id: 3,
@@ -36,7 +36,7 @@ function LikedPages() {
       pagetitle: "Fivestar Food",
       subtitle: "Restaurant ",
       likes: "186k",
-      color: "bg-blue-600"
+      color: "bg-blue"
     },
     {
       id: 5,
@@ -52,7 +52,7 @@ function LikedPages() {
         pagetitle: "Wattoto",
         subtitle: "Grinder",
         likes: "23k",
-        color: "bg-pink-600"
+        color: "bg-pink"
       },
   ]);
 

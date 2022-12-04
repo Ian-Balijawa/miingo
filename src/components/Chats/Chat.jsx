@@ -20,7 +20,7 @@ export default function Chat({ src, online, name }) {
               <p className="flex items-center space-x-2">
                 <span
                   className={`w-3 h-3  rounded-full left-10 ml-3 ${
-                    online ? "bg-green-400" : "bg-red-400"
+                    online ? "bg-green-400" : "bg-red"
                   }`}
                 ></span>
                 <small className=" ml-2 text-gray-900">
