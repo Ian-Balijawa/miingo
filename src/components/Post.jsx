@@ -28,7 +28,7 @@ function Post({
 }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [loggedInUser] = useLocalStorage('user');
-  const [deletePost, setDeletePost] = useState(false);
+  const [isPostDeleted, setIsPostDeleted] = useState(true);
   const [accessToken] = useLocalStorage('accessToken');
 
   const handleLike = () => {
@@ -47,8 +47,19 @@ function Post({
   };
 
   const handleDelete = (e) => {
-    e.preventDefault();
-    setDeletePost(!deletePost);
+    axios
+      .delete(`/post/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then((res) => {
+        setIsPostDeleted(!isPostDeleted);
+        actions.deletePost(_id);
+      })
+      .catch((err) => {
+        console.log('ERROR DELETING POST: ', err.response.data.message);
+      });
   };
 
   return (
@@ -137,17 +148,17 @@ function Post({
           </div>
 
           <div
-            onClick={handleDelete}
+            onClick={() => handleDelete()}
             className="rounded-none flex items-center space-x-2 hover:bg-gray-100 p-2 hover:rounded-full cursor-pointer"
           >
-            {deletePost ? (
+            {isPostDeleted ? (
               <HiX className="h-4" />
             ) : (
               <HiDotsVertical className="h-4" />
             )}
           </div>
 
-          {deletePost && (
+          {isPostDeleted && (
             <div className=" absolute -bottom-10 z-30 shadow-lg flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer">
               <div className="text-xs sm:text-base">Delete</div>
             </div>
