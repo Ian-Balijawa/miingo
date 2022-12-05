@@ -66,12 +66,12 @@ function Posts() {
           user={post.user}
           image={
             post.image
-              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.image}`
+              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.image}`
               : null
           }
           video={
             post.video
-              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.video}`
+              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.video}`
               : null
           }
           likes={post.likes.length}
