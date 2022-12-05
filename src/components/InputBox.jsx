@@ -30,7 +30,9 @@ function InputBox() {
     if (video) {
       // restrict video size to 1MB
       if (video.size > 1000000) {
-        setErrorMessage('Video size should be less than 1MB');
+        setErrorMessage(
+          'Video size should be less than 1MB \n Please Select a smaller video'
+        );
         setVideo(null);
         return;
       }
