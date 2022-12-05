@@ -68,7 +68,7 @@ function InputBox() {
     const timer = setTimeout(() => {
       setSuccessMessage('');
       setErrorMessage('');
-    }, 5000);
+    }, 10000);
     return () => clearTimeout(timer);
   }, [errorMessage, successMessage]);
 
