@@ -236,14 +236,23 @@ function InputBox() {
           </div>
         )}
         {!isUploading && video && (
-          <video
-            src={URL.createObjectURL(video)}
-            width="200"
-            height="200"
-            style={{ background: 'black' }}
-            controls
-          />
+          <div className="flex flex-col items-center justify-center">
+            <video
+              src={URL.createObjectURL(video)}
+              alt="video"
+              width="150"
+              height="200"
+              controls
+            />
+            <button
+              className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+              onClick={() => setVideo(null)}
+            >
+              Delete
+            </button>
+          </div>
         )}
+
         {!isUploading && image && (
           <img
             src={URL.createObjectURL(image)}
@@ -260,6 +269,48 @@ function InputBox() {
             controls
             title="document"
           />
+        )}
+
+        {video && (
+          <button
+            className="bg-red-500 text-white bg-red font-bold rounded"
+            onClick={() => setVideo(null)}
+            style={{
+              alignSelf: 'flex-start',
+              margin: '0 0.4rem',
+              padding: '0.4rem 0.8rem'
+            }}
+          >
+            Discard
+          </button>
+        )}
+
+        {image && (
+          <button
+            className="bg-red-500 text-white bg-red font-bold rounded"
+            onClick={() => setImage(null)}
+            style={{
+              alignSelf: 'flex-start',
+              margin: '0 0.4rem',
+              padding: '0.4rem 0.8rem'
+            }}
+          >
+            Discard
+          </button>
+        )}
+
+        {document && (
+          <button
+            className="bg-red-500 text-white bg-red font-bold rounded"
+            onClick={() => setDocument(null)}
+            style={{
+              alignSelf: 'flex-start',
+              margin: '0 0.4rem',
+              padding: '0.4rem 0.8rem'
+            }}
+          >
+            Discard
+          </button>
         )}
       </div>
     </div>
