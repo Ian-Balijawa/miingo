@@ -1,58 +1,12 @@
 import Contact from './Contact';
 import React from 'react';
-
-const contacts = [
-  {
-    src: `https://ui-avatars.com/api/name=${['Muwonge', 'Lawrence'].join(
-      ' '
-    )}&background=random`,
-    name: 'Muwonge',
-    online: true,
-    timestamp: '8:00am'
-  },
-  {
-    src: `https://ui-avatars.com/api/name=${['balijawa', 'ian'].join(
-      ' '
-    )}&background=random`,
-    name: 'Ian',
-    online: false,
-    timestamp: '8:00am'
-  },
-  {
-    src: `https://ui-avatars.com/api/name=${['bukenya', 'roland'].join(
-      ' '
-    )}&background=random`,
-    name: 'Roland',
-    online: false,
-    timestamp: '9:40am'
-  },
-  {
-    src: `https://ui-avatars.com/api/name=${['Muwawu', 'ronald'].join(
-      ' '
-    )}&background=random`,
-    name: 'ronald',
-    online: true,
-    timestamp: '10:00am'
-  },
-  {
-    src: `https://ui-avatars.com/api/name=${['Derick', 'mo'].join(
-      ' '
-    )}&background=random`,
-    name: 'derick',
-    online: true,
-    timestamp: '8:00am'
-  },
-  {
-    src: `https://ui-avatars.com/api/name=${['wafulla', 'alan'].join(
-      ' '
-    )}&background=random`,
-    name: 'alan',
-    online: false,
-    timestamp: '11:00am'
-  }
-];
+import { state } from '../state';
+import { useSnapshot } from 'valtio';
 
 function Widgets({ group }) {
+  const snap = useSnapshot(state);
+  const contacts = snap.users;
+
   return (
     <div className=" relative hidden lg:flex flex-col pb-2 mt-5 shadow-lg bg-white rounded-md  h-screen overflow-y-auto scrollbar-hide ">
       <div className=" bg-white  sticky top-0 z-30 flex space-x-4 items-center text-gray-700 mb-5">
@@ -64,11 +18,14 @@ function Widgets({ group }) {
       <div className=" px-1">
         {contacts.map((contact) => (
           <Contact
-            key={contact.src}
-            src={contact.src}
-            name={contact.name}
-            online={contact.online}
-            timestamp={contact.timestamp}
+            key={contact._id}
+            src={
+              contact?.image ||
+              `https://ui-avatars.com/api/name=${contact?.name}&background=random`
+            }
+            name={contact?.name}
+            online={contact?.online || false}
+            timestamp={contact?.lastSeen || '8:00am'}
           />
         ))}
       </div>

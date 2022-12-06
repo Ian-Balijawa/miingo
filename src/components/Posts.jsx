@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { actions, state } from '../state';
 
-import Addfriends from './Addfriends';
+import FriendSuggestion from './FriendSuggestion';
 import Post from './Post';
 import axios from '../services/axios-config';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -54,7 +54,7 @@ function Posts() {
         />
       ))}
 
-      <Addfriends />
+      <FriendSuggestion />
 
       {posts.slice(1).map((post) => (
         <Post
