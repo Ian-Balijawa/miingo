@@ -66,12 +66,14 @@ function Posts() {
           user={post.user}
           image={
             post.image
-              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.image}`
+              ? // ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.image}`
+                `https://backend-miingo.herokuapp.com/post/${post.image}`
               : null
           }
           video={
             post.video
-              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.video}`
+              ? // ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.video}`
+                `https://backend-miingo.herokuapp.com/post/${post.video}`
               : null
           }
           likes={post.likes.length}
