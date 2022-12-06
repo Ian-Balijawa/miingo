@@ -65,7 +65,9 @@ function Post({
             <div className=" w-6 h-6 md:w-8 md:h-8">
               <img
                 className=" w-full h-full object-cover rounded-full"
-                src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
+                src={`https://ui-avatars.com/api/name=${
+                  user && user?.name
+                }&background=random`}
                 alt=""
               />
             </div>
@@ -147,9 +149,9 @@ function Post({
             onClick={() => setIsPostDeleted(!isPostDeleted)}
           >
             {!isPostDeleted ? (
-              <HiX className="h-4" />
-            ) : (
               <HiDotsVertical className="h-4" />
+            ) : (
+              <HiX className="h-4" />
             )}
           </div>
 
@@ -157,7 +159,7 @@ function Post({
             className=" absolute -bottom-10 z-30 shadow-lg flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer"
             onClick={() => handleDelete()}
           >
-            {!isPostDeleted && (
+            {isPostDeleted && (
               <div className="text-xs sm:text-base">Delete Post</div>
             )}
           </div>
