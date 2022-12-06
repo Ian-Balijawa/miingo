@@ -18,7 +18,7 @@ function AddFriend({ _id, name, followers, followings, image }) {
   const handleFollow = () => {
     axios
       .post(
-        `/user/follow/${user._id}/user/${_id}`,
+        `/user/follower/${user._id}/user/${_id}`,
         { name },
         {
           headers: {
