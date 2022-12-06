@@ -41,9 +41,7 @@ function Post({
       .then((res) => {
         actions.likePost(res.data.likes, _id);
       })
-      .catch((err) => {
-        console.log('ERROR LIKING POST: ', err.response.data.message);
-      });
+      .catch((err) => {});
   };
 
   const handleDelete = (e) => {
@@ -57,9 +55,7 @@ function Post({
         setIsPostDeleted(!isPostDeleted);
         actions.deletePost(_id);
       })
-      .catch((err) => {
-        console.log('ERROR DELETING POST: ', err.response.data.message);
-      });
+      .catch((err) => {});
   };
 
   return (

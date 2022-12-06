@@ -128,11 +128,9 @@ subscribeKey( state, 'accessToken', () => {
 	if ( !state.accessToken ) {
 		actions.setAccessToken( null )
 		localStorage.setItem( 'accessToken', null )
-		console.log( 'accessToken removed', state.accessToken )
 
 	} else {
 		localStorage.setItem( 'accessToken', state.accessToken )
-		console.log( 'accessToken set', state.accessToken )
 	}
 } )
 

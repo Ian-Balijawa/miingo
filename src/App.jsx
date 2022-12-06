@@ -60,7 +60,6 @@ export default () => {
           })
           .then((res) => {
             const data = res.data;
-            console.log('RES: ', data);
 
             localStorage.setItem('user', JSON.stringify(data));
             localStorage.setItem(

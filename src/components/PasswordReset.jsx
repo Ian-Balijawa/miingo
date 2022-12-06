@@ -19,13 +19,7 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    authenticateUser();
-
-    console.log('Password Reset State: ', passwordResetState);
   };
-
-  //Handle Login API Integration here
-  const authenticateUser = () => {};
 
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>

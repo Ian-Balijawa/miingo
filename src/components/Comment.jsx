@@ -28,9 +28,7 @@ export const Comment = ({ postId }) => {
         actions.addComment(res.data);
         actions.incrementCommentsCountForPost(postId);
       })
-      .catch((error) => {
-        console.log('ERROR FETCHING COMMENTS: ', error);
-      });
+      .catch((error) => {});
   };
 
   const handleReplyToComment = (data) => {
@@ -47,11 +45,8 @@ export const Comment = ({ postId }) => {
       .then((res) => {
         actions.addComment(res.data);
         actions.incrementCommentsCountForPost(postId);
-        console.log('COMMENT: ', res.data);
       })
-      .catch((error) => {
-        console.log('ERROR FETCHING COMMENTS: ', error);
-      });
+      .catch((error) => {});
   };
 
   const data = [];
@@ -82,9 +77,7 @@ export const Comment = ({ postId }) => {
       }}
       commentData={data}
       onSubmitAction={(data) => handleComment(data)}
-      currentData={(data) => {
-        console.log('current data', data);
-      }}
+      currentData={(data) => {}}
       onReplyAction={(data) => handleReplyToComment(data)}
     />
   );

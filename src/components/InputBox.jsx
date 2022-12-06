@@ -28,7 +28,6 @@ function InputBox() {
       formData.append('image', compressedImage);
     }
     if (video) {
-      // restrict video size to 1MB
       if (video.size > 2500000) {
         setErrorMessage(
           'Video size should be less than 2.5MB \n Please Select a smaller video'

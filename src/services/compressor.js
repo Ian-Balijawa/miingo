@@ -2,7 +2,6 @@ import Compressor from 'compressorjs';
 import imageCompression from 'browser-image-compression';
 
 export const compressImage = async ( image ) => {
-	console.log( "conpressing...." );
 
 	const controller = new AbortController();
 	const compressedFile = await imageCompression( image, {
@@ -11,15 +10,12 @@ export const compressImage = async ( image ) => {
 		useWebWorker: true,
 		signal: controller.signal,
 	} );
-	console.log( "conpressing completed...." );
-
 	return compressedFile;
 }
 
 
 export const compressFile = ( file ) => {
 	let compressedFile;
-	console.log( "conpressing...." );
 	new Compressor( file, {
 		quality: 0.3,
 		maxWidth: 1920,
@@ -35,6 +31,5 @@ export const compressFile = ( file ) => {
 		},
 	} );
 
-	console.log( "compressed...." );
 	return compressedFile;
 }

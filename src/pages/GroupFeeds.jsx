@@ -1,19 +1,20 @@
-import React from "react";
-import BottomNav from "../components/BottomNav";
-import GroupCards from "../components/GroupCards";
-import Header from "../components/Header";
-import SideFeed from "../components/SideFeed";
-import axios from "../services/axios-config";
-import { HiOutlineLogout } from "react-icons/hi";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
+
+import BottomNav from '../components/BottomNav';
+import GroupCards from '../components/GroupCards';
+import Header from '../components/Header';
+import { HiOutlineLogout } from 'react-icons/hi';
+import React from 'react';
+import SideFeed from '../components/SideFeed';
+import axios from '../services/axios-config';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useState } from 'react';
 
 function GroupFeeds() {
-  
   const [logout, setLogout] = useState(false);
-  const [user] = useLocalStorage("user");
-  const [userName] = useState(user.name.split(" "));
+  const [user] = useLocalStorage('user');
+  const [userName] = useState(user.name.split(' '));
+  const [accessToken] = useLocalStorage('accessToken');
 
   const navigate = useNavigate();
 
@@ -25,16 +26,20 @@ function GroupFeeds() {
     e.preventDefault();
 
     try {
-      const res = await axios.patch("/auth/logout");
+      const res = await axios.patch('/auth/logout', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
     } catch (error) {
       if (error) {
         console.log(error);
       }
     }
 
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
 
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -54,12 +59,15 @@ function GroupFeeds() {
               {userName[0]}
             </p>
 
-            <Link  to={`/profile/${user._id}`} className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline ">
-              {" "}
-              Profile{" "}
+            <Link
+              to={`/profile/${user._id}`}
+              className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
+            >
+              {' '}
+              Profile{' '}
             </Link>
             <p
-              onClick={ handleLogout }
+              onClick={handleLogout}
               className="text-sm hover:bg-gray-200 cursor-pointer flex items-center space-x-3"
             >
               <span className="">

@@ -19,11 +19,8 @@ export const CommentInputBox = ({ postId }) => {
       .get(`/post/comment/${postId}`)
       .then((res) => {
         actions.addComments(res.data);
-        console.log('COMMENTS : ', res.data);
       })
-      .catch((err) => {
-        console.log('ERROR LOADING COMMENTS: ', err);
-      });
+      .catch((err) => {});
   }, [postId]);
 
   const handleCommentLoading = (e) => {
