@@ -5,16 +5,16 @@ import {
   ShareIcon
 } from '@heroicons/react/outline';
 import { HiDotsVertical, HiX } from 'react-icons/hi';
-import React, { useState } from 'react';
-import { actions, state } from '../state';
 
 import BeatLoader from 'react-spinners/BeatLoader';
 import { CommentInputBox } from './CommentInputField';
 import { FaThumbsUp } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'timeago-react';
+import { actions } from '../state';
 import axios from '../services/axios-config';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useState } from 'react';
 
 function Post({
   postDesc,
@@ -28,7 +28,7 @@ function Post({
 }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [loggedInUser] = useLocalStorage('user');
-  const [isPostDeleted, setIsPostDeleted] = useState(true);
+  const [isPostDeleted, setIsPostDeleted] = useState(false);
   const [accessToken] = useLocalStorage('accessToken');
 
   const handleLike = () => {
@@ -52,7 +52,6 @@ function Post({
         }
       })
       .then((res) => {
-        setIsPostDeleted(!isPostDeleted);
         actions.deletePost(_id);
       })
       .catch((err) => {});
@@ -144,21 +143,24 @@ function Post({
           </div>
 
           <div
-            onClick={() => handleDelete()}
             className="rounded-none flex items-center space-x-2 hover:bg-gray-100 p-2 hover:rounded-full cursor-pointer"
+            onClick={() => setIsPostDeleted(!isPostDeleted)}
           >
-            {isPostDeleted ? (
+            {!isPostDeleted ? (
               <HiX className="h-4" />
             ) : (
               <HiDotsVertical className="h-4" />
             )}
           </div>
 
-          {isPostDeleted && (
-            <div className=" absolute -bottom-10 z-30 shadow-lg flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer">
-              <div className="text-xs sm:text-base">Delete</div>
-            </div>
-          )}
+          <div
+            className=" absolute -bottom-10 z-30 shadow-lg flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer"
+            onClick={() => handleDelete()}
+          >
+            {!isPostDeleted && (
+              <div className="text-xs sm:text-base">Delete Post</div>
+            )}
+          </div>
         </div>
       </div>
 

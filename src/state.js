@@ -98,7 +98,9 @@ const actions = {
 		state.socket = socket
 	},
 	deletePost ( id ) {
-		state.posts = state.posts.filter( post => post.id !== id )
+
+		state.posts = state.posts.filter( ( post ) => post._id !== id )
+
 	},
 	deleteComment ( id ) {
 		state.comments = state.comments.filter( comment => comment.id !== id )
