@@ -37,7 +37,7 @@ function AddFriend({ _id, name, followers, followings, image }) {
   };
 
   return (
-    <div className="w-56 h-56  bg-white rounded-lg shadow-lg inline-block mr-2  ">
+    <div className="w-56 h-56  bg-white rounded-lg shadow-lg inline-block mr-2">
       {!isFollowing && (
         <div className=" ">
           <div className="flex flex-col space-y-3 items-center justify-center py-3">
