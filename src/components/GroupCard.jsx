@@ -24,11 +24,11 @@ function GroupCard({ id, src, name, email, image }) {
           </div>
 
           <div className="flex items-center  space-x-3 flex-grow">
-            <div className="flex items-center justify-center cursor-pointer bg-blue-500 hover:bg-blue-400 active:scale-95 transition ease-in-out duration-300 rounded-full w-10 h-10">
+            <div className="flex items-center justify-center cursor-pointer bg-blue hover:bg-blue-400 active:scale-95 transition ease-in-out duration-300 rounded-full w-10 h-10">
               <HiOutlineVideoCamera className="w-6 h-6 text-white" />
             </div>
 
-            <div className="flex items-center justify-center cursor-pointer bg-blue-500 hover:bg-blue-400 active:scale-95 transition ease-in-out duration-300 rounded-full py-2 px-3">
+            <div className="flex items-center justify-center cursor-pointer bg-blue hover:bg-blue-400 active:scale-95 transition ease-in-out duration-300 rounded-full py-2 px-3">
               <p className="text-white text-sm">FOLLOW</p>
             </div>
           </div>
