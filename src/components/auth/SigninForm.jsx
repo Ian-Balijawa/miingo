@@ -101,7 +101,7 @@ export const SigninForm = () => {
                 )}
                 <Button
                   type="submit"
-                  colorScheme="blue"
+                  colorScheme="orange"
                   size="lg"
                   fontSize="md"
                 >
@@ -122,7 +122,7 @@ export const SigninForm = () => {
                   <Box
                     as="a"
                     href="/signup"
-                    color={mode('blue.600', 'blue.200')}
+                    color="#ff6600"
                     display={{ base: 'block', md: 'inline-block' }}
                   >
                     Sign up
