@@ -73,13 +73,14 @@ export const SignupForm = () => {
             borderColor={mode('gray.200', 'transparent')}
             shadow={{ md: 'lg' }}
           >
-            <Heading textAlign="center" mb="2.5" size="md" fontWeight="extrabold">
+            <Heading textAlign="center" mb="2.5" size="md" fontWeight="extrabold" textColor="#ff6600">
               Welcome to MiingoApp
             </Heading>
 
             <Heading textAlign="center" mb="8" size="md" fontWeight="extrabold">
               Sign up
             </Heading>
+
             <form onSubmit={handleSignup}>
               <Stack spacing="4">
                 <label htmlFor="name">Name</label>
