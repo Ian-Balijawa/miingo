@@ -17,6 +17,7 @@ import { useSnapshot } from 'valtio';
 const { useState } = React;
 
 function Home({ contentType }) {
+
   const [logout, setLogout] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState('');
@@ -55,7 +56,7 @@ function Home({ contentType }) {
       
       <div className=" h-screen w-full bg-miingo-gray  font-serif overflow-y-auto overflow-x-hidden ">
         {/* Header */}
-        <Header onPress={showDropdown} />
+        <Header onPress={ showDropdown } />
 
         {logout && (
           <div className="absolute top-16 right-14 z-50 bg-white shadow-xl rounded-lg h-auto w-28 p-2">
