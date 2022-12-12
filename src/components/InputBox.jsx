@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
 import { Spinner } from '@chakra-ui/react';
-import { actions } from './../state';
+import { actions, state } from './../state';
 import axios from '../services/axios-config';
 import { compressImage } from '../services/compressor';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useSnapshot } from 'valtio';
 
 function InputBox() {
   const [accessToken] = useLocalStorage('accessToken');
-  const [user] = useLocalStorage('user');
   const [document, setDocument] = useState(null);
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
@@ -16,6 +16,7 @@ function InputBox() {
   const [isUploading, setIsUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const { me: user } = useSnapshot(state);
 
   const handlePost = async (e) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ function InputBox() {
       formData.append('video', video);
     }
 
-    formData.append('user', user._id);
+    formData.append('user', user.id);
     try {
       setIsUploading(true);
 

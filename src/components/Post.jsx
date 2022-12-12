@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import TimeAgo from 'timeago-react';
 import axios from '../services/axios-config';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useSnapshot } from 'valtio';
 
 function Post({
   postDesc,
@@ -27,9 +28,10 @@ function Post({
   commentsCount
 }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
-  const [loggedInUser] = useLocalStorage('user');
   const [deletePost, setDeletePost] = useState(false);
-  const [accessToken] = useLocalStorage('accessToken');
+
+  const {accessToken, me: loggedInUser} = useSnapshot(state);
+
 
   const handleLike = () => {
     axios

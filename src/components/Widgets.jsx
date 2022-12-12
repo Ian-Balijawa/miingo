@@ -1,5 +1,8 @@
 import Contact from './Contact';
-import React from 'react';
+import React, { useState } from 'react';
+import { useSnapshot } from 'valtio';
+import { actions, state } from '../state';
+import { useEffect } from 'react';
 
 const contacts = [
   {
@@ -52,7 +55,19 @@ const contacts = [
   }
 ];
 
-function Widgets({ group }) {
+const Widgets = ({ group }) => {
+  const { socket } = useSnapshot(state);
+  //const [contacts, setContatcts] = useState();
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('usersOnline', (data) => {
+        //setContatcts(data);
+        console.log('ONLINE USERS ', data);
+      })
+    }
+  }, [socket]);
+
   return (
     <div className=" relative hidden lg:flex flex-col pb-2 mt-5 shadow-lg bg-white rounded-md  h-screen overflow-y-auto scrollbar-hide ">
       <div className=" bg-white  sticky top-0 z-30 flex space-x-4 items-center text-gray-700 mb-5">

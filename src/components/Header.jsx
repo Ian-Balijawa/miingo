@@ -1,10 +1,12 @@
 import { HomeIcon, SearchIcon } from '@heroicons/react/outline';
 
 import { Link } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { state } from '../state';
 
 function Header({ onPress }) {
-  const [user, _] = useLocalStorage('user');
+  const { me: user } = useSnapshot(state);
 
   return (
     <div className=" bg-white  sticky top-0 z-50 flex justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">

@@ -4,9 +4,11 @@ import { HiOutlineCake } from 'react-icons/hi';
 import { HiSun } from 'react-icons/hi';
 import React from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useSnapshot } from 'valtio';
+import { state } from '../state';
 
 const BirthdayCard = () => {
-  const [user] = useLocalStorage('user');
+  const { me: user } = useSnapshot(state);
   return (
     <div className="flex flex-col space-y-4 bg-gradient-to-r from-miingo-pinksh to-miingo-pink  bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60 border rounded-lg shadow-lg p-4 font-serif relative overflow-hidden">
       <div className="flex justify-evenly">

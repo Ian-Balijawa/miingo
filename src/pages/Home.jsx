@@ -7,7 +7,7 @@ import Feed from '../components/Feed';
 import Header from '../components/Header';
 import { HiOutlineLogout } from 'react-icons/hi';
 import ModalWrapper from '../components/modal/ModalWrapper';
-import React from 'react';
+import React, { useEffect } from 'react';
 import SideFeed from '../components/SideFeed';
 import Statuses from '../components/Statuses';
 import axios from '../services/axios-config';
@@ -20,12 +20,14 @@ function Home({ contentType }) {
   const [logout, setLogout] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState('');
-  const [accessToken] = useLocalStorage('accessToken');
   const navigate = useNavigate();
-  const [user] = useLocalStorage('user');
+  const {accessToken, me: user } = useSnapshot(state);
   const name = user?.name;
+  const token = localStorage.getItem('accessToken')
 
   const userName = name?.split(' ')[0];
+
+  
 
   const showDropdown = () => {
     setLogout(!logout);
@@ -35,20 +37,36 @@ function Home({ contentType }) {
     e.preventDefault();
 
     try {
-      await axios.patch('/auth/logout', {
+      const res = await axios.patch('/auth/logout', {},{
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
-      actions.setUser(null);
-      actions.setAccessToken(null);
+      if (res) {
+        actions.setUser(null);
+        actions.setAccessToken(null);
+
+        console.log('LOGOUT ACCESS Token: ', accessToken);
+        navigate('/');
+      } else {
+        alert(res.data);
+      }
+      
     } catch (error) {
       console.error('ERROR: ', error);
     }
-    actions.setUser(null);
-    actions.setAccessToken(null);
-    navigate('/');
+    //actions.setUser(null);
+    //actions.setAccessToken(null);
+    
   };
+
+  /**
+   * This effect is used to connect first time users to a socket
+   */
+  useEffect(() => {
+    actions.initSocket();
+    console.log('WEBSOCKET USE EFFECT')
+  });
 
   return (
     <div className="">
