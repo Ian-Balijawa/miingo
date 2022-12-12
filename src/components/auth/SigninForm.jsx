@@ -64,9 +64,14 @@ export const SigninForm = () => {
             borderColor={mode('gray.200', 'transparent')}
             shadow={{ md: 'lg' }}
           >
-            <Heading textAlign="center" mb="8" size="lg" fontWeight="extrabold">
+            <Heading textAlign="center" mb="2.5" size="md" fontWeight="extrabold">
+              Welcome to MiingoApp
+            </Heading>
+
+            <Heading textAlign="center" mb="8" size="md" fontWeight="extrabold">
               Sign In
             </Heading>
+
             <form onSubmit={handleSignin}>
               <Stack spacing="4">
                 <label htmlFor="email">Email</label>
@@ -106,7 +111,7 @@ export const SigninForm = () => {
                 <Stack spacing="4">
                   <Button
                     variant="outline"
-                    leftIcon={<Box as={FaGoogle} color="red.500" />}
+                    leftIcon={<Box as={ FaGoogle } color="red.500" />}
                     disabled
                   >
                     Sign in with Google
