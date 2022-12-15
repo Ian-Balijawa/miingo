@@ -7,6 +7,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
 
 function AddFriend({ _id, name, followers, followings, image }) {
+  
   const [accessToken] = useLocalStorage('accessToken');
   const [user] = useLocalStorage('user');
   const snap = useSnapshot(state);
@@ -82,7 +83,7 @@ function AddFriend({ _id, name, followers, followings, image }) {
             <div className=" flex items-center justify-center space-x-2 text-gray-600">
               <div className="border-r border-blue px-2">
                 <p className="flex flex-col items-center justify-center space-y-2">
-                  <h3 className="text-gray-600"> {followings} </h3>
+                  <h3 className="text-gray-600"> {followings || 0 } </h3>
                   <h4>Following</h4>
                 </p>
               </div>

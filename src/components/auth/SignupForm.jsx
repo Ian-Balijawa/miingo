@@ -73,9 +73,14 @@ export const SignupForm = () => {
             borderColor={mode('gray.200', 'transparent')}
             shadow={{ md: 'lg' }}
           >
-            <Heading textAlign="center" mb="8" size="lg" fontWeight="extrabold">
+            <Heading textAlign="center" mb="2.5" size="md" fontWeight="extrabold" textColor="#ff6600">
+              Welcome to MiingoApp
+            </Heading>
+
+            <Heading textAlign="center" mb="8" size="md" fontWeight="extrabold">
               Sign up
             </Heading>
+
             <form onSubmit={handleSignup}>
               <Stack spacing="4">
                 <label htmlFor="name">Name</label>
@@ -135,7 +140,7 @@ export const SignupForm = () => {
                 )}
                 <Button
                   type="submit"
-                  colorScheme="blue"
+                  colorScheme="orange"
                   size="lg"
                   fontSize="md"
                 >
@@ -156,7 +161,7 @@ export const SignupForm = () => {
                   <Box
                     as="a"
                     href="/signin"
-                    color={mode('blue.600', 'blue.200')}
+                    color = '#ff6600'
                     display={{ base: 'block', md: 'inline-block' }}
                   >
                     Sign in

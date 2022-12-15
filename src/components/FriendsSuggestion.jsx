@@ -24,7 +24,7 @@ function FriendsSuggestion({ profile }) {
       <div className=" w-72 flex items-center justify-between mx-4 mt-2 p-2">
         <div className="text-gray-600">
           <h3 className="font-semibold">
-            {profile ? 'Suggested Friends ' : 'Friend Suggestion'}
+            { profile ? 'Suggested Friends ' : 'Friend Suggestion'}
           </h3>
         </div>
 
@@ -40,7 +40,7 @@ function FriendsSuggestion({ profile }) {
 
       <div className="relative flex items-center justify-around space-x-2  mx-auto w-80 h-56 p-2 ">
         <div
-          onClick={slideLeft}
+          onClick={ slideLeft }
           className="bg-miingo-cyan text-gray-600 rounded-full p-1 cursor-pointer"
         >
           <HiChevronLeft className="h-4 w-4" />
@@ -65,7 +65,7 @@ function FriendsSuggestion({ profile }) {
         </div>
 
         <div
-          onClick={slideRight}
+          onClick={ slideRight }
           className="bg-miingo-cyan text-gray-600 rounded-full p-1 cursor-pointer"
         >
           <HiChevronRight className="h-4 w-4" />
