@@ -1,21 +1,22 @@
 import React from "react";
 import { HomeIcon } from "@heroicons/react/outline";
 import { HiOutlineUserGroup } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 
 function BottomNav() {
   return (
-    <div className=" sm:hidden sticky bottom-0 z-50 bg-white flex justify-around p-2 shadow-2xl border-t border-blue-200">
+    <div className=" md:hidden sticky bottom-0 z-50 bg-white flex justify-around p-2 shadow-2xl border-t border-blue">
       {/* left */}
-      <div className="flex  items-center ">
+      <Link to="/feed" className="flex  items-center hover:bg-slate-200 p-3 rounded-lg cursor-pointer ">
         <HomeIcon className="h-6 w-6" />
-      </div>
+      </Link>
 
-      <div className="flex  items-center ">
+      <Link to="/groups" className="flex  items-center hover:bg-slate-200 p-3 rounded-lg cursor-pointer ">
         <HiOutlineUserGroup className="h-6 w-6" />
-      </div>
+      </Link >
 
-      <div className=" flex items-center relative">
+      <div className=" flex items-center relative hover:bg-slate-200 p-3 rounded-lg cursor-pointer">
         <span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
           {" "}
           8
@@ -37,7 +38,7 @@ function BottomNav() {
         </svg>
       </div>
 
-      <div className=" flex items-center relative">
+      <div className=" flex items-center relative hover:bg-slate-200 p-3 rounded-lg cursor-pointer">
         <span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
           {" "}
           8
@@ -58,7 +59,7 @@ function BottomNav() {
         </svg>
       </div>
 
-      <div className=" flex  items-center mr-2 relative">
+      <div className=" flex  items-center mr-2 relative hover:bg-slate-200 p-3 rounded-lg cursor-pointer">
         <span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
           {" "}
           5

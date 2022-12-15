@@ -155,7 +155,7 @@ export const SignupForm = () => {
                   Already have an account?{' '}
                   <Box
                     as="a"
-                    href="/login"
+                    href="/signin"
                     color={mode('blue.600', 'blue.200')}
                     display={{ base: 'block', md: 'inline-block' }}
                   >

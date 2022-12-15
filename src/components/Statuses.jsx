@@ -110,7 +110,7 @@ function Statuses({handlePostStatus}) {
     <div className="sticky top-0 z-40 flex  items-center justify-between space-x-2  w-screen bg-miingo-gray px-3 py-1 mx-2 ">
      
       <div className=" flex md:pl-4  w-20 md:w-24">
-        <button onClick = {handlePostStatus} className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-regal-orange shadow-lg  flex items-center justify-center  hover:shadow-xl active:scale-90 transition duration-300">
+        <button onClick = { handlePostStatus } className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-regal-orange shadow-lg  flex items-center justify-center  hover:shadow-xl active:scale-90 transition duration-300">
          
             <GoPlus className="font-extrabold text-white"  />
         </button>

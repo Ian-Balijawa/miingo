@@ -3,15 +3,14 @@ import 'react-comments-section/dist/index.css';
 import { actions, state } from '../state';
 
 import { CommentSection } from 'react-comments-section';
-import React from 'react';
 import axios from '../services/axios-config';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
 
 export const Comment = ({ postId }) => {
   const [user] = useLocalStorage('user');
-  const snapshot = useSnapshot(state);
-  const comments = snapshot.comments;
+  const snap = useSnapshot(state);
+  const comments = snap.comments;
   const [accessToken] = useLocalStorage('accessToken');
 
   const handleComment = (data) => {
@@ -27,11 +26,9 @@ export const Comment = ({ postId }) => {
       )
       .then((res) => {
         actions.addComment(res.data);
-        console.log('COMMENT: ', res.data);
+        actions.incrementCommentsCountForPost(postId);
       })
-      .catch((error) => {
-        console.log('ERROR FETCHING COMMENTS: ', error);
-      });
+      .catch((error) => {});
   };
 
   const handleReplyToComment = (data) => {
@@ -47,11 +44,9 @@ export const Comment = ({ postId }) => {
       )
       .then((res) => {
         actions.addComment(res.data);
-        console.log('COMMENT: ', res.data);
+        actions.incrementCommentsCountForPost(postId);
       })
-      .catch((error) => {
-        console.log('ERROR FETCHING COMMENTS: ', error);
-      });
+      .catch((error) => {});
   };
 
   const data = [];
@@ -68,7 +63,6 @@ export const Comment = ({ postId }) => {
     data.push(comment);
   }
 
-  console.log('data', data);
   return (
     <CommentSection
       currentUser={{
@@ -78,14 +72,12 @@ export const Comment = ({ postId }) => {
         currentUserFullName: user.name
       }}
       logIn={{
-        loginLink: '/login',
-        signupLink: '/register'
+        loginLink: '/signin',
+        signupLink: '/signup'
       }}
       commentData={data}
       onSubmitAction={(data) => handleComment(data)}
-      currentData={(data) => {
-        console.log('current data', data);
-      }}
+      currentData={(data) => {}}
       onReplyAction={(data) => handleReplyToComment(data)}
     />
   );

@@ -46,9 +46,10 @@ function ProfileBanner() {
 
   return (
     <div className="relative  mx-4 flex flex-col bg-white ">
+
       <ProfileCaption handleEdit={handleEdit} />
 
-      {partialEdit && <PartialProfileEdit />}
+      { partialEdit && <PartialProfileEdit /> }
 
       <div className=" relative w-full h-56 md:h-96 ">
         <img
@@ -59,11 +60,11 @@ function ProfileBanner() {
         />
         {/* like and follow user on Mobile  */}
         <div className="absolute bottom-2 right-2 flex items-center justify-around space-x-2 md:hidden ">
-          <div className="flex items-center justify-center bg-gray-400 cursor-pointer p-2 rounded-full">
+          <div className="flex items-center justify-center bg-gray cursor-pointer p-2 rounded-full">
             <HiCamera className=" w-4 h-4 text-white " />
           </div>
 
-          <div className="flex items-center space-x-1 bg-gray-400  text-white flex-grow justify-center p-2 rounded-lg cursor-pointer">
+          <div className="flex items-center space-x-1 bg-gray  text-white flex-grow justify-center p-2 rounded-lg cursor-pointer">
             <ThumbUpIcon className="h-6" />
             <p className="text-xs sm:text-base">{`${likes || 0}`}</p>
             <p className="text-sm hidden md:inline-flex ">
@@ -77,7 +78,7 @@ function ProfileBanner() {
               setFollow(!follow);
             }}
             className={`flex items-center space-x-1 ${
-              follow && 'bg-gray-400 rounded-lg'
+              follow && 'bg-gray rounded-lg'
             }
             flex-grow justify-center p-2 text-white cursor-pointer`}
           >
@@ -92,7 +93,7 @@ function ProfileBanner() {
         <div className="relative flex items-center justify-between space-x-2 p-4 ">
           <div className="absolute -top-6 md:-top-10 w-14 h-14 md:w-20 md:h-20  rounded-full border-4 border-white ">
             <img
-              src="https://res.cloudinary.com/itgenius/image/upload/v1668007542/pexels-mahdi-chaghari-12463279_cwiw1n.jpg"
+              src= {`https://ui-avatars.com/api/name=${user?.name}&background=random`}
               className="w-full h-full rounded-full object-cover "
               alt="group-profile"
             />

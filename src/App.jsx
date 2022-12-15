@@ -53,8 +53,8 @@ export default () => {
   useEffect(() => {
     const intervalID = setInterval(() => {
       if (
-        location.pathname !== 'login' ||
-        location.pathname !== '/register' ||
+        location.pathname !== '/signin' ||
+        location.pathname !== '/signup' ||
         location.pathname !== '/'
       ) {
         api
@@ -65,7 +65,6 @@ export default () => {
           })
           .then((res) => {
             const data = res.data;
-            console.log('RES: ', data);
 
             localStorage.setItem('user', JSON.stringify(data));
             localStorage.setItem(
@@ -83,9 +82,14 @@ export default () => {
     <>
       <Routes>
         <Route path="/" element={<Signin />} />
+<<<<<<< HEAD
         <Route path="login" element={<Signin />} />
         <Route path="register" element={<Signup />} />
         {/* test routes  */}
+=======
+        <Route path="signin" element={<Signin />} />
+        <Route path="signup" element={<Signup />} />
+>>>>>>> 59601f54ccbb26bd4bcd2f79277e4c5141c873d3
         <Route path="ld" element={<NewProfilePage />} />
         <Route path="ad" element={<ActivityCard />} />
         <Route path="gallery" element={<Gallery />} />
@@ -169,7 +173,7 @@ export default () => {
 const RequireAuth = ({ children }) => {
   const [user] = useLocalStorage('user');
 
-  return user ? children : <Navigate to="/login" />;
+  return user ? children : <Navigate to="/signin" />;
 };
 
 const IsUserNavigate = ({ children, loggedInPath, ...rest }) => {
@@ -187,6 +191,6 @@ const ProtectedRoute = ({ children, ...rest }) => {
   const [user] = useLocalStorage('user');
 
   return (
-    <Route {...rest} element={user ? children : <Navigate to="/login" />} />
+    <Route {...rest} element={user ? children : <Navigate to="/signin" />} />
   );
 };

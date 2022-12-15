@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 export const CommentInputBox = ({ postId }) => {
   const [user] = useLocalStorage('user');
-  const snapshot = useSnapshot(state);
+  const snap = useSnapshot(state);
   const [isCommentLoading, setIsCommentLoading] = useState(false);
 
   useEffect(() => {
@@ -19,11 +19,8 @@ export const CommentInputBox = ({ postId }) => {
       .get(`/post/comment/${postId}`)
       .then((res) => {
         actions.addComments(res.data);
-        console.log('COMMENTS : ', res.data);
       })
-      .catch((err) => {
-        console.log('ERROR LOADING COMMENTS: ', err);
-      });
+      .catch((err) => {});
   }, [postId]);
 
   const handleCommentLoading = (e) => {
@@ -55,7 +52,7 @@ export const CommentInputBox = ({ postId }) => {
 
       <div className="flex flex-col space-y-2 p-2">
         <Comment postId={postId} />
-        {snapshot.comments.length > 2 && (
+        {snap.comments.length > 2 && (
           <Button
             isLoading={isCommentLoading}
             colorScheme="gray"

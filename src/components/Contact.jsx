@@ -6,7 +6,7 @@ function Contact({ src, name, online, timestamp }) {
     <Link to={`/messages`}  state={{ src: src , online: online, name:name }}>
       <div
         className={`flex items-center justify-between space-x-3
-	  mb-2 relative hover:bg-gray-200 cursor-pointer
+	  mb-2 relative hover:bg-graybg3 cursor-pointer
 	   p-2 pr-5 rounded-xl
 	  `}
       >
@@ -20,7 +20,7 @@ function Contact({ src, name, online, timestamp }) {
 
             <span
               className={` absolute w-3 h-3 ${
-                online ? "bg-green-400" : "bg-red-400"
+                online ? "bg-green-400" : "bg-reddark"
               } rounded-full  top-0 right-0 `}
             ></span>
           </div>

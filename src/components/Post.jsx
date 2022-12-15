@@ -4,26 +4,32 @@ import {
   ChevronDownIcon,
   ShareIcon
 } from '@heroicons/react/outline';
-import { actions, state } from '../state';
+import { HiDotsVertical, HiX } from 'react-icons/hi';
 
 import BeatLoader from 'react-spinners/BeatLoader';
 import { CommentInputBox } from './CommentInputField';
 import { FaThumbsUp } from 'react-icons/fa';
-import { HiDotsVertical } from 'react-icons/hi';
-import { HiX } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'timeago-react';
+import { actions } from '../state';
 import axios from '../services/axios-config';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useSnapshot } from 'valtio';
 import { useState } from 'react';
 
-function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
+function Post({
+  postDesc,
+  user,
+  createdAt,
+  image,
+  _id,
+  video,
+  likes,
+  commentsCount
+}) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [loggedInUser] = useLocalStorage('user');
-  const [deletePost, setDeletePost] = useState(false);
+  const [isPostDeleted, setIsPostDeleted] = useState(false);
   const [accessToken] = useLocalStorage('accessToken');
-  const snapshot = useSnapshot(state);
 
   const handleLike = () => {
     axios
@@ -35,14 +41,20 @@ function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
       .then((res) => {
         actions.likePost(res.data.likes, _id);
       })
-      .catch((err) => {
-        console.log('ERROR LIKING POST: ', err.response.data.message);
-      });
+      .catch((err) => {});
   };
 
   const handleDelete = (e) => {
-    e.preventDefault();
-    setDeletePost(!deletePost);
+    axios
+      .delete(`/post/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then((res) => {
+        actions.deletePost(_id);
+      })
+      .catch((err) => {});
   };
 
   return (
@@ -53,7 +65,9 @@ function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
             <div className=" w-6 h-6 md:w-8 md:h-8">
               <img
                 className=" w-full h-full object-cover rounded-full"
-                src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
+                src={`https://ui-avatars.com/api/name=${
+                  user && user?.name
+                }&background=random`}
                 alt=""
               />
             </div>
@@ -83,7 +97,11 @@ function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
 
       {image && (
         <div className="relative  mx-2 md:mx-8 h-56 md:h-96">
-          <img src={image} className="w-full h-full object-cover" alt="" />
+          <img
+            src={image}
+            className="w-full h-full object-contain bg-black"
+            alt=""
+          />
         </div>
       )}
       {video && (
@@ -102,7 +120,7 @@ function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
             onClick={handleLike}
           >
             <FaThumbsUp color={likes > 0 ? 'red' : 'black'} />
-            <p className="text-xs sm:text-base hidden md:inline-flex">
+            <p className="text-xs sm:text-base text-center">
               {`${likes} ${likes === 1 ? 'Like' : 'likes'}`}
             </p>
           </div>
@@ -112,7 +130,9 @@ function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
             onClick={() => setIsCommentsVisible(!isCommentsVisible)}
           >
             <p className="text-xs sm:text-base hidden md:inline-flex">
-              {snapshot.commentCountForPost[_id]}
+              {`${commentsCount} ${
+                commentsCount === 1 ? 'Comment' : 'Comments'
+              }`}
             </p>
             <ChatAltIcon className="h-6" />
           </div>
@@ -125,21 +145,24 @@ function Post({ postDesc, user, createdAt, image, _id, video, likes }) {
           </div>
 
           <div
-            onClick={handleDelete}
             className="rounded-none flex items-center space-x-2 hover:bg-gray-100 p-2 hover:rounded-full cursor-pointer"
+            onClick={() => setIsPostDeleted(!isPostDeleted)}
           >
-            {deletePost ? (
-              <HiX className="h-4" />
-            ) : (
+            {!isPostDeleted ? (
               <HiDotsVertical className="h-4" />
+            ) : (
+              <HiX className="h-4" />
             )}
           </div>
 
-          {deletePost && (
-            <div className=" absolute -bottom-10 z-30 shadow-lg flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer">
-              <div className="text-xs sm:text-base">Delete</div>
-            </div>
-          )}
+          <div
+            className=" absolute -bottom-10 z-30 shadow-lg flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer"
+            onClick={() => handleDelete()}
+          >
+            {isPostDeleted && (
+              <div className="text-xs sm:text-base">Delete Post</div>
+            )}
+          </div>
         </div>
       </div>
 

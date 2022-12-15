@@ -8,7 +8,6 @@ const state = proxy( {
 	accessToken: null,
 	posts: [],
 	comments: [],
-	commentCountForPost: {},
 	socket: null,
 	isLoading: false,
 	wsErrors: ref( [] ),
@@ -32,10 +31,6 @@ derive( {
 			name: payload.name,
 			email: payload.email,
 		}
-	},
-	getCommentCountForPost: ( get ) => ( postId ) => {
-		const commentCountForPost = get( state ).commentCountForPost
-		return commentCountForPost[postId] || 0
 	},
 },
 
@@ -71,19 +66,21 @@ const actions = {
 		const currentComments = [...state.comments]
 		if ( !currentComments.length === 0 ) {
 			state.comments = [comment]
+			state.comments.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 			return
 		}
 		const index = currentComments.findIndex( c => c._id === comment._id )
 		if ( index === -1 ) {
 			state.comments = [comment, ...currentComments]
+
 		} else {
 			state.comments = [
 				...currentComments.slice( 0, index ),
 				comment,
 				...currentComments.slice( index + 1 ),
 			]
-		}
 
+		}
 		state.comments.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	addComments: ( comments ) => {
@@ -101,7 +98,9 @@ const actions = {
 		state.socket = socket
 	},
 	deletePost ( id ) {
-		state.posts = state.posts.filter( post => post.id !== id )
+
+		state.posts = state.posts.filter( ( post ) => post._id !== id )
+
 	},
 	deleteComment ( id ) {
 		state.comments = state.comments.filter( comment => comment.id !== id )
@@ -116,8 +115,14 @@ const actions = {
 		state.posts = currentPosts
 
 	},
-	setCommentCountForPost ( postId, count ) {
-		state.commentCountForPost[postId] = count
+	incrementCommentsCountForPost ( id ) {
+		const post = state.posts.find( post => post._id === id )
+		post.commentCounts += 1
+
+		const currentPosts = [...state.posts]
+		const index = currentPosts.findIndex( post => post._id === id )
+		currentPosts[index] = post
+		state.posts = currentPosts
 	}
 }
 
@@ -125,11 +130,9 @@ subscribeKey( state, 'accessToken', () => {
 	if ( !state.accessToken ) {
 		actions.setAccessToken( null )
 		localStorage.setItem( 'accessToken', null )
-		console.log( 'accessToken removed', state.accessToken )
 
 	} else {
 		localStorage.setItem( 'accessToken', state.accessToken )
-		console.log( 'accessToken set', state.accessToken )
 	}
 } )
 

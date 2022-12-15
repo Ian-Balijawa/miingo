@@ -10,7 +10,7 @@ const newsfeeds = [
   {
         id: 1,
     icon: HiOutlineDesktopComputer,
-        color:"bg-blue-500",
+        color:"bg-blue",
         title:"NewsFeed",
         path: "",
   },
@@ -32,14 +32,14 @@ const newsfeeds = [
 
         id: 4,
     icon: HiOutlineUser,
-        color:"bg-blue-500",
+        color:"bg-blue",
         title:"Author Profile",
         path: "",
   },
     {
         id: 5,
     icon: HiOutlineStar,
-        color:"bg-blue-500",
+        color:"bg-blue",
         title:"Badges",
         path: "",
   },
