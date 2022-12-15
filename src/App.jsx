@@ -15,6 +15,11 @@ import { devtools } from 'valtio/utils';
 import { useEffect } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
 import { useLocation } from 'react-router-dom';
+import StatusPopOut from './components/status/StatusPopOut';
+
+
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
 
 const Loadable = (Component) => (props) => {
   return (
@@ -80,10 +85,13 @@ export default () => {
         <Route path="/" element={<Signin />} />
         <Route path="login" element={<Signin />} />
         <Route path="register" element={<Signup />} />
+        {/* test routes  */}
         <Route path="ld" element={<NewProfilePage />} />
         <Route path="ad" element={<ActivityCard />} />
         <Route path="gallery" element={<Gallery />} />
         <Route path="status" element={<StatusCarousel />} />
+        <Route path='av'  element={<StatusPopOut/>}/>
+        {/* end */}
         <Route
           path="profile"
           element={

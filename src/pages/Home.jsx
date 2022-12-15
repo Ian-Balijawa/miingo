@@ -99,7 +99,7 @@ function Home({ contentType }) {
                   </label>
                   <DropzoneArea
                     className="g-lightgraybg"
-                    filesLimit={1}
+                    filesLimit={120000}
                     // useChipsForPreview={
                     //   contentType.toLowerCase === 'photo' ? false : true
                     // }
