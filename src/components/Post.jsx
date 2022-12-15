@@ -155,14 +155,16 @@ function Post({
             )}
           </div>
 
-          <div
-            className=" absolute -bottom-10 z-30 shadow-lg flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer"
-            onClick={() => handleDelete()}
-          >
-            {isPostDeleted && (
-              <div className="text-xs sm:text-base">Delete Post</div>
-            )}
-          </div>
+          {isPostDeleted && (
+            <div className="absolute border -bottom-10 z-30 flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer">
+              <div
+                onClick={() => handleDelete()}
+                className="text-xs sm:text-base"
+              >
+                Delete Post
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -172,65 +174,3 @@ function Post({
 }
 
 export default Post;
-
-const PostMenu = ({ postId }) => {
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [accessToken] = useLocalStorage('accessToken');
-
-  const handlePostDelete = () => {
-    axios
-      .delete(`/post/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
-      .then((res) => {
-        setIsDeleting(true);
-        setIsDeleting(false);
-        actions.deletePost(postId);
-      })
-      .catch((err) => {
-        setIsDeleting(false);
-      });
-  };
-
-  return (
-    <Menu>
-      {({ isOpen }) => (
-        <>
-          <MenuButton
-            isActive={isOpen}
-            as={Button}
-            rightIcon={<ChevronDownIcon />}
-          >
-            {isOpen ? 'Close' : <Ellipsis />}
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={handlePostDelete}>
-              {isDeleting ? <BeatLoader size="8" color="black" /> : 'Delete'}
-            </MenuItem>
-          </MenuList>
-        </>
-      )}
-    </Menu>
-  );
-};
-
-const Ellipsis = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="w-6 h-6"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-      />
-    </svg>
-  );
-};
