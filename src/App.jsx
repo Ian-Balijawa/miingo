@@ -37,6 +37,10 @@ export default () => {
   const location = useLocation();
   const [accessToken] = useLocalStorage('accessToken');
 
+  useEffect(() => {
+    
+  },[])
+
   useEffect(
     () => () =>
       devtools(state, {
