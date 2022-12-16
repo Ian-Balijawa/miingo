@@ -1,10 +1,19 @@
 import { HomeIcon, SearchIcon } from '@heroicons/react/outline';
 
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 function Header({ onPress }) {
   const [user, _] = useLocalStorage('user');
+  const navigate = useNavigate()
+
+  const handleNavigate = () =>{
+    navigate('/coming')
+  }
+
+  const handleChatNavigate = () =>{
+    navigate('/messages')
+  }
 
   return (
     <div className=" bg-white  sticky top-0 z-50 flex justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
@@ -33,6 +42,7 @@ function Header({ onPress }) {
         </Link>
 
         <svg
+          onClick={handleChatNavigate}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -56,6 +66,7 @@ function Header({ onPress }) {
             8
           </span>
           <svg
+           onClick = {handleNavigate}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
