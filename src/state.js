@@ -8,6 +8,7 @@ const state = proxy( {
 	accessToken: null,
 	posts: [],
 	comments: [],
+	users: [],
 	socket: null,
 	isLoading: false,
 	wsErrors: ref( [] ),
@@ -54,6 +55,22 @@ const actions = {
 	setAccessToken: ( accessToken ) => {
 		state.accessToken = accessToken
 	},
+
+	addUsers: ( users ) => {
+		state.users = users
+	},
+	followUser: ( userId, myId ) => {
+		const user = state.users.find( ( user ) => user._id === userId )
+		user.followers.push( myId )
+		state.users.filter( ( user ) => user._id !== userId )
+		state.users = [...state.users, user]
+	},
+	unfollowUser: ( userId, myId ) => {
+		const user = state.users.find( ( user ) => user._id === userId )
+		user.followers = user.followers.filter( ( follower ) => follower !== myId )
+		state.users.filter( ( user ) => user._id !== userId )
+		state.users = [...state.users, user]
+	},
 	addPost: ( post ) => {
 		state.posts = [post, ...state.posts]
 		state.posts.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
@@ -98,7 +115,6 @@ const actions = {
 		state.socket = socket
 	},
 	deletePost ( id ) {
-
 		state.posts = state.posts.filter( ( post ) => post._id !== id )
 
 	},

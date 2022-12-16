@@ -34,7 +34,7 @@ const BirthdayCard = () => {
         <div className="flex flex-col justify-center items-center space-x-4">
           <div className="h-16 md:h-20 w-16 md:w-20 rounded-full  bg-miingo-light-pink ">
             <img
-              src="https://res.cloudinary.com/itgenius/image/upload/v1668011068/pexels-mahdi-chaghari-12463279_yt9vgo.jpg"
+              src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
               layout="fill"
               className="w-full h-full inline-block rounded-full"
               alt="profile pic"

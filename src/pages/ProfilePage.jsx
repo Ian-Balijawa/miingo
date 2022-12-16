@@ -41,6 +41,7 @@ export default function ProfilePage() {
 
   return (
     <div className="h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden">
+      
       <Header onPress={showDropdown} />
 
       {logout && (

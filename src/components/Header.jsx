@@ -11,7 +11,7 @@ function Header({ onPress }) {
       {/* left */}
       <Link to="/feed" className="w-56">
         <div className="flex items-center justify-center rounded-full bg-regal-orange w-14 md:w-16  h-14 md:h-16">
-          <p className="text-white text-base text-center">Logo</p>
+          <p className="text-white text-base text-center">Miingo</p>
         </div>
       </Link>
 
