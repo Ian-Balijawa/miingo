@@ -1,14 +1,19 @@
+import React , {useState} from 'react'
 import Status from "./Status";
 import { HiChevronRight } from "react-icons/hi";
 import { HiChevronLeft } from "react-icons/hi";
-
 import { GoPlus} from "react-icons/go";
+import StatusPopOut from './status/StatusPopOut'
+import StatusWrapper from './status/StatusWrapper';
+import { BiSend } from "react-icons/bi";
+import Input from './Input';
 
 
 
 
 
-function Statuses({ handlePostStatus }) {
+function Statuses({handlePostStatus}) {
+  const [showModal , setShowModal] = useState(false)
 
 
   const statuses = [
@@ -127,8 +132,10 @@ function Statuses({ handlePostStatus }) {
         >
         
            {statuses?.map(({ id, image }) => (
-            <Status key= {id} image={image} />
+            <Status handleClick = {()=>setShowModal(true)} key= {id} image={image} />
           ))}
+
+         
         </div>
 
         <div
@@ -137,6 +144,22 @@ function Statuses({ handlePostStatus }) {
         >
           <HiChevronRight className="h-4 w-4" />
         </div>
+
+        {showModal ? 
+         (<StatusWrapper title="Status View" closeModal={()=>setShowModal(false)} bodyContent = { <StatusPopOut />     }  footer={true}
+         footerContent={
+           <>
+           <div className='flex relative space-x-2'>
+
+          <Input placeholder="comment on status"  />
+          <button className='bg-regal-orange text-white p-2 rounded-full' >
+            <BiSend/>
+          </button>
+           </div>
+           </>
+         }  />     )
+          : null
+         }
 
       </div>
 

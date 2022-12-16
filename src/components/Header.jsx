@@ -1,12 +1,23 @@
-import { HomeIcon, SearchIcon } from "@heroicons/react/outline";
-import { Link } from "react-router-dom";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { HiMenuAlt3 } from "react-icons/hi";
-import { HiX } from "react-icons/hi";
-import { useState } from "react";
+
+import { HomeIcon, SearchIcon } from '@heroicons/react/outline';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { HiMenuAlt3 } from 'react-icons/hi';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useState } from 'react';
 
 function Header({ onPress, showMenuModal }) {
-  const [user, _] = useLocalStorage("user");
+  const [user, _] = useLocalStorage('user');
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate('/coming');
+  };
+
+  const handleChatNavigate = () => {
+    navigate('/messages');
+  };
+  
   const [showSearch, setShowSearch] = useState(false);
 
   return (
@@ -26,10 +37,12 @@ function Header({ onPress, showMenuModal }) {
 
       <div className="flex flex-grow items-center space-x-2 md:space-x-4  md:w-[500px] lg:w-[700px] ">
         <div className="flex items-center rounded-full bg-white p-2 border-2 md:flex-grow">
+
           <input
             type="text"
             placeholder="Start typing to search..."
             className={` ${
+
               showSearch ? "w-32 md:flex-grow " : "hidden md:flex md:flex-grow"
             } mx-2 items-center bg-transparent outline-none placeholder-gray-500  text-gray-700`}
           />
@@ -51,6 +64,7 @@ function Header({ onPress, showMenuModal }) {
             />
           )} */}
           
+
         </div>
 
         <Link to="/feed">
@@ -58,6 +72,7 @@ function Header({ onPress, showMenuModal }) {
         </Link>
 
         <svg
+          onClick={handleChatNavigate}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -81,6 +96,7 @@ function Header({ onPress, showMenuModal }) {
             8
           </span>
           <svg
+            onClick={handleNavigate}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -121,9 +137,11 @@ function Header({ onPress, showMenuModal }) {
         <div className=" flex items-center space-x-2">
           <div
             onClick={onPress}
+
             className={` ${
               showSearch && "hidden md:inline-flex"
             }  relative w-12 h-12 md:w-14 md:h-14 cursor-pointer`}
+
           >
             <img
               src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
@@ -141,7 +159,9 @@ function Header({ onPress, showMenuModal }) {
 
           <div
             onClick={showMenuModal}
+
             className={`${showSearch && "hidden"} cursor-pointer lg:hidden`}
+
           >
             <HiMenuAlt3 className=" h-8 w-8 " />
           </div>

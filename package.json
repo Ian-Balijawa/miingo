@@ -37,6 +37,7 @@
     "react-photo-gallery": "^8.0.0",
     "react-query": "^3.39.2",
     "react-redux": "^8.0.5",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "6.4.3",
     "react-scripts": "5.0.1",
     "react-sortable-hoc": "1.9.1",
