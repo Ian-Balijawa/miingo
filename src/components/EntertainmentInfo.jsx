@@ -4,7 +4,7 @@ function EntertainmentInfo({ id, image, title, description }) {
   return (
     <div
     className={`flex items-center  space-x-3  
-  mb-2 relative hover:bg-gray-100 cursor-pointer
+  mb-2 relative hover:bg-lightgraybg cursor-pointer
    p-2 pr-10 rounded-xl
   `}
   >

@@ -1,3 +1,4 @@
+
 import { HomeIcon, SearchIcon } from '@heroicons/react/outline';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -16,6 +17,7 @@ function Header({ onPress, showMenuModal }) {
   const handleChatNavigate = () => {
     navigate('/messages');
   };
+  
   const [showSearch, setShowSearch] = useState(false);
 
   return (
@@ -35,19 +37,34 @@ function Header({ onPress, showMenuModal }) {
 
       <div className="flex flex-grow items-center space-x-2 md:space-x-4  md:w-[500px] lg:w-[700px] ">
         <div className="flex items-center rounded-full bg-white p-2 border-2 md:flex-grow">
-          {/* md:flex-grow md:flex */}
+
           <input
             type="text"
             placeholder="Start typing to search..."
             className={` ${
-              showSearch ? 'w-28 md:flex-grow ' : 'hidden md:flex md:flex-grow'
+
+              showSearch ? "w-32 md:flex-grow " : "hidden md:flex md:flex-grow"
             } mx-2 items-center bg-transparent outline-none placeholder-gray-500  text-gray-700`}
           />
 
-          <SearchIcon
-            onClick={() => setShowSearch(!showSearch)}
-            className="h-6 text-gray-600"
-          />
+            <SearchIcon
+              onClick={() => setShowSearch(!showSearch)}
+              className="h-6 text-gray-600"
+            />
+
+          {/* { showSearch ? (
+            <HiX
+              onClick={() => setShowSearch(!showSearch)}
+              className="h-6 text-gray-600"
+            />
+          ) : (
+            <SearchIcon
+              onClick={() => setShowSearch(!showSearch)}
+              className="h-6 text-gray-600"
+            />
+          )} */}
+          
+
         </div>
 
         <Link to="/feed">
@@ -75,7 +92,7 @@ function Header({ onPress, showMenuModal }) {
       <div className="flex justify-around items-center sm:space-x-2 md:space-x-6 w-56 md:w-80">
         <div className="hidden md:inline-flex items-center relative  cursor-pointer">
           <span className="absolute top-0 right-0  h-4 w-4 bg-red text-center rounded-full text-white text-xs font-bold">
-            {' '}
+            {" "}
             8
           </span>
           <svg
@@ -120,7 +137,11 @@ function Header({ onPress, showMenuModal }) {
         <div className=" flex items-center space-x-2">
           <div
             onClick={onPress}
-            className=" relative w-12 h-12 md:w-14 md:h-14 cursor-pointer"
+
+            className={` ${
+              showSearch && "hidden md:inline-flex"
+            }  relative w-12 h-12 md:w-14 md:h-14 cursor-pointer`}
+
           >
             <img
               src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
@@ -131,14 +152,16 @@ function Header({ onPress, showMenuModal }) {
           </div>
 
           <div className="hidden lg:inline-flex lg:flex-col">
-            <p className="text-gray-700 "> {user?.name.split(' ')[0]} </p>
+            <p className="text-gray-700 "> {user?.name.split(" ")[0]} </p>
 
             <h3 className="text-xs text-gray-600">Active Now</h3>
           </div>
 
           <div
             onClick={showMenuModal}
-            className={`${showSearch && 'hidden'} cursor-pointer lg:hidden`}
+
+            className={`${showSearch && "hidden"} cursor-pointer lg:hidden`}
+
           >
             <HiMenuAlt3 className=" h-8 w-8 " />
           </div>
