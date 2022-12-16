@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { actions, state } from '../state';
-
 import FriendSuggestion from './FriendSuggestion';
 import Post from './Post';
 import axios from '../services/axios-config';
@@ -8,9 +7,11 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
 
 function Posts() {
+
   const [error, setError] = useState(null);
   const snap = useSnapshot(state);
   const [accessToken] = useLocalStorage('accessToken');
+  
   useEffect(() => {
     axios
       .get('/post', {
@@ -29,7 +30,7 @@ function Posts() {
   const posts = snap.posts;
 
   return (
-    <div className="w-full md:w-[640px] space-y-4">
+    <div className="w-full space-y-4">
       {posts.slice(0, 1).map((post) => (
         <Post
           key={post._id}
@@ -56,7 +57,7 @@ function Posts() {
 
       <FriendSuggestion />
 
-      {posts.slice(1).map((post) => (
+      { posts.slice(1).map((post) => (
         <Post
           key={post._id}
           name={post.user ? post.user.name : "creator's name"}
@@ -74,8 +75,8 @@ function Posts() {
               ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.video}`
               : null
           }
-          likes={post.likes.length}
-          commentsCount={post.commentsCount}
+          likes={ post.likes.length }
+          commentsCount={ post.commentsCount }
           _id={post._id}
         />
       ))}

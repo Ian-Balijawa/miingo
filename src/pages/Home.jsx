@@ -147,6 +147,7 @@ function Home({ contentType }) {
         </main>
 
         <BottomNav />
+
       </div>
     </div>
   );

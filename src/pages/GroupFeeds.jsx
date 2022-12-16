@@ -78,7 +78,7 @@ function GroupFeeds() {
           </div>
         )}
 
-        <main className=" flex space-x-2 pr-3">
+        <main className="flex space-x-2 pr-3">
           {/* Side */}
 
           <SideFeed />
@@ -89,6 +89,7 @@ function GroupFeeds() {
         </main>
 
         <BottomNav />
+        
       </div>
     </div>
   );
