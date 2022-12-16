@@ -58,7 +58,7 @@ function Post({
   };
 
   return (
-    <div className="flex flex-col bg-white my-3 post-description">
+    <div className="flex flex-col bg-white my-3 post-description shadow-xl">
       <div className="p-5 bg-white">
         <div className="flex items-center justify-between space-x-2">
           <div className="flex items-center space-x-2">

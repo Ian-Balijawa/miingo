@@ -4,9 +4,8 @@ import Charts from "./Charts";
 export default function GroupChart({ src, name, members }) {
   return (
     <>
-      {/* Header */}
-      <div className=" relative h-screen  flex flex-col space-y-2  flex-grow mx-2  mt-2 bg-miingo-gray">
-        <div className="w-full">
+      <div className="relative flex flex-col flex-grow bg-miingo-gray  mx-2  mt-2 ">
+        <div className=" sticky top-20 flex flex-col space-y-2">
           <div className=" flex  items-center p-3 mb-10 shadow-md ">
             <img
               className="object-cover w-10 h-10 rounded-full"
@@ -42,10 +41,11 @@ export default function GroupChart({ src, name, members }) {
 
             {/* right */}
             <div className=" p-2 flex items-center justify-center space-x-3">
-              <button className={`focus:outline-none outline-none border-none cursor-pointer 
-                active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
-                 duration-300
-              `}
+              <button
+                className={`focus:outline-none outline-none border-none cursor-pointer 
+            active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+             duration-300
+          `}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -63,10 +63,11 @@ export default function GroupChart({ src, name, members }) {
                 </svg>
               </button>
 
-              <button className={`focus:outline-none outline-none border-none cursor-pointer 
-                active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
-                 duration-300
-              `}
+              <button
+                className={`focus:outline-none outline-none border-none cursor-pointer 
+            active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+             duration-300
+          `}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -84,10 +85,11 @@ export default function GroupChart({ src, name, members }) {
                 </svg>
               </button>
 
-              <button className={`focus:outline-none outline-none border-none cursor-pointer 
-                active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
-                 duration-300
-              `}
+              <button
+                className={`focus:outline-none outline-none border-none cursor-pointer 
+            active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+             duration-300
+          `}
               >
                 <svg
                   className="w-5 h-5 text-gray-700 origin-center transform rotate-90"

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function BottomNav() {
   return (
-    <div className=" md:hidden sticky bottom-0 z-50 bg-white flex justify-around p-2 shadow-2xl border-t border-blue">
+    <div className=" md:hidden sticky bottom-0 z-40 bg-white flex justify-around p-2 shadow-2xl border-t border-blue">
       {/* left */}
       <Link to="/feed" className="flex  items-center hover:bg-slate-200 p-3 rounded-lg cursor-pointer ">
         <HomeIcon className="h-6 w-6" />
