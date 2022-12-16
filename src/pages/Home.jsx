@@ -1,32 +1,33 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { actions, state } from '../state';
-import Boards from '../components/Boards';
-import BottomNav from '../components/BottomNav';
-import { DropzoneArea } from 'material-ui-dropzone';
-import Feed from '../components/Feed';
-import Header from '../components/Header';
-import { HiOutlineLogout } from 'react-icons/hi';
-import ModalWrapper from '../components/modal/ModalWrapper';
-import React from 'react';
-import SideFeed from '../components/SideFeed';
-import Statuses from '../components/Statuses';
-import axios from '../services/axios-config';
-import useLocalStorage from '../hooks/useLocalStorage';
-import { useSnapshot } from 'valtio';
+import { Link, useNavigate } from "react-router-dom";
+import { actions, state } from "../state";
+import Boards from "../components/Boards";
+import BottomNav from "../components/BottomNav";
+import { DropzoneArea } from "material-ui-dropzone";
+import Feed from "../components/Feed";
+import Header from "../components/Header";
+import { HiOutlineLogout } from "react-icons/hi";
+import ModalWrapper from "../components/modal/ModalWrapper";
+import React from "react";
+import SideFeed from "../components/SideFeed";
+import Statuses from "../components/Statuses";
+import axios from "../services/axios-config";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { useSnapshot } from "valtio";
+import MenuModal from "../components/modal/MenuModal";
 
 const { useState } = React;
 
 function Home({ contentType }) {
-
   const [logout, setLogout] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [content, setContent] = useState('');
-  const [accessToken] = useLocalStorage('accessToken');
+  const [menuModal, showMenuModal] = useState(false);
+  const [content, setContent] = useState("");
+  const [accessToken] = useLocalStorage("accessToken");
   const navigate = useNavigate();
-  const [user] = useLocalStorage('user');
+  const [user] = useLocalStorage("user");
   const name = user?.name;
 
-  const userName = name?.split(' ')[0];
+  const userName = name?.split(" ")[0];
 
   const showDropdown = () => {
     setLogout(!logout);
@@ -36,27 +37,31 @@ function Home({ contentType }) {
     e.preventDefault();
 
     try {
-      await axios.patch('/auth/logout', {
+      await axios.patch("/auth/logout", {
         headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
       actions.setUser(null);
       actions.setAccessToken(null);
     } catch (error) {
-      console.error('ERROR: ', error);
+      console.error("ERROR: ", error);
     }
     actions.setUser(null);
     actions.setAccessToken(null);
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <div className="">
-      
       <div className=" h-screen w-full bg-miingo-gray  font-serif overflow-y-auto overflow-x-hidden ">
         {/* Header */}
-        <Header onPress={ showDropdown } />
+        <Header
+          onPress={showDropdown}
+          showMenuModal={() => showMenuModal(!menuModal)}
+        />
+
+        {menuModal && <MenuModal setClose={() => showMenuModal(!menuModal)} />}
 
         {logout && (
           <div className="absolute top-16 right-14 z-50 bg-white shadow-xl rounded-lg h-auto w-28 p-2">
@@ -72,8 +77,8 @@ function Home({ contentType }) {
               to={`/profile/${user?._id}`}
               className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
             >
-              {' '}
-              Profile{' '}
+              {" "}
+              Profile{" "}
             </Link>
             <p
               onClick={handleLogout}
@@ -147,7 +152,6 @@ function Home({ contentType }) {
         </main>
 
         <BottomNav />
-
       </div>
     </div>
   );
