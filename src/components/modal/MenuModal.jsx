@@ -13,38 +13,38 @@ const menuItems = [
         id: 1,
         name: "Groups",
         icon: HiOutlineUserGroup,
-        path :"/feed"
+        path :"/groups"
     },
     { 
         id: 2,
         name: "News Feeds",
         icon: HiOutlineNewspaper,
-        path :"/feed"
+        path :"/coming"
     },
     { 
         id: 3,
         name: "Entertainment",
         icon: HiOutlineMusicNote,
-        path :"/feed"
+        path :"/coming"
     },
     { 
         id: 4,
         name: "Gallery",
         icon: HiViewGrid,
-        path :"/feed"
+        path :"/coming"
     },
     
     { 
         id: 5,
         name: "Events",
         icon: HiOutlineSpeakerphone,
-        path :"/feed"
+        path :"/coming"
     },
     { 
         id: 6,
         name: "Chats",
         icon: HiOutlineChat,
-        path :"/feed"
+        path :"/coming"
     },
 ];
 
