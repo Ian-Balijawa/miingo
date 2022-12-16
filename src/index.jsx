@@ -16,7 +16,7 @@ root.render(
     <BrowserRouter>
       <ChakraProvider>
         <Routes>
-          <Route path="/*" element={<App />} />
+          <Route path="/*" element={ <App /> } />
         </Routes>
       </ChakraProvider>
     </BrowserRouter>
