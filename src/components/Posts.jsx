@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { actions, state } from '../state';
+
 import FriendSuggestion from './FriendSuggestion';
 import Post from './Post';
 import axios from '../services/axios-config';
@@ -7,14 +8,14 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
 
 function Posts() {
-
   const [error, setError] = useState(null);
   const snap = useSnapshot(state);
   const [accessToken] = useLocalStorage('accessToken');
-  
+  const [user] = useLocalStorage('user');
+
   useEffect(() => {
     axios
-      .get('/post', {
+      .get(`/post/user/${user?._id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -25,7 +26,7 @@ function Posts() {
       .catch((err) => {
         setError(err.response.data.message);
       });
-  }, [accessToken]);
+  }, [accessToken, user]);
 
   const posts = snap.posts;
 
@@ -41,12 +42,12 @@ function Posts() {
           user={post.user}
           image={
             post.image
-              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.image}`
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.image}`
               : null
           }
           video={
             post.video
-              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.video}`
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.video}`
               : null
           }
           _id={post._id}
@@ -57,7 +58,7 @@ function Posts() {
 
       <FriendSuggestion />
 
-      { posts.slice(1).map((post) => (
+      {posts.slice(1).map((post) => (
         <Post
           key={post._id}
           name={post.user ? post.user.name : "creator's name"}
@@ -67,16 +68,16 @@ function Posts() {
           user={post.user}
           image={
             post.image
-              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.image}`
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.image}`
               : null
           }
           video={
             post.video
-              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.video}`
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.video}`
               : null
           }
-          likes={ post.likes.length }
-          commentsCount={ post.commentsCount }
+          likes={post.likes.length}
+          commentsCount={post.commentsCount}
           _id={post._id}
         />
       ))}
