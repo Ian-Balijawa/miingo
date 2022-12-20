@@ -11,9 +11,11 @@ function Posts() {
   const [error, setError] = useState(null);
   const snap = useSnapshot(state);
   const [accessToken] = useLocalStorage('accessToken');
+  const [user] = useLocalStorage('user');
+
   useEffect(() => {
     axios
-      .get('/post', {
+      .get(`/post/user/${user?._id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -24,12 +26,12 @@ function Posts() {
       .catch((err) => {
         setError(err.response.data.message);
       });
-  }, [accessToken]);
+  }, [accessToken, user]);
 
   const posts = snap.posts;
 
   return (
-    <div className="w-full md:w-[640px] space-y-4">
+    <div className="w-full space-y-4">
       {posts.slice(0, 1).map((post) => (
         <Post
           key={post._id}
@@ -40,12 +42,12 @@ function Posts() {
           user={post.user}
           image={
             post.image
-              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.image}`
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.image}`
               : null
           }
           video={
             post.video
-              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.video}`
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.video}`
               : null
           }
           _id={post._id}
@@ -66,12 +68,12 @@ function Posts() {
           user={post.user}
           image={
             post.image
-              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.image}`
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.image}`
               : null
           }
           video={
             post.video
-              ? `https://backend-miingo.herokuapp.com/post/stream-video?streamFile=${post.video}`
+              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.video}`
               : null
           }
           likes={post.likes.length}

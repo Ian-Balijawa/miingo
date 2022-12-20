@@ -1,26 +1,32 @@
+
 import { HomeIcon, SearchIcon } from '@heroicons/react/outline';
-
-import { Link , useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { HiMenuAlt3 } from 'react-icons/hi';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useState } from 'react';
 
-function Header({ onPress }) {
+function Header({ onPress, showMenuModal }) {
   const [user, _] = useLocalStorage('user');
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleNavigate = () =>{
-    navigate('/coming')
-  }
+  const handleNavigate = () => {
+    navigate('/coming');
+  };
 
-  const handleChatNavigate = () =>{
-    navigate('/messages')
-  }
+  
+  
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
-    <div className=" bg-white  sticky top-0 z-50 flex justify-between p-2 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
+    <div className=" bg-white  sticky top-0 z-50 flex justify-between p-1 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
       {/* left */}
-      <Link to="/feed" className="w-56">
+      <Link to="/feed" className=" flex items-center space-x-2 w-56">
         <div className="flex items-center justify-center rounded-full bg-regal-orange w-14 md:w-16  h-14 md:h-16">
           <p className="text-white text-base text-center">Miingo</p>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <p className="text-orange-600 text-base">MiingoApp</p>
         </div>
       </Link>
 
@@ -28,45 +34,51 @@ function Header({ onPress }) {
 
       <div className="flex flex-grow items-center space-x-2 md:space-x-4  md:w-[500px] lg:w-[700px] ">
         <div className="flex items-center rounded-full bg-white p-2 border-2 md:flex-grow">
+
           <input
             type="text"
             placeholder="Start typing to search..."
-            className="flex mx-2 items-center bg-transparent outline-none placeholder-gray-500  text-gray-700 w-36 md:flex-grow"
+            className={` ${
+
+              showSearch ? "w-32 md:flex-grow " : "hidden md:flex md:flex-grow"
+            } mx-2 items-center bg-transparent outline-none placeholder-gray-500  text-gray-700`}
           />
 
-          <SearchIcon className="h-6 text-gray-600" />
+            <SearchIcon
+              onClick={() => setShowSearch(!showSearch)}
+              className="h-6 text-gray-600"
+            />
+
+          {/* { showSearch ? (
+            <HiX
+              onClick={() => setShowSearch(!showSearch)}
+              className="h-6 text-gray-600"
+            />
+          ) : (
+            <SearchIcon
+              onClick={() => setShowSearch(!showSearch)}
+              className="h-6 text-gray-600"
+            />
+          )} */}
+          
+
         </div>
 
         <Link to="/feed">
           <HomeIcon className="h-6 w-6 hidden md:inline-flex" />
         </Link>
-
-        <svg
-          onClick={handleChatNavigate}
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6 hidden md:inline-flex"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"
-          />
-        </svg>
+       
       </div>
 
       {/*  Right */}
       <div className="flex justify-around items-center sm:space-x-2 md:space-x-6 w-56 md:w-80">
         <div className="hidden md:inline-flex items-center relative  cursor-pointer">
           <span className="absolute top-0 right-0  h-4 w-4 bg-red text-center rounded-full text-white text-xs font-bold">
-            {' '}
+            {" "}
             8
           </span>
           <svg
-           onClick = {handleNavigate}
+            onClick={handleNavigate}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -84,6 +96,7 @@ function Header({ onPress }) {
 
         <div className=" hidden md:inline-flex items-center mr-2 relative">
           <svg
+          onClick={handleNavigate}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -105,7 +118,14 @@ function Header({ onPress }) {
         </div>
 
         <div className=" flex items-center space-x-2">
-          <div onClick={onPress} className=" relative w-14 h-14 cursor-pointer">
+          <div
+            onClick={onPress}
+
+            className={` ${
+              showSearch && "hidden md:inline-flex"
+            }  relative w-12 h-12 md:w-14 md:h-14 cursor-pointer`}
+
+          >
             <img
               src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
               alt=""
@@ -114,10 +134,19 @@ function Header({ onPress }) {
             <span className=" absolute top-0 right-0 w-3 h-3 rounded-full bg-green-400 border-2 border-white"></span>
           </div>
 
-          <div className="hidden md:inline-flex md:flex-col">
-            <p className="text-gray-700 "> {user?.name.split(' ')[0]} </p>
+          <div className="hidden lg:inline-flex lg:flex-col">
+            <p className="text-gray-700 "> {user?.name.split(" ")[0]} </p>
 
             <h3 className="text-xs text-gray-600">Active Now</h3>
+          </div>
+
+          <div
+            onClick={showMenuModal}
+
+            className={`${showSearch && "hidden"} cursor-pointer lg:hidden`}
+
+          >
+            <HiMenuAlt3 className=" h-8 w-8 " />
           </div>
         </div>
       </div>

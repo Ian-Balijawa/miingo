@@ -272,7 +272,7 @@ function InputBox() {
           />
         )}
 
-        {video && (
+        {!isUploading && !isUploading && video && (
           <button
             className="bg-red-500 text-white bg-red font-bold rounded"
             onClick={() => setVideo(null)}
@@ -286,7 +286,7 @@ function InputBox() {
           </button>
         )}
 
-        {image && (
+        {!isUploading && image && (
           <button
             className="bg-red-500 text-white bg-red font-bold rounded"
             onClick={() => setImage(null)}
@@ -300,7 +300,7 @@ function InputBox() {
           </button>
         )}
 
-        {document && (
+        {!isUploading && document && (
           <button
             className="bg-red-500 text-white bg-red font-bold rounded"
             onClick={() => setDocument(null)}
