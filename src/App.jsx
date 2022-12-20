@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable no-use-before-define */
 
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import { actions, state } from './state';
 
@@ -190,16 +190,18 @@ const RequireAuth = ({ children }) => {
   const user = localStorage.getItem('me');
   const location = useLocation();
   const accessToken = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
   actions.setAccessToken(accessToken);
   console.log('AUTH TOKEN', { user })
 
+  
   useEffect(() => {
     if (accessToken) {
       const { exp: tokenEXp, iat } = getTokenPayload(accessToken);
        
       const currentTime = Date.now() / 1000; //time in seconds
+ 
       if (tokenEXp > currentTime) {
-
 
         const intervalID = setInterval(() => {
           console.log('TIME TO EXPIRE', tokenEXp, iat);
@@ -223,9 +225,13 @@ const RequireAuth = ({ children }) => {
         }, ((tokenEXp - iat) * 1000) - 10000);
 
         return () => clearInterval(intervalID);
+      } else {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('user')
+        navigate('/signin');
       }
     }
-}, [accessToken, location.pathname]);
+}, [accessToken, location.pathname, navigate]);
   
 
 
