@@ -74,9 +74,9 @@ export default function ProfilePage() {
         </div>
       )}
 
-      <ProfileBanner user={user} />
+      <ProfileBanner user = { user } />
 
-      <main className=" flex space-x-2 pr-3 pb-10">
+      <main className=" flex space-x-2 px-2 pb-10">
         {/* Profile Side Feed /> */}
         <ProfileSideFeed />
 
@@ -92,6 +92,7 @@ export default function ProfilePage() {
       {/* <main className="">
         <Profile user={user} />
       </main> */}
+
     </div>
   );
 }

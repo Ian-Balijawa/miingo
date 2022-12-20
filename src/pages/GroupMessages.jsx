@@ -42,12 +42,12 @@ function GroupMessages() {
   };
 
   return (
-    <div className="relative h-screen bg-miingo-gray overflow-hidden">
+    <div className="relative h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden">
       {/* Header */}
 
       <Header onPress={showDropdown} />
 
-      {logout && (
+      { logout && (
         <div className="absolute top-16 right-14 z-50 bg-white shadow-xl rounded-lg h-auto w-28 p-2">
           <div className="py-1">
             <div className="w-4 h-4 right-3 md:left-3 absolute mt-1 bg-white -top-3  rotate-45"></div>
@@ -86,10 +86,10 @@ function GroupMessages() {
         </div>
       </div>
 
-      <main className="flex space-x-2 pr-3 mt-3">
+      <main className="flex space-x-2 pr-3 mt-3 pb-10">
         {/* Side_feed */}
 
-        <SideFeed group={true} />
+        <SideFeed group={ true } />
 
         {/* Group_Messages */}
 
@@ -98,6 +98,7 @@ function GroupMessages() {
         {/* Boards */}
 
         <Boards />
+
       </main>
     </div>
   );

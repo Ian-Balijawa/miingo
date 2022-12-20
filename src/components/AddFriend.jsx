@@ -7,34 +7,34 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { useSnapshot } from "valtio";
 
 function AddFriend({ _id, name, followers, followings, image }) {
-	const [accessToken] = useLocalStorage("accessToken");
-	const [user] = useLocalStorage("user");
-	const snap = useSnapshot(state);
-	const [isFollowing, setIsFollowing] = useState(
-		snap.users.some((user) => user?.followings?.includes(_id))
-	);
-	const [error, setError] = useState(null);
+  const [accessToken] = useLocalStorage('accessToken');
+  const [user] = useLocalStorage('user');
+  const snap = useSnapshot(state);
+  const [isFollowing, setIsFollowing] = useState(
+    snap.users.some((user) => user?.followings?.includes(_id))
+  );
+  const [error, setError] = useState(null);
 
-	const handleFollow = () => {
-		axios
-			.post(
-				`/user/follower/${user._id}/user/${_id}`,
-				{ name },
-				{
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-					},
-				}
-			)
-			.then((res) => {
-				setIsFollowing(true);
-				actions.followUser(_id, user._id);
-				console.log(res.data);
-			})
-			.catch((err) => {
-				setError(err.response.data.message);
-			});
-	};
+  const handleFollow = () => {
+    axios
+      .patch(
+        `/user/${user._id}/follow/${_id}`,
+        { name },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
+      .then((res) => {
+        setIsFollowing(true);
+        actions.followUser(_id, user._id);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+  };
 
 	return (
 		<div className="w-56 h-56  bg-white rounded-lg shadow-lg inline-block mr-2">
@@ -79,23 +79,20 @@ function AddFriend({ _id, name, followers, followings, image }) {
 							</p>
 						</div>
 
-						<div className=" flex items-center justify-center space-x-2 text-gray-600">
-							<div className="border-r border-blue px-2">
-								<p className="flex flex-col items-center justify-center space-y-2">
-									<h3 className="text-gray-600">
-										{" "}
-										{followings || 0}{" "}
-									</h3>
-									<h4>Following</h4>
-								</p>
-							</div>
-							<div className="">
-								<p className="flex flex-col items-center justify-center space-y-2">
-									<h3 className="text-gray-600"> {followers} </h3>
-									<h4>Followers</h4>
-								</p>
-							</div>
-						</div>
+            <div className=" flex items-center justify-center space-x-2 text-gray-600">
+              <div className="border-r border-blue px-2">
+                <p className="flex flex-col items-center justify-center space-y-2">
+                  <h3 className="text-gray-600"> {followings || 0} </h3>
+                  <h4>Following</h4>
+                </p>
+              </div>
+              <div className="">
+                <p className="flex flex-col items-center justify-center space-y-2">
+                  <h3 className="text-gray-600"> {followers} </h3>
+                  <h4>Followers</h4>
+                </p>
+              </div>
+            </div>
 
 						<div className=" flex items-center justify-center">
 							<button

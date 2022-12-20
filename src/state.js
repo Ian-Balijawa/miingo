@@ -12,7 +12,6 @@ const state = proxy( {
 	socket: null,
 	isLoading: false,
 	wsErrors: ref( [] ),
-
 } );
 
 derive( {

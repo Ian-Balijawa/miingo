@@ -7,7 +7,7 @@ function LikedPage({ Icon, pagetitle, subtitle, likes, color }) {
     const [ starred, SetStarred] = useState(false);
 
   return (
-    <div className=" bg-white sticky top-0 z-50 flex space-x-4 items-center justify-between text-gray-700 mb-5 p-2 border-b cursor-pointer">
+    <div className="bg-white sticky top-0 z-50 flex space-x-4 items-center justify-between text-gray-800 mb-5 p-2 border-b cursor-pointer">
       <div
         className={`${color} w-14 h-14 rounded-full p-2 flex items-center justify-center `}
       >
@@ -35,7 +35,7 @@ function LikedPage({ Icon, pagetitle, subtitle, likes, color }) {
             e.preventDefault();
             SetStarred(!starred);
         }}
-      className={`flex items-center justify-center w-8 h-8 rounded-full ${ starred && "bg-gray-100"} font-bold  p-2 cursor-pointer`}>
+      className={`flex items-center justify-center w-8 h-8 rounded-full ${ starred && "bg-lightgraybg"} font-bold  p-2 cursor-pointer`}>
         <HiOutlineStar className="h-4 w-4" />
       </div>
 

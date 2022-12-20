@@ -4,7 +4,6 @@ import { HiOutlineUserGroup } from "react-icons/hi";
 import { FiMessageCircle, FiBell } from "react-icons/fi";
 import { Link, useNavigate, useNavigation } from "react-router-dom";
 import CustomBottomSheet from "./bottom-sheet/BottomSheet";
-import Widgets from "./Widgets";
 import { useSnapshot } from "valtio";
 import { state } from "../state";
 import Contact from "./Contact";
