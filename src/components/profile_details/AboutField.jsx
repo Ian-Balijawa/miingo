@@ -11,6 +11,7 @@ function AboutField({
   placeholder,
   select_options,
   enable_edit,
+  onChange
 }) {
   return (
     <div className={`flex items-center space-x-3 pb-2  p-2 ${label === "Joined"? "": "border-b"}`}>
@@ -30,7 +31,7 @@ function AboutField({
         </label>
        
 
-        { enable_edit && !select && label !== "Joined" && (<Input className="cursor-pointer text-gray-400" placeholder={placeholder} type={ input_type } />)}
+        { enable_edit && !select && label !== "Joined" && (<Input className="cursor-pointer text-gray-400" onChange={onChange} placeholder={placeholder} type={ input_type } />)}
 
         {enable_edit && select && (
           <Select
