@@ -101,17 +101,17 @@ function Statuses({ handlePostStatus }) {
   };
 
   return (
-    <div className="sticky top-0 z-40 flex items-center justify-center w-screen bg-miingo-gray py-1">
-      <div className="flex w-25 mx-2">
+    <div className="sticky top-0 z-40 flex items-center justify-around w-screen bg-miingo-gray py-1 px-2">
+      <div className="flex mx-2">
         <button
           onClick={handlePostStatus}
-          className="h-16 w-20 md:h-20 rounded-full bg-regal-orange shadow-lg flex items-center justify-center  hover:shadow-xl active:scale-90 transition duration-300"
+          className="h-16 w-16 md:h-20 md:w-20  rounded-full bg-regal-orange shadow-lg flex items-center justify-center  hover:shadow-xl active:scale-90 transition duration-300"
         >
           <GoPlus className="font-extrabold text-white" />
         </button>
       </div>
 
-      <div className="relative  flex  md:flex-grow items-center justify-center space-x-2 w-80 h-24 p-2 ">
+      <div className="relative flex md:flex-grow items-center justify-center space-x-2 w-80 h-24 p-2 ">
         <div
           onClick={slideLeft2}
           className="bg-miingo-cyan text-gray-600 rounded-full p-1 cursor-pointer hidden md:inline-flex"
@@ -121,7 +121,7 @@ function Statuses({ handlePostStatus }) {
 
         <div
           id="slider2"
-          className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+          className=" w-[280px] md:w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
         >
           {statuses?.map(({ id, image }) => (
             <Status
