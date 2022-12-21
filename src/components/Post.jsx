@@ -1,12 +1,6 @@
-import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
-import {
-  ChatAltIcon,
-  ChevronDownIcon,
-  ShareIcon
-} from '@heroicons/react/outline';
+import { ChatAltIcon, ShareIcon } from '@heroicons/react/outline';
 import { HiDotsVertical, HiX } from 'react-icons/hi';
 
-import BeatLoader from 'react-spinners/BeatLoader';
 import { CommentInputBox } from './CommentInputField';
 import { FaThumbsUp } from 'react-icons/fa';
 import { Link } from 'react-router-dom';

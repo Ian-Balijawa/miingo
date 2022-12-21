@@ -28,7 +28,7 @@ function Posts() {
       });
   }, [accessToken, user]);
 
-  const posts = snap.posts;
+  const posts = snap.users;
 
   return (
     <div className="w-full space-y-4">

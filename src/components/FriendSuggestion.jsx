@@ -8,6 +8,7 @@ import { useSnapshot } from 'valtio';
 
 function FriendSuggestion() {
   const [accessToken] = useLocalStorage('accessToken');
+  const [loggedInUser] = useLocalStorage('user');
   const snap = useSnapshot(state);
   useEffect(() => {
     axios
@@ -25,21 +26,22 @@ function FriendSuggestion() {
       });
   }, [accessToken]);
 
-  const users = snap.users;
+  const users = snap.users.filter((user) => user._id !== loggedInUser._id);
+  console.log('users: ', users);
 
   return (
     <div className=" w-80 md:w-[640px] mx-auto flext items-center justify-center bg-miingo-gray">
       <div
         id="slider3"
-        className="w-full h-full  overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide p-2"
+        className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide p-2"
       >
         {users.map(({ _id, name, followers, followings, image }) => (
           <AddFriend
             key={_id}
             _id={_id}
             name={name}
-            followers={followers?.length}
-            following={followings?.length}
+            followers={followers}
+            followings={followings}
             image={
               image ||
               `https://ui-avatars.com/api/?name=${name}&background=random`

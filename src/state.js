@@ -6,8 +6,9 @@ import { getTokenPayload } from './utils/getTokenPayload';
 const state = proxy( {
 	user: null,
 	accessToken: null,
-	posts: [],
+	users: [],
 	comments: [],
+	followings: [],
 	users: [],
 	socket: null,
 	isLoading: false,
@@ -17,7 +18,7 @@ const state = proxy( {
 derive( {
 	isLoggedIn: ( get ) => get( state ).user,
 	hasAccessToken: ( get ) => get( state ).accessToken,
-	hasPosts: ( get ) => get( state ).posts.length,
+	hasPosts: ( get ) => get( state ).users.length,
 	hasComments: ( get ) => get( state ).comments?.length,
 	hasSocket: ( get ) => get( state ).socket,
 	hasWsErrors: ( get ) => get( state ).wsErrors.length,
@@ -58,25 +59,19 @@ const actions = {
 	addUsers: ( users ) => {
 		state.users = users
 	},
-	followUser: ( userId, myId ) => {
-		const user = state.users.find( ( user ) => user._id === userId )
-		user.followers.push( myId )
-		state.users.filter( ( user ) => user._id !== userId )
-		state.users = [...state.users, user]
-	},
-	unfollowUser: ( userId, myId ) => {
-		const user = state.users.find( ( user ) => user._id === userId )
-		user.followers = user.followers.filter( ( follower ) => follower !== myId )
-		state.users.filter( ( user ) => user._id !== userId )
-		state.users = [...state.users, user]
+	follow: ( userTobeFollowed ) => {
+		const userTobeFollowedIndex = state.users.findIndex( user => user._id === userTobeFollowed._id )
+		const newUsers = [...state.users.slice( 0, userTobeFollowedIndex ), userTobeFollowed, ...state.users.slice( userTobeFollowedIndex + 1 )]
+		state.users = newUsers
+
 	},
 	addPost: ( post ) => {
-		state.posts = [post, ...state.posts]
-		state.posts.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
+		state.users = [post, ...state.users]
+		state.users.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	addPosts: ( posts ) => {
-		state.posts = posts
-		state.posts.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
+		state.users = posts
+		state.users.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	addComment: ( comment ) => {
 		const currentComments = [...state.comments]
@@ -114,30 +109,30 @@ const actions = {
 		state.socket = socket
 	},
 	deletePost ( id ) {
-		state.posts = state.posts.filter( ( post ) => post._id !== id )
+		state.users = state.users.filter( ( post ) => post._id !== id )
 
 	},
 	deleteComment ( id ) {
 		state.comments = state.comments.filter( comment => comment.id !== id )
 	},
 	likePost ( likes, id ) {
-		const likedPost = state.posts.find( post => post._id === id )
+		const likedPost = state.users.find( post => post._id === id )
 		likedPost.likes = likes
 
-		const currentPosts = [...state.posts]
+		const currentPosts = [...state.users]
 		const index = currentPosts.findIndex( post => post._id === id )
 		currentPosts[index] = likedPost
-		state.posts = currentPosts
+		state.users = currentPosts
 
 	},
 	incrementCommentsCountForPost ( id ) {
-		const post = state.posts.find( post => post._id === id )
+		const post = state.users.find( post => post._id === id )
 		post.commentCounts += 1
 
-		const currentPosts = [...state.posts]
+		const currentPosts = [...state.users]
 		const index = currentPosts.findIndex( post => post._id === id )
 		currentPosts[index] = post
-		state.posts = currentPosts
+		state.users = currentPosts
 	}
 }
 
