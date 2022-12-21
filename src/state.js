@@ -108,30 +108,30 @@ const actions = {
 		state.socket = socket
 	},
 	deletePost ( id ) {
-		state.users = state.users.filter( ( post ) => post._id !== id )
+		state.posts = state.posts.filter( ( post ) => post._id !== id )
 
 	},
 	deleteComment ( id ) {
 		state.comments = state.comments.filter( comment => comment.id !== id )
 	},
 	likePost ( likes, id ) {
-		const likedPost = state.users.find( post => post._id === id )
+		const likedPost = state.posts.find( post => post._id === id )
 		likedPost.likes = likes
 
-		const currentPosts = [...state.users]
+		const currentPosts = [...state.posts]
 		const index = currentPosts.findIndex( post => post._id === id )
 		currentPosts[index] = likedPost
-		state.users = currentPosts
+		state.posts = currentPosts
 
 	},
 	incrementCommentsCountForPost ( id ) {
-		const post = state.users.find( post => post._id === id )
+		const post = state.posts.find( post => post._id === id )
 		post.commentCounts += 1
 
-		const currentPosts = [...state.users]
+		const currentPosts = [...state.posts]
 		const index = currentPosts.findIndex( post => post._id === id )
 		currentPosts[index] = post
-		state.users = currentPosts
+		state.posts = currentPosts
 	}
 }
 
