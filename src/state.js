@@ -7,9 +7,9 @@ const state = proxy( {
 	user: null,
 	accessToken: null,
 	users: [],
+	posts: [],
 	comments: [],
 	followings: [],
-	users: [],
 	socket: null,
 	isLoading: false,
 	wsErrors: ref( [] ),
@@ -40,7 +40,6 @@ derive( {
 	}
 );
 
-
 const actions = {
 	startLoading: () => {
 		state.isLoading = true
@@ -66,12 +65,12 @@ const actions = {
 
 	},
 	addPost: ( post ) => {
-		state.users = [post, ...state.users]
-		state.users.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
+		state.posts = [post, ...state.posts]
+		state.posts.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	addPosts: ( posts ) => {
-		state.users = posts
-		state.users.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
+		state.posts = posts
+		state.posts.sort( ( a, b ) => new Date( b.createdAt ) - new Date( a.createdAt ) )
 	},
 	addComment: ( comment ) => {
 		const currentComments = [...state.comments]

@@ -1,7 +1,9 @@
+import { UserProvider, userContext } from '../context/userContext';
 import { actions, state } from '../state';
 
 import AddFriend from './AddFriend';
 import axios from '../services/axios-config';
+import { useContext } from 'react';
 import { useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
@@ -35,19 +37,21 @@ function FriendSuggestion() {
         id="slider3"
         className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide p-2"
       >
-        {users.map(({ _id, name, followers, followings, image }) => (
-          <AddFriend
-            key={_id}
-            _id={_id}
-            name={name}
-            followers={followers}
-            followings={followings}
-            image={
-              image ||
-              `https://ui-avatars.com/api/?name=${name}&background=random`
-            }
-          />
-        ))}
+        <UserProvider>
+          {users.map(({ _id, name, followers, followings, image }) => (
+            <AddFriend
+              key={_id}
+              _id={_id}
+              name={name}
+              followers={followers}
+              followings={followings}
+              image={
+                image ||
+                `https://ui-avatars.com/api/?name=${name}&background=random`
+              }
+            />
+          ))}
+        </UserProvider>
       </div>
     </div>
   );

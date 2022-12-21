@@ -1,7 +1,18 @@
 import { createContext } from 'react';
+import { state } from '../state';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useSnapshot } from 'valtio';
 
-export const UserContext = createContext(null);
+export const userContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
-  return <UserContext.Provider value={{}}>{children}</UserContext.Provider>;
+  const snap = useSnapshot(state);
+  const [loggedInUser] = useLocalStorage('user');
+  const me = snap.users[0];
+  console.log('me ===========>: ', me);
+  console.log('loggedInUser: ', loggedInUser);
+
+  return (
+    <userContext.Provider value={{ user: me }}>{children}</userContext.Provider>
+  );
 };

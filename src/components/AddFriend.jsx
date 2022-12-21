@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { actions, state } from '../state';
 
 import { HiHeart } from 'react-icons/hi';
 import axios from '../services/axios-config';
-import { useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
+import { userContext } from '../context/userContext';
 
 function AddFriend({ _id, name, followers, followings, image }) {
   const [accessToken] = useLocalStorage('accessToken');
+  const { user: me } = useContext(userContext);
   const [loggedInUser] = useLocalStorage('user');
-  const snap = useSnapshot(state);
   const [isFollowing, setIsFollowing] = useState(() => {
-    const me = snap.users.find((user) => user._id === loggedInUser._id);
-    console.log('me: ', me);
-    return me.followings.includes(_id) ? true : false;
+    return me.followings.includes(_id);
   });
 
   const [error, setError] = useState(null);
