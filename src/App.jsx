@@ -4,6 +4,7 @@
 import { Navigate, Route, Routes, Link , useNavigate } from "react-router-dom";
 import { Suspense, lazy, useState } from "react";
 import { actions, state } from "./state";
+
 import ActivityCard from "./components/profile/ActivityCard";
 import Gallery from "./components/Album/ImageGallery";
 import LoadingScreen from "./components/LoadingScreen";
@@ -84,8 +85,6 @@ const Loadable = (Component) => (props) => {
 };
 
 // Notice the convention of how we're importing pagesing with the Loadable HOC
-const Signin = Loadable(lazy(() => import("./pages/Login")));
-const Signup = Loadable(lazy(() => import("./pages/Register")));
 const Home = Loadable(lazy(() => import("./pages/Home")));
 const Messages = Loadable(lazy(() => import("./pages/Messages")));
 const GroupFeeds = Loadable(lazy(() => import("./pages/GroupFeeds")));
@@ -93,7 +92,6 @@ const GroupMessages = Loadable(lazy(() => import("./pages/GroupMessages")));
 const Profile = Loadable(lazy(() => import("./pages/ProfilePage")));
 
 export default () => {
-
   const location = useLocation();
   const [logout, setLogout] = useState(false);
   const [menuModal, showMenuModal] = useState(false);
@@ -168,7 +166,7 @@ export default () => {
   }, [accessToken, location.pathname]);
 
   return (
-    <div className="relative h-screen ">
+    <div className="relative">
       <Header
         onPress={ showDropdown }
         showMenuModal={() => showMenuModal(true)}
@@ -205,9 +203,6 @@ export default () => {
 
       <>
         <Routes>
-          <Route path="/" element={<Signin />} />
-          <Route path="signin" element={<Signin />} />
-          <Route path="signup" element={<Signup />} />
           {/* test routes */}
           <Route path="ld" element={<NewProfilePage />} />
           <Route path="ad" element={<ActivityCard />} />
@@ -291,6 +286,8 @@ export default () => {
       </>
 
        <BottomNav />
+
+         
         { menuModal ? (
           <>
             <MenuBottomSheet
@@ -300,7 +297,7 @@ export default () => {
             >
               <div className=" flex flex-col space-y-4 rounded shadow-lg h-[500px]">
                 <div className="flex items-center justify-between border-b px-4 py-2">
-                  <h3 className="text-gray-600 font-semibold"> Menu </h3>
+                  <h3 className="text-gray-600 font-semibold">Menu </h3>
                   <HiOutlineX
                     className="h-6 w-6 cursor-pointer"
                   />

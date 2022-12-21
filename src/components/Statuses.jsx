@@ -121,7 +121,7 @@ function Statuses({ handlePostStatus }) {
 
         <div
           id="slider2"
-          className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+          className=" w-[280px] md:w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
         >
           {statuses?.map(({ id, image }) => (
             <Status
