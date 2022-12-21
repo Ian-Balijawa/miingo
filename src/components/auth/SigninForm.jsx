@@ -105,7 +105,8 @@ export const SigninForm = () => {
                   size="lg"
                   fontSize="md"
                 >
-                  {isLoading ? <Spinner size="md" color="white" /> : 'Sign in'}
+                  { isLoading ? <Spinner size="md" color="white" /> : 'Sign in'}
+                  
                 </Button>
                 <DividerWithText>or</DividerWithText>
                 <Stack spacing="4">

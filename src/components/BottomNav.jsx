@@ -2,26 +2,24 @@ import React, { useState } from "react";
 import { HomeIcon } from "@heroicons/react/outline";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { FiMessageCircle, FiBell } from "react-icons/fi";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomBottomSheet from "./bottom-sheet/BottomSheet";
 import { useSnapshot } from "valtio";
 import { state } from "../state";
 import Contact from "./Contact";
+
 function BottomNav({ group }) {
+
 	const [isOpen, setIsOpen] = useState(false);
 	const snap = useSnapshot(state);
 	const contacts = snap.users;
 	const navigate = useNavigate();
 
 	const toggleClick = () => {
-		setIsOpen(() => {
-			if (isOpen) {
-				setIsOpen(false);
-			} else {
-				setIsOpen(true);
-			}
-		});
+	   // toggle the popup action
+    setIsOpen(!isOpen);
 	};
+  
 	const handleClick = () => {
 		navigate("/coming");
 	};
@@ -45,22 +43,22 @@ function BottomNav({ group }) {
 
 			<div
 				className=" flex items-center relative hover:bg-slate-200 p-3 rounded-lg cursor-pointer"
-				onClick={toggleClick}
+				onClick={ toggleClick }
 			>
-				<span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
+				<span className="absolute top-3 right-3  h-4 w-4   bg-red text-center rounded-full text-white text-xs font-bold">
 					{" "}
-					8
+					{ contacts.length }
 				</span>
 
 				{/* chaticon */}
 				<FiMessageCircle className="h-6 w-6" />
 
-				{isOpen ? (
+				{ isOpen ? (
 					<>
 						<CustomBottomSheet
 							onClick={() => setIsOpen((prev) => !prev)}
-							onDismiss={toggleClick}
-							open={isOpen}
+							onDismiss={ toggleClick }
+							open = { isOpen }
 						>
 							<div className=" relative  lg:flex flex-col pb-2 mt-5 shadow-lg bg-white rounded-md  h-screen overflow-y-auto scrollbar-hide ">
 								<div className=" bg-white  sticky top-0 z-30 flex space-x-4 items-center text-gray-700 mb-5">
@@ -90,35 +88,19 @@ function BottomNav({ group }) {
 					""
 				)}
 
-				{/* <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"
-          />
-        </svg> */}
 			</div>
 
 			<div className=" flex items-center relative hover:bg-slate-200 p-3 rounded-lg cursor-pointer">
-				<span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
+				<span className="absolute top-3 right-3  h-4 w-4 bg-red text-center rounded-full text-white text-xs font-bold">
 					{" "}
 					8
 				</span>
-				<FiBell onClick={handleClick} className="h-6 w-6" />
+				<FiBell onClick={ handleClick } className="h-6 w-6" />
 			</div>
 
-			<div className=" flex  items-center mr-2 relative hover:bg-slate-200 p-3 rounded-lg cursor-pointer">
-				<span className="absolute top-0 right-0  h-4 w-4 bg-red-800 text-center rounded-full text-white text-xs font-bold">
-					{" "}
-					5
-				</span>
+			<div 
+			 onClick={ handleClick }
+			 className=" flex  items-center mr-2 relative hover:bg-slate-200 p-3 rounded-lg cursor-pointer">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
