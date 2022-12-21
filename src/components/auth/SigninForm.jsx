@@ -7,11 +7,11 @@ import {
   Text,
   useColorModeValue as mode
 } from '@chakra-ui/react';
-import { actions, state } from '../../state';
 
 import { DividerWithText } from './DividerWithText';
 import { FaGoogle } from 'react-icons/fa';
 import Input from '../Input';
+import { actions } from '../../state';
 import axios from '../../services/axios-config';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -64,7 +64,13 @@ export const SigninForm = () => {
             borderColor={mode('gray.200', 'transparent')}
             shadow={{ md: 'lg' }}
           >
-            <Heading textAlign="center" mb="2.5" size="md" fontWeight="extrabold" textColor="#ff6600">
+            <Heading
+              textAlign="center"
+              mb="2.5"
+              size="md"
+              fontWeight="extrabold"
+              textColor="#ff6600"
+            >
               Welcome to MiingoApp
             </Heading>
 
@@ -105,14 +111,13 @@ export const SigninForm = () => {
                   size="lg"
                   fontSize="md"
                 >
-                  { isLoading ? <Spinner size="md" color="white" /> : 'Sign in'}
-                  
+                  {isLoading ? <Spinner size="md" color="white" /> : 'Sign in'}
                 </Button>
                 <DividerWithText>or</DividerWithText>
                 <Stack spacing="4">
                   <Button
                     variant="outline"
-                    leftIcon={<Box as={ FaGoogle } color="red.500" />}
+                    leftIcon={<Box as={FaGoogle} color="red.500" />}
                     disabled
                   >
                     Sign in with Google
