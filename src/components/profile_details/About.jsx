@@ -3,11 +3,23 @@ import { HiOutlineX } from "react-icons/hi";
 import { HiPencil } from "react-icons/hi";
 import { HiDocument } from "react-icons/hi";
 import AboutField from "./AboutField";
+import instance from "../../services/axios-config";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 function About() {
 
   const [edit, setEdit] = useState(false);
-
+  const [intro,setIntro] = useState("")
+  const [dob,setDob] = useState("")
+  const [phone,setPhone] = useState("")
+  const [gender,setGender] = useState("")
+  const [country,setCountry] = useState("")
+  const [relationship,setRelationship] = useState("")
+ const  [city,setCity] = useState("")
+ const [email,setEmail] = useState("")
+ const [website,setWebsite] = useState("")
+ const [joined,setJoined] = useState("")
+ const [user] = useLocalStorage("user");
   const [inputFields] = useState([
     {
       id: 1,
@@ -16,6 +28,7 @@ function About() {
       select: false,
       placeholder: "",
       select_options: [],
+      onChange:(e)=>setIntro(e.target.value)
     },
     {
       id: 2,
@@ -24,6 +37,8 @@ function About() {
       select: false,
       placeholder: "",
       select_options: [],
+      onChange:(e)=>setDob(e.target.value)
+
     },
     {
       id: 3,
@@ -32,6 +47,7 @@ function About() {
       select: false,
       placeholder: "",
       select_options: [],
+      onChange:(e)=>setPhone(e.target.value)
     },
     {
       id: 4,
@@ -40,6 +56,8 @@ function About() {
       select: true,
       placeholder: "Select Gender",
       select_options: ["Male", "Female"],
+      onChange:(e)=>setGender(e.target.value)
+
     },
     {
       id: 5,
@@ -48,6 +66,7 @@ function About() {
       select: false,
       placeholder: "",
       select_options: [],
+      onChange:(e)=>setCountry(e.target.value)
     },
     {
       id: 6,
@@ -56,6 +75,7 @@ function About() {
       select: true,
       placeholder: "Relationship",
       select_options: ["Single", "Married", "Divorced"],
+      onChange:(e)=>setRelationship(e.target.value)
     },
     {
         id: 7,
@@ -64,6 +84,7 @@ function About() {
         select: false,
         placeholder: "City",
         select_options: [],
+        onChange:(e)=>setCity(e.target.value)
     },
     {
       id: 8,
@@ -72,6 +93,7 @@ function About() {
       select: false,
       placeholder: "",
       select_options: [],
+      onChange:(e)=>setEmail(e.target.value)
     },
     {
       id: 9,
@@ -80,6 +102,7 @@ function About() {
       select: false,
       placeholder: "",
       select_options: [],
+      onChange:(e)=>setWebsite(e.target.value)
     },
     ,
     {
@@ -89,9 +112,31 @@ function About() {
       select: false,
       placeholder: "Joined",
       select_options: [],
+      onChange:(e)=>setJoined(e.target.value)
     },
   ]);
-
+  const handleSubmit = async(e)=>{
+    e.preventDefault()
+    try {
+      const {
+        data
+      } = await instance.patch(`/user/profile/${user._id}`, {
+        intro,
+        dob,
+        phone,
+        gender,
+        country,
+        city,
+        email,
+        website,
+        joined
+      },
+      );
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className="hidden lg:flex flex-col  mt-5 shadow-lg bg-white rounded-md  h-auto overflow-hidden">
       <div className=" bg-white flex items-center justify-between text-gray-700 mb-5 px-3 border-b">
@@ -104,7 +149,7 @@ function About() {
 
         <div className="flex items-center space-x-3">
           {edit && (
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 font-bold  p-2 cursor-pointer">
+            <div onClick={handleSubmit} className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 font-bold  p-2 cursor-pointer">
               <HiDocument className="h-6 w-6" />
             </div>
           )}
@@ -136,7 +181,7 @@ function About() {
       </div>
 
       <form className="grid grid-cols-1 gap-y-2 px-4">
-        {inputFields.map(({ id,  label ,input_type , select, placeholder, select_options }) => (
+        {inputFields.map(({ id,  label ,input_type , select, placeholder, select_options,onChange}) => (
            
            <AboutField 
              key = { id }
@@ -146,6 +191,7 @@ function About() {
              placeholder = { placeholder }
              select_options = { select_options }
              enable_edit = { edit }
+             onChange={onChange}
            />
            
         ))}
