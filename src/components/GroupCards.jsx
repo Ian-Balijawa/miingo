@@ -77,7 +77,7 @@ const groups = [
 
 function GroupCards() {
   return (
-    <div className="h-screen  pb-20 pt-6 flex-grow  mt-2 overflow-y-auto scrollbar-hide bg-miingo-gray shadow-2xl ">
+    <div className="pb-2 pt-6 flex-grow  mt-2  bg-miingo-gray shadow-xl ">
      
     <div className="flex items-center justify-between p-2 bg-white mx-2 md:mx-4 rounded-md mb-6">
         
@@ -96,8 +96,8 @@ function GroupCards() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 pb-20 overflow-y-auto scrollbar-hide mx-2 md:mx-4">
-        {groups?.map(({ id, src, name, email, image }) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4  overflow-y-auto scrollbar-hide mx-2 md:mx-4">
+        { groups?.map(({ id, src, name, email, image }) => (
           <GroupCard
             key={id}
             src={src}

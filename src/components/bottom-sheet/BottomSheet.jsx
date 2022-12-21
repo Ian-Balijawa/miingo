@@ -33,7 +33,7 @@ export default function CustomSheet({ onDismiss, onClick, open, children }) {
 				snapPoints={({ minHeight }) => 0.7 * minHeight}
 				open={open}
 			>
-				{children}
+				{ children }
 			</BottomSheet>
 		</>
 	);
