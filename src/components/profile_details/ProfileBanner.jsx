@@ -5,6 +5,7 @@ import PartialProfileEdit from './PartialProfileEdit';
 import ProfileButton from './ProfileButton';
 import ProfileCaption from './ProfileCaption';
 import { ThumbUpIcon } from '@heroicons/react/outline';
+import { UserProvider } from '../../context/userContext';
 import { state } from '../../state';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
@@ -46,10 +47,11 @@ function ProfileBanner() {
 
   return (
     <div className="relative  mx-4 flex flex-col bg-white ">
+      <UserProvider>
+        <ProfileCaption handleEdit={handleEdit} />
+      </UserProvider>
 
-      <ProfileCaption handleEdit={handleEdit} />
-
-      { partialEdit && <PartialProfileEdit /> }
+      {partialEdit && <PartialProfileEdit />}
 
       <div className=" relative w-full h-56 md:h-96 ">
         <img
@@ -93,7 +95,7 @@ function ProfileBanner() {
         <div className="relative flex items-center justify-between space-x-2 p-4 ">
           <div className="absolute -top-6 md:-top-10 w-14 h-14 md:w-20 md:h-20  rounded-full border-4 border-white ">
             <img
-              src= {`https://ui-avatars.com/api/name=${user?.name}&background=random`}
+              src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
               className="w-full h-full rounded-full object-cover "
               alt="group-profile"
             />

@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { HiCamera } from 'react-icons/hi';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import { state } from '../../state';
+import { userContext } from '../../context/userContext';
 
 function ProfileCaption({ handleEdit }) {
-  const [user] = useLocalStorage('user');
   const [editProfile, setEditProfile] = useState(true);
+  const { user } = useContext(userContext);
 
   return (
     <div className="hidden lg:block   absolute  top-12 left-6 md:left-3 z-30 w-72 h-72 bg-white rounded-lg shadow-lg ">
@@ -15,7 +14,7 @@ function ProfileCaption({ handleEdit }) {
           <div className="relative flex items-center justify-center w-20">
             <div className="w-14 h-14 md:w-20 md:h-20 rounded-full">
               <img
-                src= {`https://ui-avatars.com/api/name=${user?.name}&background=random`}
+                src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
                 loading="lazy"
                 className="w-full h-full rounded-full object-cover"
                 alt="profile_caption"
@@ -37,17 +36,8 @@ function ProfileCaption({ handleEdit }) {
           <div className=" flex items-center justify-between space-x-2 text-gray-600">
             <div className=" px-2">
               <p className="flex flex-col items-center justify-center space-y-2">
-                <h3 className="text-gray-600"> 230 </h3>
+                <h3 className="text-gray-600"> {user?.followings?.length} </h3>
                 <h4>Following</h4>
-              </p>
-            </div>
-
-            <div className="border-r border-blue h-7 " />
-
-            <div className="  px-2">
-              <p className="flex flex-col items-center justify-center space-y-2">
-                <h3 className="text-gray-600"> 300 </h3>
-                <h4> Likes </h4>
               </p>
             </div>
 
@@ -55,7 +45,7 @@ function ProfileCaption({ handleEdit }) {
 
             <div className="">
               <p className="flex flex-col items-center justify-center space-y-2">
-                <h3 className="text-gray-600"> 220 </h3>
+                <h3 className="text-gray-600"> {user?.followers?.length} </h3>
                 <h4>Followers</h4>
               </p>
             </div>
