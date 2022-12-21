@@ -40,7 +40,7 @@ function Post({
 
   const handleDelete = (e) => {
     axios
-      .delete(`/post/${_id}`, {
+      .delete(`/post/${_id}/user/${user._id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -151,12 +151,13 @@ function Post({
 
           {isPostDeleted && (
             <div className="absolute border -bottom-10 z-30 flex items-center space-x-2 bg-white hover:bg-gray-100 p-2 rounded-lg cursor-pointer">
-              <div
-                onClick={() => handleDelete()}
+              <button
+                onClick={handleDelete}
                 className="text-xs sm:text-base"
+                disabled={loggedInUser._id !== user._id}
               >
                 Delete Post
-              </div>
+              </button>
             </div>
           )}
         </div>
