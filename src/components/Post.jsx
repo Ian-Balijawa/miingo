@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import TimeAgo from 'timeago-react';
 import { actions } from '../state';
 import axios from '../services/axios-config';
-import state from '../state';
+import { state } from '../state';
 import { useState } from 'react';
 import { useSnapshot } from 'valtio';
 
@@ -23,7 +23,7 @@ function Post({
 }) {
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [isPostDeleted, setIsPostDeleted] = useState(false);
-  const [deletePost, setDeletePost] = useState(false);
+  //const [deletePost, setDeletePost] = useState(false);
 
   const {accessToken, me: loggedInUser} = useSnapshot(state);
 

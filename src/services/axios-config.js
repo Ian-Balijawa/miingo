@@ -1,7 +1,9 @@
 import * as axios from "axios";
+import { state } from '../state';
+import config from '../utils/envConfig';
 
 const instance = axios.create( {
-	baseURL: "https://api1.miingoapp.com/",
+	baseURL: config.API_URL,
 } );
 
 instance.defaults.headers.post["Content-Type"] = "application/json";

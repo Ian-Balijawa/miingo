@@ -1,17 +1,17 @@
 import Contact from './Contact';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { state } from '../state';
 import { useSnapshot } from 'valtio';
 
 const Widgets = ({ group }) => {
   const { socket } = useSnapshot(state);
   //const [contacts, setContatcts] = useState();
+  const snap = useSnapshot(state);
+  const contacts = snap.users;
 
   useEffect(() => {
     if (socket) {
       socket.on('usersOnline', (data) => {
-  const snap = useSnapshot(state);
-  const contacts = snap.users;
 
         //setContatcts(data);
         console.log('ONLINE USERS ', data);

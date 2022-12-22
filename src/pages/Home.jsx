@@ -2,11 +2,10 @@ import Boards from "../components/Boards";
 import { DropzoneArea } from "material-ui-dropzone";
 import Feed from "../components/Feed";
 import ModalWrapper from "../components/modal/ModalWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideFeed from "../components/SideFeed";
 import Statuses from "../components/Statuses";
-
-const { useState } = React;
+import { actions } from "../state";
 
 function Home({ contentType }) {
   

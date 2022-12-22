@@ -3,7 +3,6 @@ import { HomeIcon, SearchIcon } from '@heroicons/react/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import { HiMenuAlt3 } from 'react-icons/hi';
 import { useSnapshot } from 'valtio';
-import useLocalStorage from '../hooks/useLocalStorage';
 import { useState } from 'react';
 import { state } from '../state';
 

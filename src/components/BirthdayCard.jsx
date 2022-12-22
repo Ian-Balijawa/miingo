@@ -3,7 +3,6 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { HiOutlineCake } from 'react-icons/hi';
 import { HiSun } from 'react-icons/hi';
 import React from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
 import { state } from '../state';
 

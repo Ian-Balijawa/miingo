@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable no-use-before-define */
 
-import { Navigate, Route, Routes, Link , useNavigate, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, Link , useNavigate } from "react-router-dom";
 import { Suspense, lazy, useState } from "react";
 import { actions, state } from "./state";
 
@@ -35,6 +35,8 @@ import { HiViewGrid } from "react-icons/hi";
 import { HiOutlineChat } from "react-icons/hi";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
 import MenuItem from "./components/MenuItem";
+import { useSnapshot } from 'valtio';
+import { getTokenPayload } from './utils/getTokenPayload';
 
 const menuItems = [
   { 
@@ -75,8 +77,6 @@ const menuItems = [
       path :"/coming"
   },
 ];
-import { useSnapshot } from 'valtio';
-import { getTokenPayload } from './utils/getTokenPayload';
 
 const Loadable = (Component) => (props) => {
   return (
@@ -119,12 +119,12 @@ export default () => {
       });
       actions.setUser(null);
       actions.setAccessToken(null);
+      navigate("/signin");
     } catch (error) {
       console.error("ERROR: ", error);
     }
-    actions.setUser(null);
-    actions.setAccessToken(null);
-    navigate("/");
+    // actions.setUser(null);
+    // actions.setAccessToken(null);
   };
 
   const toggleAction = () => {
@@ -193,32 +193,9 @@ export default () => {
   //           });
   //       }
   //     }, ((tokenEXp -iat)*1000) - 3540000);
-  );
+ // );
 
-  useEffect(() => {
-    const intervalID = setInterval(() => {
-      if (
-        location.pathname !== "/signin" ||
-        location.pathname !== "/signup" ||
-        location.pathname !== "/"
-      ) {
-        api
-          .get("/auth/refresh-token", {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          })
-          .then((res) => {
-            const data = res.data;
-
-            localStorage.setItem("user", JSON.stringify(data));
-            localStorage.setItem(
-              "accessToken",
-              JSON.stringify(data.accessToken)
-            );
-          });
-      }
-    }, 50 * 60 * 1000);
+  
 
   //     return () => clearInterval(intervalID);
   //   }
@@ -294,42 +271,6 @@ export default () => {
               </RequireAuth>
             }
           />
-    <>
-      <Routes>
-        <Route path="/" element={<Signin />} />
-        <Route path="signin" element={
-       
-          <Signin />
-       } />
-        <Route path="signup" element={<Signup />} />
-        <Route path="ld" element={<NewProfilePage />} />
-        <Route path="ad" element={<ActivityCard />} />
-        <Route path="gallery" element={<Gallery />} />
-        <Route path="status" element={<StatusCarousel />} />
-        <Route
-          path="profile"
-          element={
-            <RequireAuth>
-              <Profile />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="feed"
-          element={
-            <RequireAuth>
-              <Home />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="messages"
-          element={
-            <RequireAuth>
-              <Messages />
-            </RequireAuth>
-          }
-        />
 
           <Route
             path="group_messages"
@@ -367,15 +308,6 @@ export default () => {
             }
           />
 
-          <Route
-            path="feed"
-            element={
-              <IsUserNavigate user={state.user} loggedInPath="/feed">
-                <Home />
-              </IsUserNavigate>
-            }
-          />
-
           <Route path="coming" element={ <Coming /> } />
         </Routes>
       </>
@@ -386,7 +318,7 @@ export default () => {
         { menuModal ? (
           <>
             <MenuBottomSheet
-              onClick={() => showMenuModal((prev) => !prev)}
+              onClick={ toggleAction}
               onDismiss={ toggleAction }
               open = { menuModal }
             >
@@ -468,23 +400,23 @@ const RequireAuth = ({ children }) => {
   return user ?  children : <Navigate to="/signin" />;
 };
 
-const IsUserNavigate = ({ children, loggedInPath, ...rest }) => {
-  actions.setAccessToken(localStorage.getItem('accessToken'));
-  const { me: user } = useSnapshot(state);
+// const IsUserNavigate = ({ children, loggedInPath, ...rest }) => {
+//   actions.setAccessToken(localStorage.getItem('accessToken'));
+//   const { me: user } = useSnapshot(state);
 
-  return (
-    <Route
-      {...rest}
-      element={user ? <Navigate to={loggedInPath} /> : children}
-    />
-  );
-};
+//   return (
+//     <Route
+//       {...rest}
+//       element={user ? <Navigate to={loggedInPath} /> : children}
+//     />
+//   );
+// };
 
-const ProtectedRoute = ({ children, ...rest }) => {
-  actions.setAccessToken(localStorage.getItem('accessToken'));
-  const { me: user } = useSnapshot(state);
+// const ProtectedRoute = ({ children, ...rest }) => {
+//   actions.setAccessToken(localStorage.getItem('accessToken'));
+//   const { me: user } = useSnapshot(state);
 
-  return (
-    <Route {...rest} element={user ? children : <Navigate to="/signin" />} />
-  );
-};
+//   return (
+//     <Route {...rest} element={user ? children : <Navigate to="/signin" />} />
+//   );
+// };
