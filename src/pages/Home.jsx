@@ -2,17 +2,24 @@ import Boards from "../components/Boards";
 import { DropzoneArea } from "material-ui-dropzone";
 import Feed from "../components/Feed";
 import ModalWrapper from "../components/modal/ModalWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideFeed from "../components/SideFeed";
 import Statuses from "../components/Statuses";
-
-const { useState } = React;
+import { actions } from "../state";
 
 function Home({ contentType }) {
   
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState("");
  
+
+  /**
+   * This effect is used to connect first time users to a socket
+   */
+  useEffect(() => {
+    actions.initSocket();
+    console.log('WEBSOCKET USE EFFECT')
+  });
 
   return (
       <div className=" h-screen w-full bg-miingo-gray  font-serif overflow-y-auto overflow-x-hidden scrollbar-hide ">

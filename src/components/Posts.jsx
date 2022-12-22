@@ -4,18 +4,17 @@ import { actions, state } from '../state';
 import FriendSuggestion from './FriendSuggestion';
 import Post from './Post';
 import axios from '../services/axios-config';
-import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
+import config from '../utils/envConfig';
 
 function Posts() {
   const [error, setError] = useState(null);
-  const snap = useSnapshot(state);
-  const [accessToken] = useLocalStorage('accessToken');
-  const [user] = useLocalStorage('user');
-
+  const { accessToken, me: loggedInUser, posts } = useSnapshot(state);
+  console.log('LOGGEDIN USER: ', accessToken);
+  
   useEffect(() => {
     axios
-      .get(`/post/user/${user?._id}`, {
+      .get(`/post/user/${loggedInUser.id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -26,9 +25,7 @@ function Posts() {
       .catch((err) => {
         setError(err.response.data.message);
       });
-  }, [accessToken, user]);
-
-  const posts = snap.posts;
+  }, [accessToken, loggedInUser.id]);
 
   return (
     <div className="w-full space-y-4">
@@ -42,12 +39,12 @@ function Posts() {
           user={post.user}
           image={
             post.image
-              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.image}`
+              ? `${config.API_URL}/post/stream-video?streamFile=${post.image}`
               : null
           }
           video={
             post.video
-              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.video}`
+              ? `${config.API_URL}/post/stream-video?streamFile=${post.video}`
               : null
           }
           _id={post._id}
@@ -68,12 +65,12 @@ function Posts() {
           user={post.user}
           image={
             post.image
-              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.image}`
+              ? `${config.API_URL}/post/stream-video?streamFile=${post.image}`
               : null
           }
           video={
             post.video
-              ? `https://api1.miingoapp.com/post/stream-video?streamFile=${post.video}`
+              ? `${config.API_URL}/post/stream-video?streamFile=${post.video}`
               : null
           }
           likes={post.likes.length}

@@ -35,6 +35,8 @@ import { HiViewGrid } from "react-icons/hi";
 import { HiOutlineChat } from "react-icons/hi";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
 import MenuItem from "./components/MenuItem";
+import { useSnapshot } from 'valtio';
+import { getTokenPayload } from './utils/getTokenPayload';
 
 const menuItems = [
   { 
@@ -117,53 +119,87 @@ export default () => {
       });
       actions.setUser(null);
       actions.setAccessToken(null);
+      navigate("/signin");
     } catch (error) {
       console.error("ERROR: ", error);
     }
-    actions.setUser(null);
-    actions.setAccessToken(null);
-    navigate("/");
+    // actions.setUser(null);
+    // actions.setAccessToken(null);
   };
 
   const toggleAction = () => {
     showMenuModal(!menuModal);
   };
+  //const { accessToken } = useSnapshot(state);
+  actions.setAccessToken(localStorage.getItem('accessToken'));
+  
 
   useEffect(
-    () => () =>
+    () => () => {
       devtools(state, {
         name: "MIINGO_STATE",
         enabled: process.env.NODE_ENV !== "production",
       })
+     
+    }
   );
 
-  useEffect(() => {
-    const intervalID = setInterval(() => {
-      if (
-        location.pathname !== "/signin" ||
-        location.pathname !== "/signup" ||
-        location.pathname !== "/"
-      ) {
-        api
-          .get("/auth/refresh-token", {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          })
-          .then((res) => {
-            const data = res.data;
+  // useEffect(() => {
 
-            localStorage.setItem("user", JSON.stringify(data));
-            localStorage.setItem(
-              "accessToken",
-              JSON.stringify(data.accessToken)
-            );
-          });
-      }
-    }, 50 * 60 * 1000);
+  //   if (accessToken) {
+  //     const { exp: tokenEXp, iat } = getTokenPayload(accessToken);
+  //     const currentTime = Date.now() / 1000; //time in seconds
+  //     console.log('TIME TO EXPIRE', tokenEXp, iat);
 
-    return () => clearInterval(intervalID);
-  }, [accessToken, location.pathname]);
+  //     //   if (tokenEXp < currentTime - 10) {
+  //     //    // localStorage.removeItem('accessToken');
+  //     //     if (
+  //     //       location.pathname !== '/signin' ||
+  //     //       location.pathname !== '/signup' ||
+  //     //       location.pathname !== '/'
+  //     //     ) {
+  //     //       api
+  //     //         .get('/auth/refresh-token', {
+  //     //           headers: {
+  //     //             Authorization: `Bearer ${accessToken}`
+  //     //           }
+  //     //         })
+  //     //         .then((res) => {
+  //     //           const data = res.data;
+  //     //           console.log('RES: ', data);
+  //     //           actions.setAccessToken(data.accessToken);
+  //     //         });
+  //     //     }
+  //     //   }
+  //     //  // actions.setAccessToken(accessToken);
+  //     // }
+  //     // actions.setAccessToken(localStorage.getItem('accessToken'))
+  //     const intervalID = setInterval(() => {
+  //       if (
+  //         location.pathname !== '/signin' ||
+  //         location.pathname !== '/signup' ||
+  //         location.pathname !== '/'
+  //       ) {
+  //         api
+  //           .get('/auth/refresh-token', {
+  //             headers: {
+  //               Authorization: `Bearer ${accessToken}`
+  //             }
+  //           })
+  //           .then((res) => {
+  //             const data = res.data;
+  //             console.log('RES: ', data);
+  //             actions.setAccessToken(data.accessToken);
+  //           });
+  //       }
+  //     }, ((tokenEXp -iat)*1000) - 3540000);
+ // );
+
+  
+
+  //     return () => clearInterval(intervalID);
+  //   }
+  // }, [accessToken, location.pathname]);
 
   return (
     <div className="relative">
@@ -272,15 +308,6 @@ export default () => {
             }
           />
 
-          <Route
-            path="feed"
-            element={
-              <IsUserNavigate user={state.user} loggedInPath="/feed">
-                <Home />
-              </IsUserNavigate>
-            }
-          />
-
           <Route path="coming" element={ <Coming /> } />
         </Routes>
       </>
@@ -291,7 +318,7 @@ export default () => {
         { menuModal ? (
           <>
             <MenuBottomSheet
-              onClick={() => showMenuModal((prev) => !prev)}
+              onClick={ toggleAction}
               onDismiss={ toggleAction }
               open = { menuModal }
             >
@@ -321,26 +348,75 @@ export default () => {
 };
 
 const RequireAuth = ({ children }) => {
-  const [user] = useLocalStorage("user");
 
-  return user ? children : <Navigate to="/signin" />;
+  const user = localStorage.getItem('me');
+  const location = useLocation();
+  const accessToken = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
+  actions.setAccessToken(accessToken);
+  console.log('AUTH TOKEN', { user })
+
+  
+  useEffect(() => {
+    if (accessToken) {
+      const { exp: tokenEXp, iat } = getTokenPayload(accessToken);
+       
+      const currentTime = Date.now() / 1000; //time in seconds
+ 
+      if (tokenEXp > currentTime) {
+
+        const intervalID = setInterval(() => {
+          console.log('TIME TO EXPIRE', tokenEXp, iat);
+          if (
+            location.pathname !== '/signin' ||
+            location.pathname !== '/signup' ||
+            location.pathname !== '/'
+          ) {
+            api
+              .get('/auth/refresh-token', {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`
+                }
+              })
+              .then((res) => {
+                const data = res.data;
+                console.log('RES: ', data);
+                actions.setAccessToken(data.accessToken);
+              });
+          }
+        }, ((tokenEXp - iat) * 1000) - 10000);
+
+        return () => clearInterval(intervalID);
+      } else {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('user')
+        navigate('/signin');
+      }
+    }
+}, [accessToken, location.pathname, navigate]);
+  
+
+
+  return user ?  children : <Navigate to="/signin" />;
 };
 
-const IsUserNavigate = ({ children, loggedInPath, ...rest }) => {
-  const [user] = useLocalStorage("user");
+// const IsUserNavigate = ({ children, loggedInPath, ...rest }) => {
+//   actions.setAccessToken(localStorage.getItem('accessToken'));
+//   const { me: user } = useSnapshot(state);
 
-  return (
-    <Route
-      {...rest}
-      element={user ? <Navigate to={loggedInPath} /> : children}
-    />
-  );
-};
+//   return (
+//     <Route
+//       {...rest}
+//       element={user ? <Navigate to={loggedInPath} /> : children}
+//     />
+//   );
+// };
 
-const ProtectedRoute = ({ children, ...rest }) => {
-  const [user] = useLocalStorage("user");
+// const ProtectedRoute = ({ children, ...rest }) => {
+//   actions.setAccessToken(localStorage.getItem('accessToken'));
+//   const { me: user } = useSnapshot(state);
 
-  return (
-    <Route {...rest} element={user ? children : <Navigate to="/signin" />} />
-  );
-};
+//   return (
+//     <Route {...rest} element={user ? children : <Navigate to="/signin" />} />
+//   );
+// };
