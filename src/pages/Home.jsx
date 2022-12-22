@@ -14,6 +14,14 @@ function Home({ contentType }) {
   const [content, setContent] = useState("");
  
 
+  /**
+   * This effect is used to connect first time users to a socket
+   */
+  useEffect(() => {
+    actions.initSocket();
+    console.log('WEBSOCKET USE EFFECT')
+  });
+
   return (
       <div className=" h-screen w-full bg-miingo-gray  font-serif overflow-y-auto overflow-x-hidden scrollbar-hide ">
        

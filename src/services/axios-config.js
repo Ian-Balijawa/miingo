@@ -1,5 +1,4 @@
 import * as axios from "axios";
-import {state} from "../state";
 
 const instance = axios.create( {
 	baseURL: "https://api1.miingoapp.com/",

@@ -2,6 +2,8 @@ import { derive, subscribeKey } from "valtio/utils"
 import { proxy, ref } from "valtio"
 
 import { getTokenPayload } from './utils/getTokenPayload';
+import { socketUrl, createSocket } from './socket'
+
 
 const state = proxy( {
 	user: null,
@@ -41,6 +43,14 @@ derive( {
 );
 
 const actions = {
+	initSocket: () => {
+		if (!state.socket) {
+			state.socket = ref(createSocket({ socketUrl, state, actions }));
+		} else {
+			state.socket.connect();
+		}
+
+	},
 	startLoading: () => {
 		state.isLoading = true
 	},
@@ -136,13 +146,24 @@ const actions = {
 }
 
 subscribeKey( state, 'accessToken', () => {
-	if ( !state.accessToken ) {
-		actions.setAccessToken( null )
-		localStorage.setItem( 'accessToken', null )
+	if ( state.accessToken ) {
+		//actions.setAccessToken( null )
+		localStorage.setItem( 'accessToken', state.accessToken )
+		console.log('accessToken set', state.accessToken)
 
 	} else {
-		localStorage.setItem( 'accessToken', state.accessToken )
+		localStorage.removeItem('accessToken')
+		localStorage.removeItem('me');
 	}
-} )
+	
+})
+
+subscribeKey(state, 'me', () => {
+	if (state.me) {
+		localStorage.setItem('me', JSON.stringify(state.me));
+	} else {
+		localStorage.removeItem('me');
+	}
+})
 
 export { state, actions }

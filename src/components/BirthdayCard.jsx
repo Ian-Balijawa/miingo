@@ -1,25 +1,25 @@
-import { FiRotateCw } from "react-icons/fi";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
-import { HiOutlineCake } from "react-icons/hi";
-import { HiSun } from "react-icons/hi";
-import React from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
+import { FiRotateCw } from 'react-icons/fi';
+import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
+import { HiOutlineCake } from 'react-icons/hi';
+import { HiSun } from 'react-icons/hi';
+import React from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useSnapshot } from 'valtio';
+import { state } from '../state';
 
 const BirthdayCard = () => {
-	const [user] = useLocalStorage("user");
-	return (
-		<div className="flex flex-col space-y-4 bg-gradient-to-r from-miingo-pinksh to-miingo-pink  bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60 border rounded-lg shadow-lg p-4 font-serif relative overflow-hidden">
-			<div className="flex justify-evenly">
-				<div className="text-white">
-					<h2 className="font-bold">Birthday !!!</h2>
-					<p className="text-xs text-white">
-						Today Its your Friends Birthday
-					</p>
-				</div>
-				<div className="flex text-white font-bold space-x-4 ">
-					<div className="flex items-center justify-center w-8 h-8 rounded-full bg-miingo-light-pink font-bold  p-2">
-						<FiRotateCw className="h-4 w-4" />
-					</div>
+  const { me: user } = useSnapshot(state);
+  return (
+    <div className="flex flex-col space-y-4 bg-gradient-to-r from-miingo-pinksh to-miingo-pink  bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60 border rounded-lg shadow-lg p-4 font-serif relative overflow-hidden">
+      <div className="flex justify-evenly">
+        <div className="text-white">
+          <h2 className="font-bold">Birthday !!!</h2>
+          <p className="text-xs text-white">Today Its your Friends Birthday</p>
+        </div>
+        <div className="flex text-white font-bold space-x-4 ">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-miingo-light-pink font-bold  p-2">
+            <FiRotateCw className="h-4 w-4" />
+          </div>
 
 					<div className=" flex items-center justify-center w-8 h-8 rounded-full bg-miingo-light-pink font-bold  p-2">
 						<HiSun className="h-4 w-4" />

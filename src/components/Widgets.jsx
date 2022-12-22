@@ -3,9 +3,21 @@ import React from 'react';
 import { state } from '../state';
 import { useSnapshot } from 'valtio';
 
-function Widgets({ group }) {
+const Widgets = ({ group }) => {
+  const { socket } = useSnapshot(state);
+  //const [contacts, setContatcts] = useState();
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('usersOnline', (data) => {
   const snap = useSnapshot(state);
   const contacts = snap.users;
+
+        //setContatcts(data);
+        console.log('ONLINE USERS ', data);
+      })
+    }
+  }, [socket]);
 
   return (
     <div className=" relative hidden lg:flex flex-col pb-2 mt-5 shadow-lg bg-white rounded-md  h-screen overflow-y-auto scrollbar-hide ">

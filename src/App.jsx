@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable no-use-before-define */
 
-import { Navigate, Route, Routes, Link , useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, Link , useNavigate, useNavigate } from "react-router-dom";
 import { Suspense, lazy, useState } from "react";
 import { actions, state } from "./state";
 
@@ -75,6 +75,8 @@ const menuItems = [
       path :"/coming"
   },
 ];
+import { useSnapshot } from 'valtio';
+import { getTokenPayload } from './utils/getTokenPayload';
 
 const Loadable = (Component) => (props) => {
   return (
@@ -128,13 +130,69 @@ export default () => {
   const toggleAction = () => {
     showMenuModal(!menuModal);
   };
+  //const { accessToken } = useSnapshot(state);
+  actions.setAccessToken(localStorage.getItem('accessToken'));
+  
 
   useEffect(
-    () => () =>
+    () => () => {
       devtools(state, {
         name: "MIINGO_STATE",
         enabled: process.env.NODE_ENV !== "production",
       })
+     
+    }
+  );
+
+  // useEffect(() => {
+
+  //   if (accessToken) {
+  //     const { exp: tokenEXp, iat } = getTokenPayload(accessToken);
+  //     const currentTime = Date.now() / 1000; //time in seconds
+  //     console.log('TIME TO EXPIRE', tokenEXp, iat);
+
+  //     //   if (tokenEXp < currentTime - 10) {
+  //     //    // localStorage.removeItem('accessToken');
+  //     //     if (
+  //     //       location.pathname !== '/signin' ||
+  //     //       location.pathname !== '/signup' ||
+  //     //       location.pathname !== '/'
+  //     //     ) {
+  //     //       api
+  //     //         .get('/auth/refresh-token', {
+  //     //           headers: {
+  //     //             Authorization: `Bearer ${accessToken}`
+  //     //           }
+  //     //         })
+  //     //         .then((res) => {
+  //     //           const data = res.data;
+  //     //           console.log('RES: ', data);
+  //     //           actions.setAccessToken(data.accessToken);
+  //     //         });
+  //     //     }
+  //     //   }
+  //     //  // actions.setAccessToken(accessToken);
+  //     // }
+  //     // actions.setAccessToken(localStorage.getItem('accessToken'))
+  //     const intervalID = setInterval(() => {
+  //       if (
+  //         location.pathname !== '/signin' ||
+  //         location.pathname !== '/signup' ||
+  //         location.pathname !== '/'
+  //       ) {
+  //         api
+  //           .get('/auth/refresh-token', {
+  //             headers: {
+  //               Authorization: `Bearer ${accessToken}`
+  //             }
+  //           })
+  //           .then((res) => {
+  //             const data = res.data;
+  //             console.log('RES: ', data);
+  //             actions.setAccessToken(data.accessToken);
+  //           });
+  //       }
+  //     }, ((tokenEXp -iat)*1000) - 3540000);
   );
 
   useEffect(() => {
@@ -162,8 +220,9 @@ export default () => {
       }
     }, 50 * 60 * 1000);
 
-    return () => clearInterval(intervalID);
-  }, [accessToken, location.pathname]);
+  //     return () => clearInterval(intervalID);
+  //   }
+  // }, [accessToken, location.pathname]);
 
   return (
     <div className="relative">
@@ -235,6 +294,42 @@ export default () => {
               </RequireAuth>
             }
           />
+    <>
+      <Routes>
+        <Route path="/" element={<Signin />} />
+        <Route path="signin" element={
+       
+          <Signin />
+       } />
+        <Route path="signup" element={<Signup />} />
+        <Route path="ld" element={<NewProfilePage />} />
+        <Route path="ad" element={<ActivityCard />} />
+        <Route path="gallery" element={<Gallery />} />
+        <Route path="status" element={<StatusCarousel />} />
+        <Route
+          path="profile"
+          element={
+            <RequireAuth>
+              <Profile />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="feed"
+          element={
+            <RequireAuth>
+              <Home />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="messages"
+          element={
+            <RequireAuth>
+              <Messages />
+            </RequireAuth>
+          }
+        />
 
           <Route
             path="group_messages"
@@ -321,13 +416,61 @@ export default () => {
 };
 
 const RequireAuth = ({ children }) => {
-  const [user] = useLocalStorage("user");
 
-  return user ? children : <Navigate to="/signin" />;
+  const user = localStorage.getItem('me');
+  const location = useLocation();
+  const accessToken = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
+  actions.setAccessToken(accessToken);
+  console.log('AUTH TOKEN', { user })
+
+  
+  useEffect(() => {
+    if (accessToken) {
+      const { exp: tokenEXp, iat } = getTokenPayload(accessToken);
+       
+      const currentTime = Date.now() / 1000; //time in seconds
+ 
+      if (tokenEXp > currentTime) {
+
+        const intervalID = setInterval(() => {
+          console.log('TIME TO EXPIRE', tokenEXp, iat);
+          if (
+            location.pathname !== '/signin' ||
+            location.pathname !== '/signup' ||
+            location.pathname !== '/'
+          ) {
+            api
+              .get('/auth/refresh-token', {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`
+                }
+              })
+              .then((res) => {
+                const data = res.data;
+                console.log('RES: ', data);
+                actions.setAccessToken(data.accessToken);
+              });
+          }
+        }, ((tokenEXp - iat) * 1000) - 10000);
+
+        return () => clearInterval(intervalID);
+      } else {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('user')
+        navigate('/signin');
+      }
+    }
+}, [accessToken, location.pathname, navigate]);
+  
+
+
+  return user ?  children : <Navigate to="/signin" />;
 };
 
 const IsUserNavigate = ({ children, loggedInPath, ...rest }) => {
-  const [user] = useLocalStorage("user");
+  actions.setAccessToken(localStorage.getItem('accessToken'));
+  const { me: user } = useSnapshot(state);
 
   return (
     <Route
@@ -338,7 +481,8 @@ const IsUserNavigate = ({ children, loggedInPath, ...rest }) => {
 };
 
 const ProtectedRoute = ({ children, ...rest }) => {
-  const [user] = useLocalStorage("user");
+  actions.setAccessToken(localStorage.getItem('accessToken'));
+  const { me: user } = useSnapshot(state);
 
   return (
     <Route {...rest} element={user ? children : <Navigate to="/signin" />} />
