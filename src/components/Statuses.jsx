@@ -101,7 +101,7 @@ function Statuses({ handlePostStatus }) {
   };
 
   return (
-    <div className="sticky top-0 z-40 flex items-center justify-around w-screen bg-miingo-gray py-1 px-2">
+    <div className="sticky top-0 z-30 flex items-center justify-center w-screen  bg-miingo-gray py-1 px-2">
       <div className="flex mx-2">
         <button
           onClick={handlePostStatus}

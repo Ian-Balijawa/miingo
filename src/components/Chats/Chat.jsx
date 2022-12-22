@@ -3,8 +3,9 @@ import React from 'react';
 
 export default function Chat({ src, online, name }) {
   return (
-    <div className="relative flex flex-col flex-grow bg-miingo-gray  mx-2  mt-2 ">
-      <div className="sticky top-20 flex flex-col space-y-2">
+    <div className="relative flex flex-col flex-grow  mx-2  mt-2">
+      <div className="sticky top-20 flex flex-col space-y-2 ">
+        
         <div className=" flex  items-center p-3 mb-4 shadow-md rounded-md">
           <img
             className="object-cover w-10 h-10 rounded-full"
@@ -22,7 +23,7 @@ export default function Chat({ src, online, name }) {
                 }`}
               ></span>
               <small className=" ml-2 text-gray-900">
-                {online ? 'Online' : 'offline'} <br />{' '}
+                { online ? 'Online' : 'offline'} <br />{' '}
               </small>
             </p>
           </div>
@@ -31,7 +32,7 @@ export default function Chat({ src, online, name }) {
         {/* Chart messages */}
         <Charts src={src} />
 
-        <div className=" bg-miingo-gray sticky bottom-0 z-50 flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
+        <div className="bg-miingo-gray flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
           {/* left */}
           <div className="flex-grow">
             <input
