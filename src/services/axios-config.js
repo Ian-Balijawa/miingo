@@ -3,7 +3,7 @@ import { state } from '../state';
 import config from '../utils/envConfig';
 
 const instance = axios.create( {
-	baseURL: config.API_URL,
+	baseURL: 'https://api1.miingoapp.com/',
 } );
 
 instance.defaults.headers.post["Content-Type"] = "application/json";
