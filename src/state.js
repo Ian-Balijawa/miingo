@@ -54,7 +54,8 @@ const actions = {
 	setAccessToken: ( accessToken ) => {
 		state.accessToken = accessToken
 	},
-
+	// [0,1,2,3,4,5,6]
+	//[0,1,2,7,4]
 	addUsers: ( users ) => {
 		state.users = users
 	},
@@ -62,7 +63,6 @@ const actions = {
 		const userTobeFollowedIndex = state.users.findIndex( user => user._id === userTobeFollowed._id )
 		const newUsers = [...state.users.slice( 0, userTobeFollowedIndex ), userTobeFollowed, ...state.users.slice( userTobeFollowedIndex + 1 )]
 		state.users = newUsers
-
 	},
 	addPost: ( post ) => {
 		state.posts = [post, ...state.posts]
