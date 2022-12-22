@@ -18,7 +18,7 @@ function Header({ onPress, showMenuModal }) {
   const [showSearch, setShowSearch] = useState(false);
 
   return (
-    <div className=" bg-white  sticky top-0 z-50 flex justify-between p-1 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
+    <div className=" bg-white  sticky top-0 z-40 flex justify-between p-1 lg:pr-10 lg:px-5 shadow-md space-x-2 md:space-x-4">
       {/* left */}
       <Link to="/feed" className=" flex items-center space-x-2 w-56">
         <div className="flex items-center justify-center rounded-full bg-regal-orange w-14 md:w-16  h-14 md:h-16">
@@ -48,19 +48,6 @@ function Header({ onPress, showMenuModal }) {
               onClick={() => setShowSearch(!showSearch)}
               className="h-6 text-gray-600"
             />
-
-          {/* { showSearch ? (
-            <HiX
-              onClick={() => setShowSearch(!showSearch)}
-              className="h-6 text-gray-600"
-            />
-          ) : (
-            <SearchIcon
-              onClick={() => setShowSearch(!showSearch)}
-              className="h-6 text-gray-600"
-            />
-          )} */}
-          
 
         </div>
 

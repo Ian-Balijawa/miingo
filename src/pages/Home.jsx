@@ -44,7 +44,7 @@ function Home({ contentType }) {
                 </div>
               </div>
             }
-            footer={true}
+            footer={ true }
             footerContent={
               <>
                 <button
