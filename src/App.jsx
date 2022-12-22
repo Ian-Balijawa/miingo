@@ -72,7 +72,7 @@ const menuItems = [
   },
   { 
       id: 6,
-      name: "Chats",
+      name: "Birthday",
       icon: HiOutlineChat,
       path :"/coming"
   },
@@ -208,7 +208,7 @@ export default () => {
         showMenuModal={() => showMenuModal(true)}
       />
 
-      {logout && (
+      { logout && (
         <div className="absolute top-16 right-14 z-50 bg-white shadow-xl rounded-lg h-auto w-28 p-2">
           <div className="py-1">
             <div className="w-4 h-4 right-3 md:left-3 absolute mt-1 bg-white -top-3  rotate-45"></div>
@@ -226,7 +226,7 @@ export default () => {
             Profile{" "}
           </Link>
           <p
-            onClick={handleLogout}
+            onClick={ handleLogout }
             className="text-sm hover:bg-gray-200 cursor-pointer flex items-center space-x-3"
           >
             <span className="">
@@ -322,7 +322,7 @@ export default () => {
               onDismiss={ toggleAction }
               open = { menuModal }
             >
-              <div className=" flex flex-col space-y-4 rounded shadow-lg h-[500px]">
+              <div className=" flex flex-col space-y-4 rounded shadow-lg h-[600px]">
                 <div className="flex items-center justify-between border-b px-4 py-2">
                   <h3 className="text-gray-600 font-semibold">Menu </h3>
                   <HiOutlineX
