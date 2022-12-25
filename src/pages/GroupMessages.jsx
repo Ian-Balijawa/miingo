@@ -9,7 +9,7 @@ function GroupMessages() {
   const { src, name, members } = location.state;
 
   return (
-    <div className="relative h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden scrollbar-hide">
+    <div className="h-screen md:overflow-y-auto md:overflow-x-hidden scrollbar-hide">
     
       <div className="px-5">
         <div className=" w-full h-20 md:h-28">
@@ -21,7 +21,7 @@ function GroupMessages() {
         </div>
       </div>
 
-      <main className="flex space-x-2 pr-3 mt-3 pb-10">
+      <main className="flex space-x-2 pr-3 mt-3 md:pb-10 ">
         {/* Side_feed */}
 
         <SideFeed group={ true } />
