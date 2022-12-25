@@ -48,7 +48,7 @@ export default function Chat({ src, online, name }) {
            
             <button
               className={`focus:outline-none outline-none border-none cursor-pointer 
-                active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+                active:scale-90  rounded-full hover:bg-lightgraybg p-2 transition ease-in-out
                  duration-300
               `}
             >
