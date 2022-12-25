@@ -66,8 +66,9 @@ function Charts({ src }) {
     },
   ];
 
+ 
   return (
-    <div className="w-full h-64 p-3 pb-20  md:px-10 overflow-y-auto scrollbar-hide border border-blue-100 rounded-lg">
+    <div className="w-full h-72 p-3 pb-20  md:px-10 overflow-y-auto scrollbar-hide border border-blue-100 rounded-lg">
       {messages.map(({ id, message, reply }) => (
         <GroupCharts key={id} message={message} reply={reply} src={src} />
       ))}
