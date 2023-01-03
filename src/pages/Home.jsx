@@ -21,8 +21,10 @@ function Home({ contentType }) {
     console.log('WEBSOCKET USE EFFECT')
   });
 
+  
+
   return (
-      <div className=" h-screen w-full bg-miingo-gray  font-serif overflow-y-auto overflow-x-hidden scrollbar-hide ">
+      <div className=" h-screen w-full bg-miingo-gray  font-serif ">
        
         <Statuses handlePostStatus={() => setShowModal(true)} />
 

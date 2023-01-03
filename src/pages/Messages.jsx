@@ -15,7 +15,7 @@ export default function Messages() {
   const [content, setContent] = useState('');
 
   return (
-    <div className="relative lg:h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden scrollbar-hide">
+    <div className="relative  bg-miingo-gray">
 
       <Statuses handlePostStatus = {() => setShowModal(true)} />
         

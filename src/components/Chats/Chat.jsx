@@ -1,5 +1,6 @@
 import Charts from './Chats';
 import React from 'react';
+import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 
 export default function Chat({ src, online, name }) {
   return (
@@ -32,7 +33,7 @@ export default function Chat({ src, online, name }) {
         {/* Chart messages */}
         <Charts src={src} />
 
-        <div className="bg-miingo-gray sticky bottom-0 flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
+        <div className="bg-miingo-gray sticky bottom-0 hidden md:inline-flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
           {/* left */}
           <div className="flex-grow">
             <input
@@ -108,6 +109,11 @@ export default function Chat({ src, online, name }) {
             
           </div>
         </div>
+
+        <div className='absolute bottom-20 right-2  flex items-center justify-center p-3 bg-lightgraybg rounded-full w-12 h-12 shadow-xl active:scale-90 transition ease-in-out duration-300'>
+             <HiOutlineChatBubbleBottomCenterText className=' w-10 h-10  text-black' />
+        </div>
+
       </div>
     </div>
   );
