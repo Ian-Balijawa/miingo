@@ -110,7 +110,7 @@ export default function Chat({ src, online, name }) {
           </div>
         </div>
 
-        <div className='absolute bottom-20 right-2  flex items-center justify-center p-3 bg-lightgraybg rounded-full w-12 h-12 shadow-xl active:scale-90 transition ease-in-out duration-300'>
+        <div className='absolute bottom-20 right-2 md:hidden flex items-center justify-center p-3 bg-lightgraybg rounded-full w-12 h-12 shadow-xl active:scale-90 transition ease-in-out duration-300'>
              <HiOutlineChatBubbleBottomCenterText className=' w-10 h-10  text-black' />
         </div>
 
