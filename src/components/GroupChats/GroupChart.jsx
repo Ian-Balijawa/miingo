@@ -2,7 +2,6 @@ import React from "react";
 import Charts from "./Charts";
 
 export default function GroupChart({ src, name, members }) {
-  // relative flex flex-col flex-grow bg-miingo-gray  mx-2  mt-2
   return (
     <>
       <div className="flex flex-col flex-grow bg-miingo-gray">
@@ -33,7 +32,7 @@ export default function GroupChart({ src, name, members }) {
 
           <Charts src = { src } />
          
-          <div className="flex items-center justify-between w-full p-3 border-t border-lightgraybg rounded-t-lg">
+          <div className="flex items-center sticky bottom-0 justify-between w-full p-3 border-t border-lightgraybg rounded-t-lg">
             {/* left */}
             <div className="flex-grow">
               <input

@@ -15,7 +15,7 @@ export default function Messages() {
   const [content, setContent] = useState('');
 
   return (
-    <div className="relative h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden scrollbar-hide">
+    <div className="relative lg:h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden scrollbar-hide">
 
       <Statuses handlePostStatus = {() => setShowModal(true)} />
         
@@ -61,7 +61,7 @@ export default function Messages() {
           />
         ) : null}
 
-      <main className="flex space-x-2 pr-3 pb-10">
+      <main className="flex space-x-2 pr-3">
         {/* chats */}
 
         <SideFeed />

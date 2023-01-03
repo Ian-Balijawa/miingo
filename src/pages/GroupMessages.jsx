@@ -9,7 +9,7 @@ function GroupMessages() {
   const { src, name, members } = location.state;
 
   return (
-    <div className="h-screen md:overflow-y-auto md:overflow-x-hidden scrollbar-hide">
+    <div className=" lg:h-screen md:overflow-y-auto md:overflow-x-hidden scrollbar-hide">
     
       <div className="px-5">
         <div className=" w-full h-20 md:h-28">

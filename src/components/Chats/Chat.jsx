@@ -32,7 +32,7 @@ export default function Chat({ src, online, name }) {
         {/* Chart messages */}
         <Charts src={src} />
 
-        <div className="bg-miingo-gray flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
+        <div className="bg-miingo-gray sticky bottom-0 flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
           {/* left */}
           <div className="flex-grow">
             <input
