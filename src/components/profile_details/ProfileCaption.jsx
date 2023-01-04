@@ -3,9 +3,10 @@ import { useContext, useState } from 'react';
 import { HiCamera } from 'react-icons/hi';
 import { userContext } from '../../context/userContext';
 
-function ProfileCaption({ handleEdit }) {
+function ProfileCaption({ handleEdit , user }) {
+
   const [editProfile, setEditProfile] = useState(true);
-  const { user } = useContext(userContext);
+  // const { user } = useContext(userContext);
 
   return (
     <div className="hidden lg:block   absolute  top-12 left-6 md:left-3 z-30 w-72 h-72 bg-white rounded-lg shadow-lg ">

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { actions, state } from '../state';
-
 import FriendSuggestion from './FriendSuggestion';
 import Post from './Post';
 import axios from '../services/axios-config';
@@ -8,6 +7,7 @@ import { useSnapshot } from 'valtio';
 import config from '../utils/envConfig';
 
 function Posts() {
+  
   const [error, setError] = useState(null);
   const { accessToken, me: loggedInUser, posts } = useSnapshot(state);
   console.log('LOGGEDIN USER: ', accessToken);
@@ -53,6 +53,8 @@ function Posts() {
         />
       ))}
 
+
+         {/* following and unfollowing users*/}
       <FriendSuggestion />
 
       {posts.slice(1).map((post) => (

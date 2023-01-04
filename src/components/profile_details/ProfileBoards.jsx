@@ -7,7 +7,7 @@ import FriendsSuggestion from '../FriendsSuggestion';
 
 function ProfileBoards() {
   return (
-    <div className="relative hidden lg:block  w-[340px] mt-2  ">
+    <div className="relative hidden lg:block  w-[340px] mt-2 ">
 
     <div className=" space-y-4 sticky top-20 ">
        

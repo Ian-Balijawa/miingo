@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { HiCamera } from 'react-icons/hi';
 import PartialProfileEdit from './PartialProfileEdit';
 import ProfileButton from './ProfileButton';
@@ -10,10 +9,10 @@ import { state } from '../../state';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 function ProfileBanner() {
+
   const [likes] = useState(2);
   const [user] = useLocalStorage('user');
   const [follow, setFollow] = useState(true);
-
   const [partialEdit, setPartialEdit] = useState(false);
 
   const [links] = useState([
@@ -48,7 +47,7 @@ function ProfileBanner() {
   return (
     <div className="relative  mx-4 flex flex-col bg-white ">
       <UserProvider>
-        <ProfileCaption handleEdit={handleEdit} />
+        <ProfileCaption handleEdit={handleEdit} user = { user }/>
       </UserProvider>
 
       {partialEdit && <PartialProfileEdit />}
@@ -60,8 +59,14 @@ function ProfileBanner() {
           className="w-full h-full object-cover "
           alt="profile_banner"
         />
+         
+         {/* editting the background image */}
+        <div className='absolute bottom-2 right-2 flex items-center justify-center bg-gray  cursor-pointer p-2 rounded-lg'>
+          <p className='text-white '>Edit cover</p>
+        </div>
+
         {/* like and follow user on Mobile  */}
-        <div className="absolute bottom-2 right-2 flex items-center justify-around space-x-2 md:hidden ">
+        <div className="absolute bottom-2 left-4 flex items-center justify-around space-x-2 md:hidden ">
           <div className="flex items-center justify-center bg-gray cursor-pointer p-2 rounded-full">
             <HiCamera className=" w-4 h-4 text-white " />
           </div>
@@ -88,11 +93,12 @@ function ProfileBanner() {
               {follow ? ' UnFollow ' : 'Follow'}
             </p>
           </div>
+
         </div>
       </div>
 
       <div className="lg:hidden border-b">
-        <div className="relative flex items-center justify-between space-x-2 p-4 ">
+        <div className="relative flex items-center justify-between space-x-2 p-4">
           <div className="absolute -top-6 md:-top-10 w-14 h-14 md:w-20 md:h-20  rounded-full border-4 border-white ">
             <img
               src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}

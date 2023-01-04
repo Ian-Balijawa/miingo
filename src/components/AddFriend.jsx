@@ -41,7 +41,7 @@ function AddFriend({ _id, name, followers, followings, image }) {
       setIsFollowing(!isFollowing);
   };
 
-  console.log([_id, name, followers, followings, image]);
+  // console.log([_id, name, followers, followings, image]);
 
   return (
     <div className="w-56 h-56  bg-white rounded-lg shadow-lg inline-block mr-2">
