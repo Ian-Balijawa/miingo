@@ -8,6 +8,7 @@ import { ThumbUpIcon } from '@heroicons/react/outline';
 import { UserProvider } from '../../context/userContext';
 import { state } from '../../state';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import ProfileTabs from './ProfileTabs';
 
 function ProfileBanner() {
   const [likes] = useState(2);
@@ -117,13 +118,11 @@ function ProfileBanner() {
       </div>
 
       <div className="flex items-center md:justify-between py-2 px-3">
-        <div className="flex items-center  space-x-3 justify-around">
-          {links.map(({ id, name }) => (
-            <ProfileButton key={id} name={name} />
-          ))}
+        <div className="flex items-center  space-x-2  justify-around">
+          <ProfileTabs />
         </div>
 
-        <div className="hidden md:inline-flex items-center justify-around space-x-2 ">
+        {/* <div className="hidden md:inline-flex items-center justify-around space-x-2 ">
           <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
             <ThumbUpIcon className="h-6" />
             <p className="text-xs sm:text-base">{`${likes || 0}`}</p>
@@ -146,7 +145,7 @@ function ProfileBanner() {
               {follow ? ' UnFollow ' : 'Follow'}
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
