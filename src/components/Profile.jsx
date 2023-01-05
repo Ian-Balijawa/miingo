@@ -2,7 +2,7 @@ import { Button, Select, Spinner, Stack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
 import Input from './Input';
-import ProfileTabs from './profile_details/ProfileTabs';
+import ProfileTabs from './profile_details/ProfileTabList';
 import axios from '../services/axios-config';
 
 export default function Profile({ user }) {
