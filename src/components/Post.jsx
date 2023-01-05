@@ -1,6 +1,6 @@
 import { ChatAltIcon, ShareIcon } from '@heroicons/react/outline';
 import { HiDotsVertical, HiX } from 'react-icons/hi';
-
+import { HiOutlineUserPlus } from "react-icons/hi2";
 import { CommentInputBox } from './CommentInputField';
 import { FaThumbsUp } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -82,9 +82,11 @@ function Post({
             className="flex items-center"
           >
             <button
-              className={`flex  mx-auto text-white bg-regal-orange hover:bg-orange-400 px-3 py-1 md:px-5 rounded-full shadow-xl font-normalhover:shadow-xl active:scale-90 transition duration-300 outline-none `}
+              className={`flex  mx-auto text-white  bg-regal-orange hover:bg-orange-400 px-2 py-1 md:px-3 rounded-full shadow-xl font-normal hover:shadow-xl active:scale-90 transition duration-300 outline-none `}
             >
-              About me
+
+              <HiOutlineUserPlus className='w-4 h-4'/>
+
             </button>
           </Link>
         </div>
