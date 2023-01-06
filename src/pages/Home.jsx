@@ -8,6 +8,7 @@ import Statuses from "../components/Statuses";
 import { actions } from "../state";
 
 function Home({ contentType }) {
+  
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState("");
 
