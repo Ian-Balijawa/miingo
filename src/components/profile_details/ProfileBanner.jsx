@@ -124,7 +124,7 @@ function ProfileBanner() {
       </div>
 
       <div className="flex items-center md:justify-between py-2 px-3">
-        <div className="flex items-center  space-x-2  justify-around">
+        <div className="flex items-center  space-x-1  justify-around">
           <ProfileTabs />
         </div>
 
