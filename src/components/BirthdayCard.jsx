@@ -54,6 +54,7 @@ const BirthdayCard = () => {
 				<div className="text-white text-center mt-5">
 					<h2 className="font-bold text-sm">{user?.name}</h2>
 					<h4 className="text-xs">Kampala ,Uganda</h4>
+
 				</div>
 				<div className="text-white text-center mt-2">
 					<h2 className=" text-sm">
@@ -70,6 +71,7 @@ const BirthdayCard = () => {
 
 				<HiOutlineArrowNarrowRight className="h-6 w-6 text-white hover:scale-110" />
 			</div>
+
 		</div>
 	);
 };

@@ -10,7 +10,6 @@ import { actions } from '../state';
 
 function Home({ contentType }) {
   const [showModal, setShowModal] = useState(false);
-  const [content, setContent] = useState('');
 
   /**
    * This effect is used to connect first time users to a socket
