@@ -8,87 +8,15 @@ import Input from './Input';
 import Status from './Status';
 import StatusPopOut from './status/StatusPopOut';
 import StatusWrapper from './status/StatusWrapper';
+import { state } from '../state';
+import { useSnapshot } from 'valtio';
 
 function Statuses({ handlePostStatus }) {
   const [showModal, setShowModal] = useState(false);
+  const [statusOwner, setStatusOwner] = useState(null);
 
-  const statuses = [
-    {
-      id: 1,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668007553/pexels-jonathan-borba-12031357_rzxxvm.jpg'
-    },
-    {
-      id: 2,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668007542/pexels-mahdi-chaghari-12463279_cwiw1n.jpg'
-    },
-    {
-      id: 3,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668007538/pexels-martin-boh%C3%A1%C4%8D-10288457_uwpcbd.jpg'
-    },
-    {
-      id: 4,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668007538/pexels-martin-boh%C3%A1%C4%8D-10288457_uwpcbd.jpg'
-    },
-    {
-      id: 5,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668011048/pexels-james-gana-13747843_vz07rw.jpg'
-    },
-    {
-      id: 6,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668011048/pexels-james-gana-13747843_vz07rw.jpg'
-    },
-    {
-      id: 7,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668011062/pexels-martin-boh%C3%A1%C4%8D-10288457_hmd0gl.jpg'
-    },
-    {
-      id: 8,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1664953256/images_1_cb1erh.jpg'
-    },
-    {
-      id: 9,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1664904897/fog-forest-19186761_yefcgv.jpg'
-    },
-    {
-      id: 10,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1664902648/1_mwpuwHSsNIlIirvWdjgIbw_adeo16.jpg'
-    },
-    {
-      id: 11,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668007553/pexels-jonathan-borba-12031357_rzxxvm.jpg'
-    },
-    {
-      id: 12,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668007538/pexels-martin-boh%C3%A1%C4%8D-10288457_uwpcbd.jpg'
-    },
-    {
-      id: 13,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1664902648/1_mwpuwHSsNIlIirvWdjgIbw_adeo16.jpg'
-    },
-    {
-      id: 14,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668007553/pexels-jonathan-borba-12031357_rzxxvm.jpg'
-    },
-    {
-      id: 15,
-      image:
-        'https://res.cloudinary.com/itgenius/image/upload/v1668007538/pexels-martin-boh%C3%A1%C4%8D-10288457_uwpcbd.jpg'
-    }
-  ];
+  const snap = useSnapshot(state);
+  const users = snap.users;
 
   const slideLeft2 = () => {
     var slider = document.getElementById('slider2');
@@ -123,11 +51,16 @@ function Statuses({ handlePostStatus }) {
           id="slider2"
           className=" w-[280px] md:w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
         >
-          {statuses?.map(({ id, image }) => (
+          {users?.map((user) => (
             <Status
-              handleClick={() => setShowModal(true)}
-              key={id}
-              image={image}
+              handleClick={() => {
+                setShowModal(true);
+                setStatusOwner(user);
+              }}
+              key={user._id}
+              image={
+                user?.image || `https://ui-avatars.com/api/?name=${user?.name}`
+              }
             />
           ))}
         </div>
@@ -143,7 +76,7 @@ function Statuses({ handlePostStatus }) {
           <StatusWrapper
             title="Status View"
             closeModal={() => setShowModal(false)}
-            bodyContent={<StatusPopOut />}
+            bodyContent={<StatusPopOut statusOwner={statusOwner} />}
             footer={true}
             footerContent={
               <>
