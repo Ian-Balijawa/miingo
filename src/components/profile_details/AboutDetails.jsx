@@ -23,7 +23,7 @@ function AboutDetails() {
     }
   }
   return (
-    <div className="relative hidden lg:block w-[600px]  mt-2">
+    <div className="relative hidden lg:block w-[300px]  mt-2">
     <div className=" px-2 sticky top-15 ">
     <div className="hidden lg:flex flex-col  mt-5 shadow-lg bg-white rounded-md  h-auto overflow-hidden">
       <div className=" bg-white flex items-center justify-between text-gray-700 mb-5 px-3 border-b">
