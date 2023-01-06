@@ -1,9 +1,8 @@
+import { createSocket, socketUrl } from './socket'
 import { derive, subscribeKey } from "valtio/utils"
 import { proxy, ref } from "valtio"
 
 import { getTokenPayload } from './utils/getTokenPayload';
-import { socketUrl, createSocket } from './socket'
-
 
 const state = proxy( {
 	user: null,
@@ -44,8 +43,8 @@ derive( {
 
 const actions = {
 	initSocket: () => {
-		if (!state.socket) {
-			state.socket = ref(createSocket({ socketUrl, state, actions }));
+		if ( !state.socket ) {
+			state.socket = ref( createSocket( { socketUrl, state, actions } ) );
 		} else {
 			state.socket.connect();
 		}
@@ -64,8 +63,6 @@ const actions = {
 	setAccessToken: ( accessToken ) => {
 		state.accessToken = accessToken
 	},
-	// [0,1,2,3,4,5,6]
-	//[0,1,2,7,4]
 	addUsers: ( users ) => {
 		state.users = users
 	},
@@ -147,23 +144,21 @@ const actions = {
 
 subscribeKey( state, 'accessToken', () => {
 	if ( state.accessToken ) {
-		//actions.setAccessToken( null )
 		localStorage.setItem( 'accessToken', state.accessToken )
-		console.log('accessToken set', state.accessToken)
 
 	} else {
-		localStorage.removeItem('accessToken')
-		localStorage.removeItem('me');
+		localStorage.removeItem( 'accessToken' )
+		localStorage.removeItem( 'me' );
 	}
-	
-})
 
-subscribeKey(state, 'me', () => {
-	if (state.me) {
-		localStorage.setItem('me', JSON.stringify(state.me));
+} )
+
+subscribeKey( state, 'user', () => {
+	if ( state.user ) {
+		localStorage.setItem( 'user', JSON.stringify( state.user ) );
 	} else {
-		localStorage.removeItem('me');
+		localStorage.removeItem( 'user' );
 	}
-})
+} )
 
 export { state, actions }

@@ -6,11 +6,11 @@ const ModalWrapper = ({
   bodyContent,
   footer,
   size,
-  footerContent,
+  footerContent
 }) => {
   return (
     <>
-      <div className='modalClass justify-center items-start py-2 lg:py-4 flex overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none w-screen shadow-md '>
+      <div className="modalClass justify-center items-start py-2 lg:py-4 flex overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none w-screen shadow-md ">
         <div
           className={`relative w-screen sm:w-9/12 md:w-7/12  mx-2 sm:mx-auto  ${
             size ? size : 'lg:w-6/12'
@@ -23,15 +23,15 @@ const ModalWrapper = ({
             }`}
           >
             {/*header*/}
-            <div className=' flex items-start justify-between px-8 pb-2 pt-4 rounded-t border-b border-linecolor'>
-              <h3 className='text-2xl font-sans font-bold text-charcoal'>
+            <div className=" flex items-start justify-between px-8 pb-2 pt-4 rounded-t border-b border-linecolor">
+              <h3 className="text-2xl font-sans font-bold text-charcoal">
                 {title}
               </h3>
               <button
-                className='p-1 ml-auto  text-black float-right text-3xl leading-none font-semibold'
+                className="p-1 ml-auto  text-black float-right text-3xl leading-none font-semibold"
                 onClick={closeModal}
               >
-                <span className='text-charcoal h-6 w-6 text-2xl  hover:text-reddark'>
+                <span className="text-charcoal h-6 w-6 text-2xl  hover:text-reddark">
                   ×
                 </span>
               </button>
@@ -47,14 +47,14 @@ const ModalWrapper = ({
             </div>
             {/*footer*/}
             {footer && (
-              <div className=' flex flex-col  justify-between p-4 border-t border-linecolor'>
+              <div className=" flex flex-col  justify-between p-4 border-t border-linecolor">
                 {footerContent}
               </div>
             )}
           </div>
         </div>
       </div>
-      <div className='modalOverlayClass opacity-60 fixed inset-0  bg-black'></div>
+      <div className="modalOverlayClass opacity-60 fixed inset-0  bg-black"></div>
     </>
   );
 };

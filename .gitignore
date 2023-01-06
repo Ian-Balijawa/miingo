@@ -23,7 +23,7 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
-# *.env
+*.env
 .yarn
 packages/react-devtools-core/dist
 packages/react-devtools-extensions/chrome/build
