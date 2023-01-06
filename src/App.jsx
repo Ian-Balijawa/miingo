@@ -137,7 +137,7 @@ export default () => {
   });
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <Header
         onPress={showDropdown}
         showMenuModal={() => showMenuModal(true)}

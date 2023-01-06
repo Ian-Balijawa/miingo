@@ -1,34 +1,39 @@
 import React from "react";
 import Charts from "./Charts";
+import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 
 export default function GroupChart({ src, name, members }) {
   return (
     <>
-      <div className="relative flex flex-col flex-grow bg-miingo-gray  mx-2  mt-2 ">
-        <div className=" sticky top-20 flex flex-col space-y-2">
-          <div className=" flex  items-center p-3 mb-10 shadow-md ">
+      <div className="relative flex flex-col flex-grow bg-miingo-gray">
+        <div className="sticky top-24 flex flex-col space-y-2 px-2">
+
+          <div className=" flex  items-center p-3 mb-2 shadow-md ">
             <img
               className="object-cover w-10 h-10 rounded-full"
-              src={src}
+              src={ src }
               alt="username"
             />
             <div>
+
               <h1 className=" ml-2 font-bold text-gray-600">
-                {name} <br />{" "}
+                { name } <br />{" "}
               </h1>
+
               <p className="flex items-center space-x-2">
                 <small className=" ml-2 text-gray-900">
-                  {members} {members > 1 ? "members" : "member"} <br />{" "}
+                  { members } { members > 1 ? "members" : "member"} <br />{" "}
                 </small>
               </p>
+
             </div>
           </div>
 
           {/* Group Chart messages */}
 
-          <Charts src={src} />
-
-          <div className="bg-miingo-gray sticky bottom-0 z-50 flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
+          <Charts src = { src } />
+         
+          <div className="hidden md:inline-flex items-center sticky bottom-0 justify-between w-full p-3 border-t border-lightgraybg rounded-t-lg">
             {/* left */}
             <div className="flex-grow">
               <input
@@ -43,7 +48,7 @@ export default function GroupChart({ src, name, members }) {
             <div className=" p-2 flex items-center justify-center space-x-3">
               <button
                 className={`focus:outline-none outline-none border-none cursor-pointer 
-            active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+            active:scale-90  rounded-full hover:bg-lightgraybg p-2 transition ease-in-out
              duration-300
           `}
               >
@@ -65,7 +70,7 @@ export default function GroupChart({ src, name, members }) {
 
               <button
                 className={`focus:outline-none outline-none border-none cursor-pointer 
-            active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+            active:scale-90  rounded-full hover:bg-lightgraybg p-2 transition ease-in-out
              duration-300
           `}
               >
@@ -87,8 +92,8 @@ export default function GroupChart({ src, name, members }) {
 
               <button
                 className={`focus:outline-none outline-none border-none cursor-pointer 
-            active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
-             duration-300
+               active:scale-90  rounded-full hover:bg-lightgraybg p-2 transition ease-in-out
+               duration-300
           `}
               >
                 <svg
@@ -102,6 +107,11 @@ export default function GroupChart({ src, name, members }) {
               </button>
             </div>
           </div>
+
+          <div className='absolute bottom-20 right-2 md:hidden  flex items-center justify-center p-3 bg-lightgraybg rounded-full w-12 h-12 shadow-xl active:scale-90 transition ease-in-out duration-300'>
+             <HiOutlineChatBubbleBottomCenterText className=' w-10 h-10  text-black' />
+        </div>
+
         </div>
       </div>
     </>

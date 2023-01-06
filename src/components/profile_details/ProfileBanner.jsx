@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { HiCamera } from 'react-icons/hi';
 import PartialProfileEdit from './PartialProfileEdit';
 import ProfileButton from './ProfileButton';
@@ -8,12 +7,13 @@ import { ThumbUpIcon } from '@heroicons/react/outline';
 import { UserProvider } from '../../context/userContext';
 import { state } from '../../state';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import ProfileTabs from './ProfileTabs';
 
 function ProfileBanner() {
+
   const [likes] = useState(2);
   const [user] = useLocalStorage('user');
   const [follow, setFollow] = useState(true);
-
   const [partialEdit, setPartialEdit] = useState(false);
 
   const [links] = useState([
@@ -48,7 +48,7 @@ function ProfileBanner() {
   return (
     <div className="relative  mx-4 flex flex-col bg-white ">
       <UserProvider>
-        <ProfileCaption handleEdit={handleEdit} />
+        <ProfileCaption handleEdit={handleEdit} user = { user }/>
       </UserProvider>
 
       {partialEdit && <PartialProfileEdit />}
@@ -60,8 +60,14 @@ function ProfileBanner() {
           className="w-full h-full object-cover "
           alt="profile_banner"
         />
+         
+         {/* editting the background image */}
+        <div className='absolute bottom-2 right-2 flex items-center justify-center bg-gray  cursor-pointer p-2 rounded-lg'>
+          <p className='text-white '>Edit cover</p>
+        </div>
+
         {/* like and follow user on Mobile  */}
-        <div className="absolute bottom-2 right-2 flex items-center justify-around space-x-2 md:hidden ">
+        <div className="absolute bottom-2 left-4 flex items-center justify-around space-x-2 md:hidden ">
           <div className="flex items-center justify-center bg-gray cursor-pointer p-2 rounded-full">
             <HiCamera className=" w-4 h-4 text-white " />
           </div>
@@ -88,11 +94,12 @@ function ProfileBanner() {
               {follow ? ' UnFollow ' : 'Follow'}
             </p>
           </div>
+
         </div>
       </div>
 
       <div className="lg:hidden border-b">
-        <div className="relative flex items-center justify-between space-x-2 p-4 ">
+        <div className="relative flex items-center justify-between space-x-2 p-4">
           <div className="absolute -top-6 md:-top-10 w-14 h-14 md:w-20 md:h-20  rounded-full border-4 border-white ">
             <img
               src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
@@ -117,13 +124,11 @@ function ProfileBanner() {
       </div>
 
       <div className="flex items-center md:justify-between py-2 px-3">
-        <div className="flex items-center  space-x-3 justify-around">
-          {links.map(({ id, name }) => (
-            <ProfileButton key={id} name={name} />
-          ))}
+        <div className="flex items-center  space-x-1  justify-around">
+          <ProfileTabs />
         </div>
 
-        <div className="hidden md:inline-flex items-center justify-around space-x-2 ">
+        {/* <div className="hidden md:inline-flex items-center justify-around space-x-2 ">
           <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
             <ThumbUpIcon className="h-6" />
             <p className="text-xs sm:text-base">{`${likes || 0}`}</p>
@@ -146,7 +151,7 @@ function ProfileBanner() {
               {follow ? ' UnFollow ' : 'Follow'}
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

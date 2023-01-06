@@ -1,44 +1,46 @@
-import React from 'react'
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import About from './About';
-import Feed from "../Feed";
-import CollegeMeet from "./CollegeMeet"
-import Gallery from "../Gallery"
-import ActivityCard from '../profile/ActivityCard';
-export default function ProfileTabs() {
-  return (
-    <div className='flex items-center'>
-      <Tabs className='flex items-center justify-center'>
-  <TabList className='flex justify-around'>
-    <Tab>Timeline</Tab>
-    <Tab>About</Tab>
-    <Tab>Friends</Tab>
-    <Tab>Photos</Tab>
-  </TabList>
+import React, { useState } from 'react';
+import ProfileTabList from './ProfileTabList';
+import TimeLine from './TimeLine';
+import AboutTab from './AboutTab';
+import Tab3 from './Tab3';
 
-  <TabPanels className='flex items-center justify-center'>
-    <TabPanel>
-    <main className=" flex space-x-2 pr-1">
-          <About/>
-          <Feed />
-          <div className=' items-center space-y-2'>
-          <CollegeMeet/>
-          <Gallery/>
-          <ActivityCard/>
-          </div>
-        </main>
-    </TabPanel>
-    <TabPanel>
-      <p>about</p>
-    </TabPanel>
-    <TabPanel>
-      <p>friends</p>
-    </TabPanel>
-    <TabPanel>
-      <p>photos</p>
-    </TabPanel>
-  </TabPanels>
-</Tabs>
+const ProfileTabs = () => {
+  const [activeTab, setActiveTab] = useState(1);
+
+  const tabs = [
+    {
+      id: 1,
+      label: 'Timeline',
+      component: <TimeLine />,
+    },
+    {
+      id: 2,
+      label: 'About',
+      component: <AboutTab />,
+    },
+    {
+      id: 3,
+      label: 'Friends',
+      component: <Tab3 />,
+    },
+    {
+        id: 4,
+        label: 'Photos',
+        component: <Tab3 />,
+      },
+      {
+        id: 5,
+        label: 'Videos',
+        component: <Tab3 />,
+      },
+  ];
+
+  return (
+    <div>
+      <ProfileTabList tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+      {tabs.find((tab) => tab.id === activeTab).component}
     </div>
-  )
-}
+  );
+};
+
+export default ProfileTabs;

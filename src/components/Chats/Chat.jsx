@@ -1,5 +1,6 @@
 import Charts from './Chats';
 import React from 'react';
+import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 
 export default function Chat({ src, online, name }) {
   return (
@@ -32,7 +33,7 @@ export default function Chat({ src, online, name }) {
         {/* Chart messages */}
         <Charts src={src} />
 
-        <div className="bg-miingo-gray flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
+        <div className="bg-miingo-gray sticky bottom-0 hidden md:inline-flex items-center justify-between w-full p-3 border-t border-gray-300 rounded-t-lg">
           {/* left */}
           <div className="flex-grow">
             <input
@@ -48,7 +49,7 @@ export default function Chat({ src, online, name }) {
            
             <button
               className={`focus:outline-none outline-none border-none cursor-pointer 
-                active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+                active:scale-90  rounded-full hover:bg-lightgraybg p-2 transition ease-in-out
                  duration-300
               `}
             >
@@ -70,7 +71,7 @@ export default function Chat({ src, online, name }) {
 
             <button
               className={`focus:outline-none outline-none border-none cursor-pointer 
-                active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+                active:scale-90  rounded-full hover:bg-lightgraybg p-2 transition ease-in-out
                  duration-300
               `}
             >
@@ -92,7 +93,7 @@ export default function Chat({ src, online, name }) {
 
             <button
               className={`focus:outline-none outline-none border-none cursor-pointer 
-                active:scale-90  rounded-full hover:bg-gray-400 p-2 transition ease-in-out
+                active:scale-90  rounded-full hover:bg-lightgraybg p-2 transition ease-in-out
                  duration-300
               `}
             >
@@ -105,8 +106,14 @@ export default function Chat({ src, online, name }) {
                 <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
               </svg>
             </button>
+            
           </div>
         </div>
+
+        <div className='absolute bottom-20 right-2 md:hidden flex items-center justify-center p-3 bg-lightgraybg rounded-full w-12 h-12 shadow-xl active:scale-90 transition ease-in-out duration-300'>
+             <HiOutlineChatBubbleBottomCenterText className=' w-10 h-10  text-black' />
+        </div>
+
       </div>
     </div>
   );

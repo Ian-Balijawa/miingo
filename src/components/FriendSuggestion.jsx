@@ -1,6 +1,5 @@
 import { UserProvider, userContext } from '../context/userContext';
 import { actions, state } from '../state';
-
 import AddFriend from './AddFriend';
 import axios from '../services/axios-config';
 import { useContext } from 'react';
@@ -9,6 +8,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { useSnapshot } from 'valtio';
 
 function FriendSuggestion() {
+
   const [accessToken] = useLocalStorage('accessToken');
   const [loggedInUser] = useLocalStorage('user');
   const snap = useSnapshot(state);
@@ -20,7 +20,7 @@ function FriendSuggestion() {
         }
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         actions.addUsers(res.data);
       })
       .catch((err) => {
@@ -29,13 +29,14 @@ function FriendSuggestion() {
   }, [accessToken]);
 
   const users = snap.users.filter((user) => user._id !== loggedInUser._id);
-  console.log('users: ', users);
+  // console.log('users: ', users);
 
+ 
   return (
-    <div className=" w-80 md:w-[640px] mx-auto flext items-center justify-center bg-miingo-gray">
+    <div className="flex items-center justify-center bg-white w-full">
       <div
         id="slider3"
-        className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide p-2"
+        className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide p-1"
       >
         <UserProvider>
           {users.map(({ _id, name, followers, followings, image }) => (

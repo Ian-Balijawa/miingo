@@ -17,7 +17,7 @@ export default function Messages() {
 
       {showModal ? <ModalWrapper handler={setShowModal} /> : null}
 
-      <main className="flex space-x-2 pr-3 pb-10">
+      <main className="flex space-x-2 pr-3">
         {/* chats */}
 
         <SideFeed />
