@@ -1,7 +1,7 @@
+import { actions, state } from './../state';
 import { useEffect, useState } from 'react';
 
 import { Spinner } from '@chakra-ui/react';
-import { actions, state } from './../state';
 import axios from '../services/axios-config';
 import { compressImage } from '../services/compressor';
 import useLocalStorage from '../hooks/useLocalStorage';
