@@ -9,6 +9,7 @@ import { HiOutlinePencil } from "react-icons/hi2";
 import ProfileTabs from "./ProfileTabs";
 
 function ProfileBanner() {
+  
   const [user] = useLocalStorage("user");
   const [follow, setFollow] = useState(true);
   const [partialEdit, setPartialEdit] = useState(false);
@@ -19,8 +20,16 @@ function ProfileBanner() {
     setPartialEdit(!partialEdit);
   };
 
+  const submitCover = (file) => {
+    console.log(file);
+  };
+
+  const submitProfile = (file) => {
+    console.log(file);
+  };
+
   return (
-    <div className="relative  mx-4 flex flex-col bg-white ">
+    <div className="relative mx-4 flex flex-col bg-white">
       <UserProvider>
         <ProfileCaption handleEdit={handleEdit} user={user} />
       </UserProvider>
@@ -36,10 +45,25 @@ function ProfileBanner() {
         />
 
         {/* editting the background image */}
-        <div className="absolute bottom-2 right-2 flex items-center space-x-2 justify-center bg-gray  cursor-pointer p-2 rounded-lg">
-          <HiOutlinePencil className="w-4 h-4 text-white" />
-          <p className="text-white ">Edit cover</p>
-        </div>
+        <form className="absolute bottom-2 right-2 flex items-center space-x-2 justify-center bg-gray  cursor-pointer p-2 rounded-lg">
+          <label
+            htmlFor="cover"
+            className="flex items-center justify-center space-x-2"
+          >
+            <HiOutlinePencil className=" w-4 h-4 text-white" />
+            <p className="text-white "> Edit cover </p>
+            <input
+              type="file"
+              placeholder="upload image"
+              id="cover"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                submitCover(e.target.files[0]);
+              }}
+            />
+          </label>
+        </form>
 
         {/*follow user on Mobile  */}
         <div className="absolute bottom-2 right-32 flex items-center justify-around space-x-2 md:hidden ">
@@ -70,9 +94,24 @@ function ProfileBanner() {
                 alt="group-profile"
               />
 
-              <div className="absolute top-0 -right-2 flex items-center justify-center bg-gray cursor-pointer p-1 rounded-full">
-                <HiCamera className=" w-4 h-4 text-white " />
-              </div>
+              <form className="absolute top-0 -right-2 flex items-center justify-center bg-gray cursor-pointer p-1 rounded-full">
+                <label
+                  htmlFor="profile"
+                  className="flex items-center justify-center space-x-2"
+                >
+                  <HiCamera className=" w-4 h-4 text-white " />
+                  <input
+                    type="file"
+                    placeholder="upload image"
+                    id="profile"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      submitProfile(e.target.files[0]);
+                    }}
+                  />
+                </label>
+              </form>
             </div>
           </div>
 
@@ -85,7 +124,7 @@ function ProfileBanner() {
         </div>
       </div>
 
-      <div className=" w-full">
+      <div className="w-full">
         <ProfileTabs />
       </div>
     </div>

@@ -3,6 +3,8 @@ import ProfileTabList from "./ProfileTabList";
 import TimeLine from "./TimeLine";
 import AboutTab from "./AboutTab";
 import Tab3 from "./Tab3";
+import Photos from "./Photos";
+import Videos from "./Album";
 
 const ProfileTabs = () => {
   
@@ -12,27 +14,22 @@ const ProfileTabs = () => {
     {
       id: 1,
       label: "Timeline",
-      component: <TimeLine />,
+      component: <TimeLine/>,
     },
     {
       id: 2,
       label: "About",
-      component: <AboutTab />,
+      component: <AboutTab/>,
     },
     {
       id: 3,
       label: "Friends",
-      component: <Tab3 />,
+      component: <Tab3/>,
     },
     {
       id: 4,
       label: "Photos",
-      component: <Tab3 />,
-    },
-    {
-      id: 5,
-      label: "Videos",
-      component: <Tab3 />,
+      component: <Photos/>,
     },
   ];
 

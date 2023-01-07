@@ -1,20 +1,20 @@
-import React from 'react'
-import ProfileFeed from './ProfileFeed'
-import AboutDetails from './AboutDetails'
-import Hobiies from './Hobiies'
-import ProfileBoards from './ProfileBoards';
+import React from 'react';
+import AboutDetails from './AboutDetails';
+import AboutFeed from './AboutFeed';
+
 
 export default function AboutTab() {
   return (
     <div className="h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden scrollbar-hide">
     
-      <main className="relative flex space-x-2 pr-3 pb-10 w-full">
-        {/* Profile Side Feed /> */}
+      <main className="flex flex-col md:flex-row space-x-2 items-center pb-10 w-full">
+       
         <AboutDetails />
-        <Hobiies/>
-        <ProfileBoards/>
+        
+         <AboutFeed  />
+        
         </main>
 
     </div>
-  )
+  );
 }

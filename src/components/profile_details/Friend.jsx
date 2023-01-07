@@ -1,54 +1,16 @@
-import React, { useContext, useState } from "react";
-import { actions, state } from "../state";
+import React, { useState } from "react";
 import { HiHeart } from "react-icons/hi";
-import axios from "../services/axios-config";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { useSnapshot } from "valtio";
-import { userContext } from "../context/userContext";
 
-function AddFriend({ _id, name, followers, followings, image }) {
-  
-  const [accessToken] = useLocalStorage("accessToken");
-  const { user: me } = useContext(userContext);
-  const [loggedInUser] = useLocalStorage("user");
-  const [isFollowing, setIsFollowing] = useState(() => {
-    return me.followings.includes(_id);
-  });
+function Friend({ _id, name, followers, followings, image }) {
 
-  const [error, setError] = useState(null);
-
-  const handleFollow = () => {
-    axios
-      .patch(
-        `/user/${loggedInUser._id}/follow/${_id}`,
-        { name },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        actions.follow(res.data.user);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        setError(err.response.data.message);
-        console.log("ERROR FOLLOWING: ", error);
-        console.log("ERROR FOLLOWING: ", err);
-      });
-
-      setIsFollowing(!isFollowing);
-  };
-
-  // console.log([_id, name, followers, followings, image]);
+  const[ profile , setProfile] = useState(false);
 
   return (
-    <div className="w-56 h-56  bg-white rounded-lg shadow-lg inline-block mr-2">
-      <div className=" ">
-        <div className="flex flex-col space-y-3 items-center justify-center py-3">
-          <div className="relative flex items-center justify-center w-20">
-            <div className="w-14 h-14 rounded-full">
+    <div className="w-full h-60 md:w-80 md:h-80 border bg-white rounded-lg shadow-lg inline-block mr-2">
+      <div className="h-full">
+        <div className="flex flex-col space-y-3 md:space-y-5 items-center justify-center py-3 h-full">
+          <div className="relative flex items-center justify-center w-20 md:w-56">
+            <div className="w-14 h-14 md:w-24 md:h-24 rounded-full">
               <img
                 src={image}
                 loading="lazy"
@@ -57,7 +19,7 @@ function AddFriend({ _id, name, followers, followings, image }) {
               />
             </div>
 
-            <span className="absolute top-0 right-2 text-white bg-blue rounded-full">
+            <span className="absolute top-0 right-2 md:right-20 text-white bg-blue rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -85,7 +47,7 @@ function AddFriend({ _id, name, followers, followings, image }) {
             </p>
           </div>
 
-          <div className=" flex items-center justify-center space-x-2 text-gray-600">
+          <div className="flex items-center justify-center space-x-2 text-gray-600">
             <div className="border-r border-blue px-2">
               <p className="flex flex-col items-center justify-center space-y-2">
                 <h3 className="text-gray-600"> {followings?.length} </h3>
@@ -100,18 +62,18 @@ function AddFriend({ _id, name, followers, followings, image }) {
             </div>
           </div>
 
-          <div className=" flex items-center justify-center">
+          <div className="flex items-center justify-center">
             <button
               onClick={(e) => {
                 e.preventDefault();
-                handleFollow();
+                setProfile(!profile);
               }}
               className={`flex  mx-auto ${
-                isFollowing ? "bg-blue text-white" : " text-blue"
+                profile ? "bg-blue text-white" : " text-blue"
               } px-3 py-1 md:px-5 rounded-lg shadow-xl font-normal hover:shadow-xl active:scale-90
-                 transition duration-300 border border-blue`}
+               transition duration-300 border border-blue`}
             >
-              {isFollowing ? "UnFollow" : "Follow"}
+               view profile
             </button>
           </div>
         </div>
@@ -120,4 +82,4 @@ function AddFriend({ _id, name, followers, followings, image }) {
   );
 }
 
-export default AddFriend;
+export default Friend;
