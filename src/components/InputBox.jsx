@@ -1,6 +1,9 @@
 import { actions, state } from './../state';
 import { useEffect, useState } from 'react';
+<<<<<<< HEAD
 
+=======
+>>>>>>> resolve_conflicts
 import { Spinner } from '@chakra-ui/react';
 import axios from '../services/axios-config';
 import { compressImage } from '../services/compressor';
