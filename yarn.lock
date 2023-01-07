@@ -2789,9 +2789,9 @@
     react-is "^18.2.0"
 
 "@nextui-org/react@^1.0.0-beta.10":
-  version "1.0.0-beta.11"
-  resolved "https://registry.yarnpkg.com/@nextui-org/react/-/react-1.0.0-beta.11.tgz#5728506d196570d3f6c4ecf3d500cdd9dd931667"
-  integrity sha512-vI4umNZfeO8OIgAik/VJiYjq7YHAfrX9GXjgNeBAGOSEngzLjSQtbLD9qMEKzfJ9NCD7+dAq3k9exkEmasi7qw==
+  version "1.0.0-beta.12"
+  resolved "https://registry.yarnpkg.com/@nextui-org/react/-/react-1.0.0-beta.12.tgz#a9674cfd4bdeab3ed3e81339b56664730393fb71"
+  integrity sha512-ay6LrdRDwIFiZDvFH6nQjRuzLWE9yPQfI3W3qEfaY1I8e+CGYm0fc8RPSj3rrfZTa9OLeV+Defh/+/ysrwrloQ==
   dependencies:
     "@babel/runtime" "^7.20.1"
     "@react-aria/button" "3.6.2"
@@ -11355,9 +11355,9 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.27, postcss@^7.0.32, postcss@^7.0.3
     source-map "^0.6.1"
 
 postcss@^8.3.5, postcss@^8.4.13, postcss@^8.4.18, postcss@^8.4.19, postcss@^8.4.4:
-  version "8.4.20"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.20.tgz#64c52f509644cecad8567e949f4081d98349dc56"
-  integrity sha512-6Q04AXR1212bXr5fh03u8aAwbLxAQNGQ/Q1LNa0VfOI06ZAlhPHtQvE4OIdpj4kLThXilalPnmDSOD65DcHt+g==
+  version "8.4.21"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.21.tgz#c639b719a57efc3187b13a1d765675485f4134f4"
+  integrity sha512-tP7u/Sn/dVxK2NnruI4H9BG+x+Wxz6oeZ1cJ8P6G/PZY0IKk4k/63TDsQf2kQq3+qoJeLm2kIBUNlZe3zgb4Zg==
   dependencies:
     nanoid "^3.3.4"
     picocolors "^1.0.0"
@@ -11874,7 +11874,7 @@ react-spinners@^0.13.6:
   resolved "https://registry.yarnpkg.com/react-spinners/-/react-spinners-0.13.7.tgz#0f423c415bfa56765ce9fb36ff604e52a92b37a9"
   integrity sha512-mRamn56bfxWbGcacif5RT3UbeJaXi2AttjtPwSmomuv2IcxjpbfETCzdTvaQpNDk0E33ENJsStsQeKAZFuJcpA==
 
-react-spring-bottom-sheet@^3.5.0-alpha.0:
+react-spring-bottom-sheet@3.5.0-alpha.0:
   version "3.5.0-alpha.0"
   resolved "https://registry.yarnpkg.com/react-spring-bottom-sheet/-/react-spring-bottom-sheet-3.5.0-alpha.0.tgz#3f529c3887be64fb5a82f659c06b3f7a7cebd38c"
   integrity sha512-iCuv+qq/2kIHLs75Z/5Tgh9/tc0hklFn/CW6XDX0GA2IKqZP/kYky+/yN1BJCD74dtnL6Dx3p+Seu1ifVnf2xQ==
@@ -11908,6 +11908,13 @@ react-style-singleton@^2.2.1:
     get-nonce "^1.0.0"
     invariant "^2.2.4"
     tslib "^2.0.0"
+
+react-toastify@^9.1.1:
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-9.1.1.tgz#9280caea4a13dc1739c350d90660a630807bf10b"
+  integrity sha512-pkFCla1z3ve045qvjEmn2xOJOy4ZciwRXm1oMPULVkELi5aJdHCN/FHnuqXq8IwGDLB7PPk2/J6uP9D8ejuiRw==
+  dependencies:
+    clsx "^1.1.1"
 
 react-transition-group@^4.4.0, react-transition-group@^4.4.5:
   version "4.4.5"

@@ -3,8 +3,8 @@ import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
 import { HiOutlineCake } from 'react-icons/hi';
 import { HiSun } from 'react-icons/hi';
 import React from 'react';
-import { useSnapshot } from 'valtio';
 import { state } from '../state';
+import { useSnapshot } from 'valtio';
 
 const BirthdayCard = () => {
   const { me: user } = useSnapshot(state);
@@ -20,58 +20,58 @@ const BirthdayCard = () => {
             <FiRotateCw className="h-4 w-4" />
           </div>
 
-					<div className=" flex items-center justify-center w-8 h-8 rounded-full bg-miingo-light-pink font-bold  p-2">
-						<HiSun className="h-4 w-4" />
-					</div>
-				</div>
-			</div>
-			<div className="flex justify-around  items-center  text-white">
-				<div className="flex justify-center items-center">
-					<div className="rounded-full bg-miingo-light-pink font-bold  p-4 text-center">
-						<HiOutlineCake />
-					</div>
-				</div>
+          <div className=" flex items-center justify-center w-8 h-8 rounded-full bg-miingo-light-pink font-bold  p-2">
+            <HiSun className="h-4 w-4" />
+          </div>
+        </div>
+      </div>
+      <div className="flex justify-around  items-center  text-white">
+        <div className="flex justify-center items-center">
+          <div className="rounded-full bg-miingo-light-pink font-bold  p-4 text-center">
+            <HiOutlineCake />
+          </div>
+        </div>
 
-				<div className="flex flex-col justify-center items-center space-x-4">
-					<div className="h-16 md:h-20 w-16 md:w-20 rounded-full  bg-miingo-light-pink ">
-						<img
-							src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
-							layout="fill"
-							className="w-full h-full inline-block rounded-full"
-							alt="profile pic"
-						/>
-					</div>
-				</div>
+        <div className="flex flex-col justify-center items-center space-x-4">
+          <div className="h-16 md:h-20 w-16 md:w-20 rounded-full  bg-miingo-light-pink ">
+            <img
+              src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
+              layout="fill"
+              className="w-full h-full inline-block rounded-full"
+              alt="profile pic"
+            />
+          </div>
+        </div>
 
-				<div className="flex justify-center items-center mt-2">
-					<div className="rounded-full bg-miingo-light-pink font-bold  p-4 text-center">
-						<HiOutlineCake />
-					</div>
-				</div>
-			</div>
-			{/* lower part */}
-			<div className=" flex flex-col items-center justify-center">
-				<div className="text-white text-center mt-5">
-					<h2 className="font-bold text-sm">{user?.name}</h2>
-					<h4 className="text-xs">Kampala ,Uganda</h4>
-				</div>
-				<div className="text-white text-center mt-2">
-					<h2 className=" text-sm">
-						Happy Birthday dear {user?.name?.split(" ")[0]} <br /> leave
-						to blow more candles
-					</h2>
-				</div>
-			</div>
-			<div className="flex justify-center items-center mt-4 bg-miingo-light-pink p-2 rounded-md ">
-				<input
-					className=" bg-miingo-light-pink outline-none text-white placeholder-white "
-					placeholder="Wish Birthday To Your Friend"
-				/>
+        <div className="flex justify-center items-center mt-2">
+          <div className="rounded-full bg-miingo-light-pink font-bold  p-4 text-center">
+            <HiOutlineCake />
+          </div>
+        </div>
+      </div>
+      {/* lower part */}
+      <div className=" flex flex-col items-center justify-center">
+        <div className="text-white text-center mt-5">
+          <h2 className="font-bold text-sm">{user?.name}</h2>
+          <h4 className="text-xs">Kampala ,Uganda</h4>
+        </div>
+        <div className="text-white text-center mt-2">
+          <h2 className=" text-sm">
+            Happy Birthday dear {user?.name?.split(' ')[0]} <br /> leave to blow
+            more candles
+          </h2>
+        </div>
+      </div>
+      <div className="flex justify-center items-center mt-4 bg-miingo-light-pink p-2 rounded-md ">
+        <input
+          className=" bg-miingo-light-pink outline-none text-white placeholder-white "
+          placeholder="Wish Birthday To Your Friend"
+        />
 
-				<HiOutlineArrowNarrowRight className="h-6 w-6 text-white hover:scale-110" />
-			</div>
-		</div>
-	);
+        <HiOutlineArrowNarrowRight className="h-6 w-6 text-white hover:scale-110" />
+      </div>
+    </div>
+  );
 };
 
 export default BirthdayCard;
