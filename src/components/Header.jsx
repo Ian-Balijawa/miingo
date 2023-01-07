@@ -28,7 +28,7 @@ function Header({ onPress, showMenuModal }) {
         </div>
 
         <div className="flex items-center justify-center">
-          <p className="text-orange-600 text-base">MiingoApp</p>
+          <p className="text-orange-600 text-base">Miingo</p>
         </div>
       </Link>
 
@@ -126,7 +126,6 @@ function Header({ onPress, showMenuModal }) {
           <div className="hidden lg:inline-flex lg:flex-col">
             <p className="text-gray-700 "> {user?.name.split(" ")[0]} </p>
 
-            <h3 className="text-xs text-gray-600">Active Now</h3>
           </div>
 
           <div

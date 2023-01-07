@@ -1,72 +1,147 @@
-import { useContext, useState } from 'react';
-import { HiCamera } from 'react-icons/hi';
-import { userContext } from '../../context/userContext';
+import { useContext, useState } from "react";
+import axios from "../../services/axios-config";
 
-function ProfileCaption({ handleEdit , user }) {
+import { HiCamera } from "react-icons/hi";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
-  const [editProfile, setEditProfile] = useState(true);
-  // const { user } = useContext(userContext);
+function ProfileCaption({ handleEdit, user }) {
+	const [editProfile, setEditProfile] = useState(true);
+	const [accessToken] = useLocalStorage("accessToken");
+	const [image, setImage] = useState(null);
+	const [loading, setLoading] = useState(false);
 
-  return (
-    <div className="hidden lg:block   absolute  top-12 left-6 md:left-3 z-30 w-72 h-72 bg-white rounded-lg shadow-lg ">
-      <div className=" ">
-        <div className="flex flex-col space-y-3 items-center justify-center py-3">
-          <div className="relative flex items-center justify-center w-20">
-            <div className="w-14 h-14 md:w-20 md:h-20 rounded-full">
-              <img
-                src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
-                loading="lazy"
-                className="w-full h-full rounded-full object-cover"
-                alt="profile_caption"
-              />
-            </div>
+	const handleChange = (e) => {
+		setLoading(true);
+		const file = e.target.files[0];
+		const reader = new FileReader();
 
-            <div className=" absolute bottom-0 right-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer p-2 rounded-full">
-              <HiCamera className=" w-4 h-4 text-white " />
-            </div>
-          </div>
+		reader.onload = function (e) {
+			setImage(e.target.result);
+		};
 
-          <div className="">
-            <p className="flex flex-col items-center  justify-center space-y-2">
-              <h3 className="text-gray-500"> {user?.name} </h3>
-              <h4 className="text-gray-500"> {user?.email} </h4>
-            </p>
-          </div>
+		reader.readAsDataURL(file);
+	};
 
-          <div className=" flex items-center justify-between space-x-2 text-gray-600">
-            <div className=" px-2">
-              <p className="flex flex-col items-center justify-center space-y-2">
-                <h3 className="text-gray-600"> {user?.followings?.length || 0 } </h3>
-                <h4>Following</h4>
-              </p>
-            </div>
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const formData = new FormData();
+		formData.append("profileImage", image);
 
-            <div className="border-r border-blue h-7 " />
+		axios
+			.patch(`/user/${user._id}`, formData)
+			.then((response) => {
+				console.log(response.data);
+				setLoading(false);
+			})
+			.catch((error) => {
+				console.log(error);
+				setLoading(false);
+			});
+	};
 
-            <div className="">
-              <p className="flex flex-col items-center justify-center space-y-2">
-                <h3 className="text-gray-600"> {user?.followers?.length || 0 } </h3>
-                <h4>Followers</h4>
-              </p>
-            </div>
-          </div>
+	const cameraIcon = document.querySelector("#camera");
+	cameraIcon?.addEventListener("click", () => {
+		document.getElementById("profile_image").click();
+	});
 
-          <div className=" flex items-center justify-center">
-            <button
-              onClick={ handleEdit }
-              className={`flex  mx-auto ${
-                !editProfile ? 'bg-blue text-white' : 'text-blue'
-              } px-3 py-1
+	// const cameraIcon = document.querySelector("#camera");
+	// cameraIcon?.addEventListener("click", () => {
+	// 	document.getElementById("profile_image").click();
+	// });
+	// // const { user } = useContext(userContext);
+
+	// const profileImage = document.getElementById("profile_image");
+
+	// profileImage?.addEventListener("change", function () {
+	// 	const formData = new FormData();
+	// 	formData.append("profileImage", profileImage.files[0]);
+
+	// 	axios
+	// 		.post("/user", formData)
+	// 		.then((response) => {
+	// 			console.log(response.data);
+	// 		})
+	// 		.catch((err) => console.log(err));
+	// });
+
+	return (
+		<div className="hidden lg:block   absolute  top-12 left-6 md:left-3 z-30 w-72 h-72 bg-white rounded-lg shadow-lg ">
+			<div className=" ">
+				<div className="flex flex-col space-y-3 items-center justify-center py-3">
+					<div className="relative flex items-center justify-center w-20">
+						<div className="w-14 h-14 md:w-20 md:h-20 rounded-full">
+							<img
+								id="preview"
+								src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
+								loading="lazy"
+								className="w-full h-full rounded-full object-cover"
+								alt="profile_caption"
+							/>
+						</div>
+
+						<div className=" absolute bottom-0 right-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer p-2 rounded-full">
+							<HiCamera id="camera" className=" w-4 h-4 text-white " />
+							<form onSubmit={handleSubmit}>
+								<input
+									type="file"
+									id="profile_image"
+									accept="image/*"
+									onChange={handleChange}
+									style={{ display: "none" }}
+								/>
+							</form>
+						</div>
+
+						
+					</div>
+
+					<div className="">
+						<p className="flex flex-col items-center  justify-center space-y-2">
+							<h3 className="text-gray-500"> {user?.name} </h3>
+							<h4 className="text-gray-500"> {user?.email} </h4>
+						</p>
+					</div>
+
+					<div className=" flex items-center justify-between space-x-2 text-gray-600">
+						<div className=" px-2">
+							<p className="flex flex-col items-center justify-center space-y-2">
+								<h3 className="text-gray-600">
+									{" "}
+									{user?.followings?.length}{" "}
+								</h3>
+								<h4>Following</h4>
+							</p>
+						</div>
+
+						<div className="border-r border-blue h-7 " />
+
+						<div className="">
+							<p className="flex flex-col items-center justify-center space-y-2">
+								<h3 className="text-gray-600">
+									{" "}
+									{user?.followers?.length}{" "}
+								</h3>
+								<h4>Followers</h4>
+							</p>
+						</div>
+					</div>
+
+					<div className=" flex items-center justify-center">
+						<button
+							onClick={handleEdit}
+							className={`flex  mx-auto ${
+								!editProfile ? "bg-blue text-white" : "text-blue"
+							} px-3 py-1
                         md:px-5 rounded-lg  font-normal hover:shadow-xl active:scale-90
                         transition duration-300 border border-blue`}
-            >
-              EDIT PROFILE
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+						>
+							EDIT PROFILE
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default ProfileCaption;
