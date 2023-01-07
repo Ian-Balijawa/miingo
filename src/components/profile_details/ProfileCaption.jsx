@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-
 import { HiCamera } from 'react-icons/hi';
 import { userContext } from '../../context/userContext';
 
@@ -37,7 +36,7 @@ function ProfileCaption({ handleEdit , user }) {
           <div className=" flex items-center justify-between space-x-2 text-gray-600">
             <div className=" px-2">
               <p className="flex flex-col items-center justify-center space-y-2">
-                <h3 className="text-gray-600"> {user?.followings?.length} </h3>
+                <h3 className="text-gray-600"> {user?.followings?.length || 0 } </h3>
                 <h4>Following</h4>
               </p>
             </div>
@@ -46,7 +45,7 @@ function ProfileCaption({ handleEdit , user }) {
 
             <div className="">
               <p className="flex flex-col items-center justify-center space-y-2">
-                <h3 className="text-gray-600"> {user?.followers?.length} </h3>
+                <h3 className="text-gray-600"> {user?.followers?.length || 0 } </h3>
                 <h4>Followers</h4>
               </p>
             </div>
@@ -54,7 +53,7 @@ function ProfileCaption({ handleEdit , user }) {
 
           <div className=" flex items-center justify-center">
             <button
-              onClick={handleEdit}
+              onClick={ handleEdit }
               className={`flex  mx-auto ${
                 !editProfile ? 'bg-blue text-white' : 'text-blue'
               } px-3 py-1

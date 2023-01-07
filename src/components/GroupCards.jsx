@@ -77,7 +77,7 @@ const groups = [
 
 function GroupCards() {
   return (
-    <div className="pb-2 pt-6 flex-grow  mt-2  bg-miingo-gray shadow-xl ">
+    <div className="pb-2 pt-6 flex-grow mt-2  bg-miingo-gray shadow-xl ">
      
     <div className="flex items-center justify-between p-2 bg-white mx-2 md:mx-4 rounded-md mb-6">
         

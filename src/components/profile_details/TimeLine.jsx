@@ -6,9 +6,9 @@ import ProfileSideFeed from './ProfileSideFeed';
 export default function TimeLine() {
  
   return (
-    <div className="h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden scrollbar-hide">
+    <div className="h-screen bg-miingo-gray w-full overflow-y-auto overflow-x-hidden scrollbar-hide">
     
-      <main className=" flex space-x-2 px-2 pb-10">
+      <main className=" flex  md:px-3  pb-10 w-full">
         {/* Profile Side Feed /> */}
         <ProfileSideFeed />
 
@@ -16,7 +16,7 @@ export default function TimeLine() {
 
         <ProfileFeed />
 
-        {/*  Profile Boards */}
+         {/* Profile Boards */}
 
         <ProfileBoards />
       </main>
