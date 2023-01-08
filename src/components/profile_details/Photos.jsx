@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Album from "./Album";
 import Photo from "./Photo";
+import { HiCamera } from "react-icons/hi";
 
 const images = [
   {
@@ -68,10 +69,15 @@ const images = [
 function Photos() {
   const [addPhoto, setAddPhoto] = useState(false);
   const [photo, setPhoto] = useState(false);
-  const [album, setAlbum] = useState(false);
+  const [album, setAlbum] = useState(true);
   const [tabIndex, setTabIndex] = useState(1);
+  const [image, setImage] = useState();
 
   // console.log(tabIndex);
+
+  const uploadImage = (file) => {
+    console.log(file);
+  };
 
   return (
     <div className=" flex flex-col   mt-3 bg-white px-2 py-3 rounded-lg">
@@ -80,20 +86,32 @@ function Photos() {
           <h1 className="text-lg font-semibold text-gray-600">Gallery</h1>
         </div>
 
-        <div className="flex items-center justify-center">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setAddPhoto(!addPhoto);
-            }}
-            className={`flex  mx-auto ${
-              addPhoto ? "bg-blue text-white" : " text-blue"
-            } px-3 py-1 md:px-5 rounded-lg shadow-xl font-normal hover:shadow-xl active:scale-90
-               transition duration-500 border border-blue`}
+        <form className="flex items-center justify-center">
+          <label
+            htmlFor="gallery"
+            className="flex items-center justify-center space-x-2"
           >
-            Add Photo/video
-          </button>
-        </div>
+            
+
+            <div
+              className={`flex  mx-auto ${
+                addPhoto ? "bg-blue text-white" : " text-blue"
+              } px-3 py-1 md:px-5 rounded-lg shadow-xl font-normal hover:shadow-xl active:scale-90
+               transition duration-500 border border-blue`}
+            >
+              Add Photo/video
+            </div>
+
+            <input
+              type="file"
+              placeholder="upload image"
+              id="gallery"
+              accept="image/*"
+              className="hidden"
+              onChange={ (e) => uploadImage(e.target.files[0])}
+            />
+          </label>
+        </form>
       </div>
 
       <div className="flex items-center space-x-2 justify-items-start pl-3 md:pl-10 cursor-pointer">
@@ -129,16 +147,13 @@ function Photos() {
       <div className="w-full">
         {tabIndex === 1 ? (
           <>
-           <Album />
+            <Album />
           </>
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 p-3">
               {images.map(({ id, image }) => (
-                 <Photo
-                   key = { id }
-                   image = { image }
-                  />
+                <Photo key={id} image={image} />
               ))}
             </div>
           </>
