@@ -67,7 +67,6 @@ function ProfileCaption({ handleEdit, user }) {
             <form className="absolute bottom-0 right-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer p-2 rounded-full">
               <label htmlFor="profile_image">
                 <HiCamera id="camera" className=" w-4 h-4 text-white " />
-
                 <input
                   type="file"
                   id="profile_image"

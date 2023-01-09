@@ -64,7 +64,7 @@ function AboutSection({ title, collection }) {
           <div className="flex items-center space-x-3 space-y-2 flex-wrap ">
              { collection.map(( text ) => (
                  <>
-                  <div key = {`text${2+3}`} className=" flex items-center space-x-2 w-auto bg-skyBlue3 rounded-full px-2 py-1 cursor-pointer group">
+                  <div key = {`text${2+3}`} className=" flex items-center space-x-1 w-auto bg-skyBlue3 rounded-full px-2 py-1 cursor-pointer group">
                       <span className="text-green-800  text-xs"> { text } </span>
 
                       <HiOutlineX className=" hidden h-4 w-4 text-white group-hover:inline-flex" />

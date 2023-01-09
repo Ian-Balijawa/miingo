@@ -6,7 +6,6 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { Suspense, lazy, useState } from "react";
 import { actions, state } from "./state";
-
 import ActivityCard from "./components/profile/ActivityCard";
 import BottomNav from "./components/BottomNav";
 import Coming from "./pages/ComingSoon";
@@ -137,9 +136,9 @@ export default () => {
 	});
 
 	return (
-		<div  className="relative ">
+		<div  className="relative">
 			<Header
-				onPress={showDropdown}
+				onPress={ showDropdown }
 				showMenuModal={() => showMenuModal(true)}
 			/>
 
