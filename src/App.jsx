@@ -33,7 +33,6 @@ import { getTokenPayload } from './utils/getTokenPayload';
 import { useEffect } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
 import { useLocation } from 'react-router-dom';
-import { useSnapshot } from 'valtio';
 
 //importing icons
 
@@ -121,6 +120,7 @@ export default () => {
     } catch (error) {
       console.error('ERROR: ', error);
     }
+    navigate('/signin');
   };
 
   const toggleAction = () => {
