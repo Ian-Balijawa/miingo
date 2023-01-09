@@ -1,79 +1,81 @@
 /* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable no-use-before-define */
 
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Link, Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import { Suspense, lazy, useState } from "react";
-import { actions, state } from "./state";
-import ActivityCard from "./components/profile/ActivityCard";
-import BottomNav from "./components/BottomNav";
-import Coming from "./pages/ComingSoon";
-import Gallery from "./components/Album/ImageGallery";
-import Header from "./components/Header";
-import { HiOutlineChat } from "react-icons/hi";
-import { HiOutlineLogout } from "react-icons/hi";
-import { HiOutlineMusicNote } from "react-icons/hi";
-import { HiOutlineNewspaper } from "react-icons/hi";
-import { HiOutlineSpeakerphone } from "react-icons/hi";
-import { HiOutlineUserGroup } from "react-icons/hi";
-import { HiOutlineX } from "react-icons/hi";
-import { HiViewGrid } from "react-icons/hi";
-import { HiOutlineUserCircle } from "react-icons/hi";
-import LoadingScreen from "./components/LoadingScreen";
-import MenuBottomSheet from "./components/bottom-sheet/BottomSheet";
-import MenuItem from "./components/MenuItem";
-import NewProfilePage from "./pages/Profile_Page";
-import StatusCarousel from "./components/StatusCarousel";
-import StatusPopOut from "./components/status/StatusPopOut";
-import api from "./services/axios-config";
-import axios from "./services/axios-config";
-import { devtools } from "valtio/utils";
-import { getTokenPayload } from "./utils/getTokenPayload";
-import { useEffect } from "react";
-import useLocalStorage from "./hooks/useLocalStorage";
-import { useLocation } from "react-router-dom";
-import { useSnapshot } from "valtio";
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
+import { Link, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { Suspense, lazy, useState } from 'react';
+import { actions, state } from './state';
+
+import ActivityCard from './components/profile/ActivityCard';
+import BottomNav from './components/BottomNav';
+import Coming from './pages/ComingSoon';
+import Gallery from './components/Album/ImageGallery';
+import Header from './components/Header';
+import { HiOutlineChat } from 'react-icons/hi';
+import { HiOutlineLogout } from 'react-icons/hi';
+import { HiOutlineMusicNote } from 'react-icons/hi';
+import { HiOutlineNewspaper } from 'react-icons/hi';
+import { HiOutlineSpeakerphone } from 'react-icons/hi';
+import { HiOutlineUserCircle } from 'react-icons/hi';
+import { HiOutlineUserGroup } from 'react-icons/hi';
+import { HiOutlineX } from 'react-icons/hi';
+import { HiViewGrid } from 'react-icons/hi';
+import LoadingScreen from './components/LoadingScreen';
+import MenuBottomSheet from './components/bottom-sheet/BottomSheet';
+import MenuItem from './components/MenuItem';
+import NewProfilePage from './pages/Profile_Page';
+import StatusCarousel from './components/StatusCarousel';
+import StatusPopOut from './components/status/StatusPopOut';
+import api from './services/axios-config';
+import axios from './services/axios-config';
+import { devtools } from 'valtio/utils';
+import { getTokenPayload } from './utils/getTokenPayload';
+import { useEffect } from 'react';
+import useLocalStorage from './hooks/useLocalStorage';
+import { useLocation } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 
 //importing icons
 
 const menuItems = [
   {
     id: 1,
-    name: "Groups",
+    name: 'Groups',
     icon: HiOutlineUserGroup,
-    path: "/groups",
+    path: '/groups'
   },
   {
     id: 2,
-    name: "News Feeds",
+    name: 'News Feeds',
     icon: HiOutlineNewspaper,
-    path: "/coming",
+    path: '/coming'
   },
   {
     id: 3,
-    name: "Entertainment",
+    name: 'Entertainment',
     icon: HiOutlineMusicNote,
-    path: "/coming",
+    path: '/coming'
   },
   {
     id: 4,
-    name: "Gallery",
+    name: 'Gallery',
     icon: HiViewGrid,
-    path: "/coming",
+    path: '/coming'
   },
 
   {
     id: 5,
-    name: "Events",
+    name: 'Events',
     icon: HiOutlineSpeakerphone,
-    path: "/coming",
+    path: '/coming'
   },
   {
     id: 6,
-    name: "Birthday",
+    name: 'Birthday',
     icon: HiOutlineChat,
-    path: "/coming",
-  },
+    path: '/coming'
+  }
 ];
 
 const Loadable = (Component) => (props) => {
@@ -85,21 +87,21 @@ const Loadable = (Component) => (props) => {
 };
 
 // Notice the convention of how we're importing pagesing with the Loadable HOC
-const Home = Loadable(lazy(() => import("./pages/Home")));
-const Messages = Loadable(lazy(() => import("./pages/Messages")));
-const GroupFeeds = Loadable(lazy(() => import("./pages/GroupFeeds")));
-const GroupMessages = Loadable(lazy(() => import("./pages/GroupMessages")));
-const Profile = Loadable(lazy(() => import("./pages/ProfilePage")));
+const Home = Loadable(lazy(() => import('./pages/Home')));
+const Messages = Loadable(lazy(() => import('./pages/Messages')));
+const GroupFeeds = Loadable(lazy(() => import('./pages/GroupFeeds')));
+const GroupMessages = Loadable(lazy(() => import('./pages/GroupMessages')));
+const Profile = Loadable(lazy(() => import('./pages/ProfilePage')));
 
 export default () => {
   const [logout, setLogout] = useState(false);
   const [menuModal, showMenuModal] = useState(false);
-  const [accessToken] = useLocalStorage("accessToken");
+  const [accessToken] = useLocalStorage('accessToken');
   const navigate = useNavigate();
-  const [user] = useLocalStorage("user");
+  const [user] = useLocalStorage('user');
   const name = user?.name;
 
-  const userName = name?.split(" ")[0];
+  const userName = name?.split(' ')[0];
 
   const showDropdown = () => {
     setLogout(!logout);
@@ -109,29 +111,30 @@ export default () => {
     e.preventDefault();
 
     try {
-      await axios.patch("/auth/logout", {
+      await axios.patch('/auth/logout', {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+          Authorization: `Bearer ${accessToken}`
+        }
       });
       actions.setUser(null);
       actions.setAccessToken(null);
-      navigate("/signin");
+      navigate('/signin');
     } catch (error) {
-      console.error("ERROR: ", error);
+      console.error('ERROR: ', error);
     }
+    navigate('/signin');
   };
 
   const toggleAction = () => {
     showMenuModal(!menuModal);
   };
   //const { accessToken } = useSnapshot(state);
-  actions.setAccessToken(localStorage.getItem("accessToken"));
+  actions.setAccessToken(localStorage.getItem('accessToken'));
 
   useEffect(() => () => {
     devtools(state, {
-      name: "MIINGO_STATE",
-      enabled: process.env.NODE_ENV !== "production",
+      name: 'MIINGO_STATE',
+      enabled: process.env.NODE_ENV !== 'production'
     });
   });
 
@@ -278,19 +281,19 @@ export default () => {
           </MenuBottomSheet>
         </>
       ) : (
-        ""
+        ''
       )}
     </div>
   );
 };
 
 const RequireAuth = ({ children }) => {
-  const user = localStorage.getItem("user");
+  const user = localStorage.getItem('user');
   const location = useLocation();
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem('accessToken');
   const navigate = useNavigate();
   actions.setAccessToken(accessToken);
-  console.log("AUTH TOKEN", { user });
+  console.log('AUTH TOKEN', { user });
 
   useEffect(() => {
     if (accessToken) {
@@ -300,21 +303,21 @@ const RequireAuth = ({ children }) => {
 
       if (tokenEXp > currentTime) {
         const intervalID = setInterval(() => {
-          console.log("TIME TO EXPIRE", tokenEXp, iat);
+          console.log('TIME TO EXPIRE', tokenEXp, iat);
           if (
-            location.pathname !== "/signin" ||
-            location.pathname !== "/signup" ||
-            location.pathname !== "/"
+            location.pathname !== '/signin' ||
+            location.pathname !== '/signup' ||
+            location.pathname !== '/'
           ) {
             api
-              .get("/auth/refresh-token", {
+              .get('/auth/refresh-token', {
                 headers: {
-                  Authorization: `Bearer ${accessToken}`,
-                },
+                  Authorization: `Bearer ${accessToken}`
+                }
               })
               .then((res) => {
                 const data = res.data;
-                console.log("RES: ", data);
+                console.log('RES: ', data);
                 actions.setAccessToken(data.accessToken);
               });
           }
@@ -322,9 +325,9 @@ const RequireAuth = ({ children }) => {
 
         return () => clearInterval(intervalID);
       } else {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("user");
-        navigate("/signin");
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('user');
+        navigate('/signin');
       }
     }
   }, [accessToken, location.pathname, navigate]);
