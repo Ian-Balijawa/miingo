@@ -10,7 +10,7 @@ function GroupMessages() {
   const { src, name, members } = location.state;
 
   return (
-    <div className="relative lg:h-screen bg-miingo-gray">
+    <div className="relative h-screen bg-miingo-gray">
     
       <div className="px-5">
         <div className=" w-full h-20 md:h-28">

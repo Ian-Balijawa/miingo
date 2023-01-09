@@ -4,6 +4,7 @@ import { HiCamera } from "react-icons/hi";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
 function ProfileCaption({ handleEdit, user }) {
+  
   const [editProfile, setEditProfile] = useState(true);
   const [accessToken] = useLocalStorage("accessToken");
   const [image, setImage] = useState(null);
