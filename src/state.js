@@ -29,7 +29,7 @@ derive( {
 		const payload = getTokenPayload( accessToken )
 
 		return {
-			id: payload.sub,
+			_id: payload.sub,
 			name: payload.name,
 			email: payload.email,
 		}

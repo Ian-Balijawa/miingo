@@ -12,6 +12,7 @@ function FriendSuggestion() {
   const [accessToken] = useLocalStorage('accessToken');
   const [loggedInUser] = useLocalStorage('user');
   const snap = useSnapshot(state);
+  
   useEffect(() => {
     axios
       .get('/user', {

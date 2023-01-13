@@ -1,43 +1,18 @@
-import React, { useState } from 'react';
-import { HiCamera } from 'react-icons/hi';
-import PartialProfileEdit from './PartialProfileEdit';
-import ProfileButton from './ProfileButton';
-import ProfileCaption from './ProfileCaption';
-import { ThumbUpIcon } from '@heroicons/react/outline';
-import { UserProvider } from '../../context/userContext';
-import { state } from '../../state';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import ProfileTabs from './ProfileTabs';
+import React, { useState } from "react";
+import { HiCamera } from "react-icons/hi";
+import PartialProfileEdit from "./PartialProfileEdit";
+import ProfileCaption from "./ProfileCaption";
+import { UserProvider } from "../../context/userContext";
+import { state } from "../../state";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { HiOutlinePencil } from "react-icons/hi2";
+import ProfileTabs from "./ProfileTabs";
 
 function ProfileBanner() {
-
-  const [likes] = useState(2);
-  const [user] = useLocalStorage('user');
+  
+  const [user] = useLocalStorage("user");
   const [follow, setFollow] = useState(true);
   const [partialEdit, setPartialEdit] = useState(false);
-
-  const [links] = useState([
-    {
-      id: 1,
-      name: 'Timeline'
-    },
-    {
-      id: 2,
-      name: 'About '
-    },
-    {
-      id: 3,
-      name: 'Friends'
-    },
-    {
-      id: 4,
-      name: 'Photos'
-    },
-    {
-      id: 5,
-      name: 'Videos'
-    }
-  ]);
 
   const handleEdit = (e) => {
     e.preventDefault();
@@ -45,10 +20,18 @@ function ProfileBanner() {
     setPartialEdit(!partialEdit);
   };
 
+  const submitCover = (file) => {
+    console.log(file);
+  };
+
+  const submitProfile = (file) => {
+    console.log(file);
+  };
+
   return (
-    <div className="relative  mx-4 flex flex-col bg-white ">
+    <div className="relative mx-4 flex flex-col bg-white">
       <UserProvider>
-        <ProfileCaption handleEdit={handleEdit} user = { user }/>
+        <ProfileCaption handleEdit={handleEdit} user={user} />
       </UserProvider>
 
       {partialEdit && <PartialProfileEdit />}
@@ -60,98 +43,89 @@ function ProfileBanner() {
           className="w-full h-full object-cover "
           alt="profile_banner"
         />
-         
-         {/* editting the background image */}
-        <div className='absolute bottom-2 right-2 flex items-center justify-center bg-gray  cursor-pointer p-2 rounded-lg'>
-          <p className='text-white '>Edit cover</p>
-        </div>
 
-        {/* like and follow user on Mobile  */}
-        <div className="absolute bottom-2 left-4 flex items-center justify-around space-x-2 md:hidden ">
-          <div className="flex items-center justify-center bg-gray cursor-pointer p-2 rounded-full">
-            <HiCamera className=" w-4 h-4 text-white " />
-          </div>
+        {/* editting the background image */}
+        <form className="absolute bottom-2 right-2 flex items-center space-x-2 justify-center bg-gray  cursor-pointer p-2 rounded-lg">
+          <label
+            htmlFor="cover"
+            className="flex items-center justify-center space-x-2"
+          >
+            <HiOutlinePencil className=" w-4 h-4 text-white" />
+            <p className="text-white "> Edit cover </p>
+            <input
+              type="file"
+              placeholder="upload image"
+              id="cover"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                submitCover(e.target.files[0]);
+              }}
+            />
+          </label>
+        </form>
 
-          <div className="flex items-center space-x-1 bg-gray  text-white flex-grow justify-center p-2 rounded-lg cursor-pointer">
-            <ThumbUpIcon className="h-6" />
-            <p className="text-xs sm:text-base">{`${likes || 0}`}</p>
-            <p className="text-sm hidden md:inline-flex ">
-              {likes === 1 ? ' Like' : 'Likes'}
-            </p>
-          </div>
-
+        {/*follow user on Mobile  */}
+        <div className="absolute bottom-2 right-32 flex items-center justify-around space-x-2 md:hidden ">
           <div
             onClick={(e) => {
               e.preventDefault();
               setFollow(!follow);
             }}
             className={`flex items-center space-x-1 ${
-              follow && 'bg-gray rounded-lg'
+              follow && "bg-gray rounded-lg"
             }
             flex-grow justify-center p-2 text-white cursor-pointer`}
           >
             <p className="text-xs sm:text-base">
-              {follow ? ' UnFollow ' : 'Follow'}
+              {follow ? " UnFollow " : "Follow"}
             </p>
           </div>
-
         </div>
       </div>
 
       <div className="lg:hidden border-b">
         <div className="relative flex items-center justify-between space-x-2 p-4">
-          <div className="absolute -top-6 md:-top-10 w-14 h-14 md:w-20 md:h-20  rounded-full border-4 border-white ">
-            <img
-              src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
-              className="w-full h-full rounded-full object-cover "
-              alt="group-profile"
-            />
+          <div className="absolute -top-6 md:-top-10 w-16 h-16 md:w-20 md:h-20  rounded-full border-4 border-white ">
+            <div className="relative w-full h-full">
+              <img
+                src={`https://ui-avatars.com/api/name=${user?.name}&background=random`}
+                className="w-full h-full rounded-full object-cover "
+                alt="group-profile"
+              />
+
+              <form className="absolute top-0 -right-2 flex items-center justify-center bg-gray cursor-pointer p-1 rounded-full">
+                <label
+                  htmlFor="profile"
+                  className="flex items-center justify-center space-x-2"
+                >
+                  <HiCamera className=" w-4 h-4 text-white " />
+                  <input
+                    type="file"
+                    placeholder="upload image"
+                    id="profile"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      submitProfile(e.target.files[0]);
+                    }}
+                  />
+                </label>
+              </form>
+            </div>
           </div>
 
-          <div className="pl-11 md:pl-20 flex items-center flex-grow justify-between space-x-4">
+          <div className="pl-14 md:pl-20 flex items-center flex-grow justify-between space-x-4">
             <div className="w-48">
               <h1 className="text-gray-700 font-semibold"> {user?.name}</h1>
               <p className="text-gray-600 text-xs "> {user?.email}</p>
-            </div>
-
-            <div className="flex items-center  space-x-3">
-              <div className="flex items-center justify-center cursor-pointer bg-blue-500 hover:bg-blue-400 active:scale-95 transition ease-in-out duration-300 rounded-full py-2 px-3">
-                <p className="text-white text-sm">EDIT</p>
-              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center md:justify-between py-2 px-3">
-        <div className="flex items-center  space-x-1  justify-around">
-          <ProfileTabs />
-        </div>
-
-        {/* <div className="hidden md:inline-flex items-center justify-around space-x-2 ">
-          <div className="rounded-none flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 hover:rounded-lg cursor-pointer">
-            <ThumbUpIcon className="h-6" />
-            <p className="text-xs sm:text-base">{`${likes || 0}`}</p>
-            <p className="text-sm hidden md:inline-flex ">
-              {likes === 1 ? ' Like' : 'Likes'}
-            </p>
-          </div>
-
-          <div
-            onClick={(e) => {
-              e.preventDefault();
-              setFollow(!follow);
-            }}
-            className={`flex items-center space-x-1 ${
-              follow && 'bg-gray-100 rounded-lg'
-            }
-            flex-grow justify-center p-2  cursor-pointer`}
-          >
-            <p className="text-xs sm:text-base">
-              {follow ? ' UnFollow ' : 'Follow'}
-            </p>
-          </div>
-        </div> */}
+      <div className="w-full">
+        <ProfileTabs />
       </div>
     </div>
   );

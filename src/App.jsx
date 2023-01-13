@@ -17,6 +17,7 @@ import { HiOutlineLogout } from 'react-icons/hi';
 import { HiOutlineMusicNote } from 'react-icons/hi';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
+import { HiOutlineUserCircle } from 'react-icons/hi';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { HiOutlineX } from 'react-icons/hi';
 import { HiViewGrid } from 'react-icons/hi';
@@ -33,6 +34,7 @@ import { getTokenPayload } from './utils/getTokenPayload';
 import { useEffect } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
 import { useLocation } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
 
 //importing icons
 
@@ -137,7 +139,7 @@ export default () => {
   });
 
   return (
-    <div className="relative ">
+    <div className="relative">
       <Header
         onPress={showDropdown}
         showMenuModal={() => showMenuModal(true)}
@@ -149,20 +151,27 @@ export default () => {
             <div className="w-4 h-4 right-3 md:left-3 absolute mt-1 bg-white -top-3  rotate-45"></div>
           </div>
 
-          <p className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 sm:hidden">
-            {userName}
+          <p className="sm:hidden flex items-center space-x-1 text-sm hover:bg-lightgraybg hover:rounded-md p-1 cursor-pointer border-b mb-2 ">
+            <span className="">
+              <HiOutlineUserCircle className="w-5 h-5 hover:scale-105 transition ease-out duration-300 " />
+            </span>
+
+            <span>{userName}</span>
           </p>
 
           <Link
             to={`/profile/${user?._id}`}
-            className="text-sm hover:bg-gray-200 cursor-pointer border-b mb-2 text no-underline "
+            className=" flex items-center space-x-3 text-sm hover:bg-lightgraybg hover:rounded-md p-1 cursor-pointer border-b mb-2 text no-underline "
           >
-            {' '}
-            Profile{' '}
+            <span className="">
+              <HiOutlineUserCircle className="w-5 h-5 hover:scale-105 transition ease-out duration-300 " />
+            </span>
+
+            <span>Profile</span>
           </Link>
           <p
             onClick={handleLogout}
-            className="text-sm hover:bg-gray-200 cursor-pointer flex items-center space-x-3"
+            className="text-sm hover:bg-lightgraybg p-1 hover:rounded-md cursor-pointer flex items-center space-x-3"
           >
             <span className="">
               <HiOutlineLogout className="w-5 h-5 hover:scale-105 transition ease-out duration-300 " />

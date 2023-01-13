@@ -142,7 +142,7 @@ function About() {
     }
   }
   return (
-    <div className="hidden lg:flex flex-col  mt-5 shadow-lg bg-white rounded-md  h-auto overflow-hidden">
+    <div className="hidden lg:flex flex-col shadow-lg bg-white rounded-md  h-auto overflow-hidden">
       <div className=" bg-white flex items-center justify-between text-gray-700 mb-5 px-3 border-b">
 
         <div className="">
@@ -153,7 +153,7 @@ function About() {
 
         <div className="flex items-center space-x-3">
           {edit && (
-            <div onClick={handleSubmit} className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 font-bold  p-2 cursor-pointer">
+            <div onClick={handleSubmit} className="flex items-center justify-center w-8 h-8 rounded-full bg-lightgraybg font-bold  p-2 cursor-pointer">
               <HiDocument className="h-6 w-6" />
             </div>
           )}
@@ -164,7 +164,7 @@ function About() {
                 e.preventDefault();
                 setEdit(!edit);
               }}
-              className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 font-bold  p-2 cursor-pointer"
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-lightgraybg font-bold  p-2 cursor-pointer"
             >
               <HiPencil className="h-6 w-6" />
             </div>
@@ -176,7 +176,7 @@ function About() {
                 e.preventDefault();
                 setEdit(!edit);
               }}
-              className=" flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 font-bold  p-2 cursor-pointer"
+              className=" flex items-center justify-center w-8 h-8 rounded-full bg-lightgraybg font-bold  p-2 cursor-pointer"
             >
               <HiOutlineX className="h-6 w-6" />
             </div>

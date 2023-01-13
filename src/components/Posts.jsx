@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { actions, state } from '../state';
+
 import FriendSuggestion from './FriendSuggestion';
 import Post from './Post';
 import axios from '../services/axios-config';
-import { useSnapshot } from 'valtio';
 import config from '../utils/envConfig';
+import { useSnapshot } from 'valtio';
 
 function Posts() {
-  
   const [error, setError] = useState(null);
   const { accessToken, me: loggedInUser, posts } = useSnapshot(state);
   console.log('LOGGEDIN USER: ', accessToken);
-  
+
   useEffect(() => {
     axios
-      .get(`/post/user/${loggedInUser.id}`, {
+      .get(`/post/user/${loggedInUser._id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -25,7 +25,7 @@ function Posts() {
       .catch((err) => {
         setError(err.response.data.message);
       });
-  }, [accessToken, loggedInUser.id]);
+  }, [accessToken, loggedInUser._id]);
 
   return (
     <div className="w-full space-y-4">
@@ -53,8 +53,7 @@ function Posts() {
         />
       ))}
 
-
-         {/* following and unfollowing users*/}
+      {/* following and unfollowing users*/}
       <FriendSuggestion />
 
       {posts.slice(1).map((post) => (

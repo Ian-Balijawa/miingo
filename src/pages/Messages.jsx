@@ -12,7 +12,7 @@ export default function Messages() {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="relative h-screen bg-miingo-gray overflow-y-auto overflow-x-hidden scrollbar-hide">
+    <div className="relative h-screen bg-miingo-gray">
       <Statuses handlePostStatus={() => setShowModal(true)} />
 
       {showModal ? <ModalWrapper handler={setShowModal} /> : null}
